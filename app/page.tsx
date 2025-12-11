@@ -58,20 +58,25 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen">
       {/* HERO SECTION - GLOBE AS PROTAGONIST */}
-      <section className="relative min-h-[100vh] flex flex-col overflow-hidden">
+      <section className="relative min-h-[110vh] flex flex-col overflow-hidden py-8 lg:py-16">
         {/* Background gradient */}
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-xandeum-dark via-[#050a1a] to-background" />
 
         {/* Animated orbs */}
         <motion.div
-          className="absolute top-20 left-10 w-[500px] h-[500px] bg-xandeum-orange/10 rounded-full blur-[120px]"
+          className="absolute top-20 left-10 w-[600px] h-[600px] bg-xandeum-orange/10 rounded-full blur-[150px]"
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 8, repeat: Infinity }}
         />
         <motion.div
-          className="absolute bottom-20 right-10 w-[400px] h-[400px] bg-xandeum-purple/20 rounded-full blur-[100px]"
+          className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-xandeum-purple/20 rounded-full blur-[120px]"
           animate={{ scale: [1.2, 1, 1.2], opacity: [0.4, 0.2, 0.4] }}
           transition={{ duration: 10, repeat: Infinity }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-xandeum-blue/5 rounded-full blur-[200px]"
+          animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
+          transition={{ duration: 12, repeat: Infinity }}
         />
 
         {/* Content overlay on globe */}
@@ -152,20 +157,20 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* GLOBE SECTION - Full width edge to edge */}
+          {/* GLOBE SECTION - Full width edge to edge with generous spacing */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex-1 w-screen relative left-1/2 right-1/2 -mx-[50vw]"
-            style={{ minHeight: '70vh' }}
+            className="flex-1 w-screen relative left-1/2 right-1/2 -mx-[50vw] my-8 lg:my-16"
+            style={{ minHeight: '80vh' }}
           >
             {/* Globe container - full viewport width */}
-            <div className="w-full h-full min-h-[70vh]">
+            <div className="w-full h-full min-h-[80vh]">
               {nodesData?.nodes && nodesData.nodes.length > 0 ? (
                 <NetworkGlobe
                   nodes={nodesData.nodes}
-                  className="w-full h-full min-h-[70vh]"
+                  className="w-full h-full min-h-[80vh]"
                   size="hero"
                   showLegend={true}
                   showStats={true}
@@ -287,14 +292,14 @@ export default function DashboardPage() {
           <StorageChart nodes={nodesData?.nodes || []} isLoading={isLoading} />
         </motion.div>
 
-        {/* Storage Distribution - Full Section */}
+        {/* Storage Distribution - Full Section - Massive Interactive Chart */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="w-screen relative left-1/2 right-1/2 -mx-[50vw] px-4 lg:px-8"
+          className="w-screen relative left-1/2 right-1/2 -mx-[50vw] py-12 lg:py-20 bg-gradient-to-b from-transparent via-xandeum-dark/30 to-transparent"
         >
-          <div className="max-w-[1800px] mx-auto">
+          <div className="w-full px-4 lg:px-8">
             <BubbleChart nodes={nodesData?.nodes || []} isLoading={isLoading} fullSection />
           </div>
         </motion.section>
