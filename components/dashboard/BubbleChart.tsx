@@ -1,8 +1,8 @@
 'use client';
 
-import { useMemo, useState, useCallback, useEffect } from 'react';
+import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ResponsiveCirclePacking } from '@nivo/circle-packing';
+import * as d3 from 'd3';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -36,26 +36,34 @@ interface BubbleNode {
   pubkey: string;
 }
 
-interface HierarchyNode {
-  id: string;
-  name: string;
-  children: BubbleNode[];
+interface TooltipData {
+  x: number;
+  y: number;
+  data: BubbleNode;
 }
 
 export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleChartProps) {
   const router = useRouter();
+  const svgRef = useRef<SVGSVGElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [filter, setFilter] = useState<FilterType>('all');
-  const [zoomedId, setZoomedId] = useState<string | null>(null);
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [tooltip, setTooltip] = useState<TooltipData | null>(null);
+  const [selectedNode, setSelectedNode] = useState<string | null>(null);
+  const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
 
-  // Smooth zoom transition
-  const handleZoom = useCallback((newZoomedId: string | null) => {
-    setIsTransitioning(true);
-    setZoomedId(newZoomedId);
-    // Allow animation to complete
-    setTimeout(() => setIsTransitioning(false), 600);
-  }, []);
+  // Handle resize
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        const { width, height } = containerRef.current.getBoundingClientRect();
+        setDimensions({ width, height: fullSection ? 800 : 400 });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, [fullSection]);
 
   const filteredNodes = useMemo(() => {
     let filtered = [...nodes];
@@ -76,13 +84,13 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
     return filtered;
   }, [nodes, filter]);
 
-  // Transform data for Nivo circle packing - show more nodes in full section
-  const chartData = useMemo((): HierarchyNode => {
+  // Transform data for D3
+  const bubbleData = useMemo((): BubbleNode[] => {
     const sorted = [...filteredNodes]
       .sort((a, b) => b.storage_committed - a.storage_committed)
       .slice(0, fullSection ? 150 : 50);
 
-    const children: BubbleNode[] = sorted.map((node) => ({
+    return sorted.map((node) => ({
       id: node.pubkey,
       name: node.pubkey.slice(0, 8) + '...',
       value: Math.max(node.storage_committed, 1000000),
@@ -98,12 +106,6 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
       usagePercent: node.storage_usage_percent,
       pubkey: node.pubkey,
     }));
-
-    return {
-      id: 'root',
-      name: 'Network',
-      children,
-    };
   }, [filteredNodes, fullSection]);
 
   const stats = useMemo(() => ({
@@ -113,29 +115,153 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
     avgHealth: Math.round(filteredNodes.reduce((a, b) => a + b.healthScore, 0) / filteredNodes.length || 0),
   }), [filteredNodes]);
 
-  const handleNodeClick = useCallback((node: any) => {
-    if (isTransitioning) return; // Prevent clicks during animation
+  // D3 bubble layout
+  useEffect(() => {
+    if (!svgRef.current || bubbleData.length === 0) return;
 
-    if (node.depth === 0) {
-      // Clicking root resets zoom
-      handleZoom(null);
-    } else if (node.data.pubkey) {
-      // Toggle zoom or navigate
-      if (zoomedId === node.id) {
-        // Already zoomed, navigate to node
-        router.push(`/nodes/${node.data.pubkey}`);
-      } else {
-        // Zoom into this node with smooth transition
-        handleZoom(node.id);
-      }
-    }
-  }, [router, zoomedId, isTransitioning, handleZoom]);
+    const svg = d3.select(svgRef.current);
+    const { width, height } = dimensions;
 
-  const resetZoom = useCallback(() => {
-    if (!isTransitioning) {
-      handleZoom(null);
+    // Clear previous content
+    svg.selectAll('*').remove();
+
+    // Create hierarchy
+    const hierarchy = d3.hierarchy({ children: bubbleData })
+      .sum((d: any) => d.value);
+
+    // Create pack layout
+    const pack = d3.pack<any>()
+      .size([width - 40, height - 40])
+      .padding(fullSection ? 8 : 4);
+
+    const root = pack(hierarchy);
+
+    // Create container group with centering
+    const g = svg.append('g')
+      .attr('transform', `translate(20, 20)`);
+
+    // Add circles with smooth transitions
+    const circles = g.selectAll('circle')
+      .data(root.leaves())
+      .enter()
+      .append('circle')
+      .attr('cx', (d: any) => d.x)
+      .attr('cy', (d: any) => d.y)
+      .attr('r', 0) // Start at 0 for animation
+      .attr('fill', (d: any) => d.data.color)
+      .attr('fill-opacity', 0.85)
+      .attr('stroke', (d: any) => d.data.color)
+      .attr('stroke-width', 2)
+      .attr('stroke-opacity', 0.5)
+      .style('cursor', 'pointer')
+      .style('filter', 'drop-shadow(0 4px 12px rgba(0,0,0,0.3))')
+      .on('mouseenter', function(event: any, d: any) {
+        const rect = svgRef.current?.getBoundingClientRect();
+        if (rect) {
+          setTooltip({
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top,
+            data: d.data
+          });
+        }
+
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('fill-opacity', 1)
+          .attr('stroke-width', 3)
+          .attr('stroke-opacity', 1)
+          .style('filter', `drop-shadow(0 8px 25px ${d.data.color}50)`);
+      })
+      .on('mousemove', function(event: any, d: any) {
+        const rect = svgRef.current?.getBoundingClientRect();
+        if (rect) {
+          setTooltip({
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top,
+            data: d.data
+          });
+        }
+      })
+      .on('mouseleave', function(event: any, d: any) {
+        setTooltip(null);
+
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('fill-opacity', 0.85)
+          .attr('stroke-width', 2)
+          .attr('stroke-opacity', 0.5)
+          .style('filter', 'drop-shadow(0 4px 12px rgba(0,0,0,0.3))');
+      })
+      .on('click', function(event: any, d: any) {
+        event.stopPropagation();
+        if (selectedNode === d.data.pubkey) {
+          router.push(`/nodes/${d.data.pubkey}`);
+        } else {
+          setSelectedNode(d.data.pubkey);
+
+          // Highlight selected
+          g.selectAll('circle')
+            .transition()
+            .duration(300)
+            .attr('fill-opacity', (node: any) => node.data.pubkey === d.data.pubkey ? 1 : 0.4)
+            .attr('stroke-opacity', (node: any) => node.data.pubkey === d.data.pubkey ? 1 : 0.2);
+        }
+      });
+
+    // Animate circles in
+    circles.transition()
+      .duration(800)
+      .delay((d: any, i: number) => i * 10)
+      .ease(d3.easeCubicOut)
+      .attr('r', (d: any) => d.r);
+
+    // Add labels for larger circles
+    const labels = g.selectAll('text')
+      .data(root.leaves().filter((d: any) => d.r > (fullSection ? 25 : 30)))
+      .enter()
+      .append('text')
+      .attr('x', (d: any) => d.x)
+      .attr('y', (d: any) => d.y)
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle')
+      .attr('fill', 'white')
+      .attr('font-size', (d: any) => Math.min(d.r / 3, 12))
+      .attr('font-weight', '500')
+      .attr('pointer-events', 'none')
+      .attr('opacity', 0)
+      .text((d: any) => d.data.name);
+
+    // Animate labels in
+    labels.transition()
+      .duration(500)
+      .delay(800)
+      .attr('opacity', 0.9);
+
+    // Click outside to deselect
+    svg.on('click', () => {
+      setSelectedNode(null);
+      g.selectAll('circle')
+        .transition()
+        .duration(300)
+        .attr('fill-opacity', 0.85)
+        .attr('stroke-opacity', 0.5);
+    });
+
+  }, [bubbleData, dimensions, fullSection, selectedNode, router]);
+
+  const resetSelection = useCallback(() => {
+    setSelectedNode(null);
+    if (svgRef.current) {
+      d3.select(svgRef.current)
+        .selectAll('circle')
+        .transition()
+        .duration(300)
+        .attr('fill-opacity', 0.85)
+        .attr('stroke-opacity', 0.5);
     }
-  }, [isTransitioning, handleZoom]);
+  }, []);
 
   if (isLoading) {
     return (
@@ -150,7 +276,6 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
     );
   }
 
-  // Much larger chart for full section mode
   const chartHeight = fullSection ? 800 : 400;
 
   return (
@@ -182,7 +307,7 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
                 </motion.span>
               </div>
               <p className="text-muted-foreground text-sm lg:text-base">
-                Explore storage allocation across the network. Click any node to zoom in and view details.
+                Explore storage allocation across the network. Click any node to select, click again to view details.
               </p>
             </motion.div>
 
@@ -193,15 +318,15 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
               viewport={{ once: true }}
               className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
             >
-              {zoomedId && (
+              {selectedNode && (
                 <Button
                   variant="outline"
                   size="sm"
                   className="border-xandeum-orange/50 hover:bg-xandeum-orange/10 text-xandeum-orange"
-                  onClick={resetZoom}
+                  onClick={resetSelection}
                 >
                   <RotateCcw className="h-4 w-4 mr-2" />
-                  Reset View
+                  Reset Selection
                 </Button>
               )}
 
@@ -220,7 +345,7 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
                     className={`h-8 text-sm transition-all ${filter === f.key ? 'bg-xandeum-orange hover:bg-xandeum-orange/90 shadow-md' : 'hover:bg-white/10'}`}
                     onClick={() => {
                       setFilter(f.key as FilterType);
-                      setZoomedId(null);
+                      setSelectedNode(null);
                     }}
                   >
                     {f.label}
@@ -251,7 +376,7 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
                 <span className="text-xs text-muted-foreground">Online</span>
               </div>
               <p className="text-2xl font-bold text-green-500">{stats.online}</p>
-              <p className="text-xs text-muted-foreground">{Math.round((stats.online / stats.total) * 100)}% active</p>
+              <p className="text-xs text-muted-foreground">{stats.total > 0 ? Math.round((stats.online / stats.total) * 100) : 0}% active</p>
             </div>
             <div className="bg-background/40 backdrop-blur-sm rounded-xl p-4 border border-border/50">
               <div className="flex items-center gap-2 mb-1">
@@ -283,7 +408,7 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
                   </button>
                 </TooltipTrigger>
                 <TooltipContent side="right" className="max-w-[250px] text-sm">
-                  <p>Interactive circle packing visualization. Click a node to zoom in, click again to view details.</p>
+                  <p>Interactive bubble visualization. Click a node to select, click again to view details.</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -302,7 +427,7 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
                   className={`h-7 text-xs ${filter === f.key ? 'bg-xandeum-orange hover:bg-xandeum-orange/90' : ''}`}
                   onClick={() => {
                     setFilter(f.key as FilterType);
-                    setZoomedId(null);
+                    setSelectedNode(null);
                   }}
                 >
                   {f.label}
@@ -314,43 +439,29 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
       )}
 
       <CardContent className="p-0">
-        <motion.div
+        <div
+          ref={containerRef}
           className={`relative overflow-hidden ${fullSection ? 'bg-gradient-to-br from-[#050810] via-[#0a1020] to-[#050810]' : 'bg-gradient-to-br from-xandeum-dark/80 via-slate-900 to-xandeum-purple/20'}`}
           style={{ height: chartHeight }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
         >
           {/* Premium background effects for full section */}
           {fullSection && (
             <>
-              {/* Animated gradient orbs */}
               <motion.div
                 className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-xandeum-orange/8 rounded-full blur-[150px] pointer-events-none"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.4, 0.6, 0.4]
-                }}
+                animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.6, 0.4] }}
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
               />
               <motion.div
                 className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-xandeum-purple/10 rounded-full blur-[120px] pointer-events-none"
-                animate={{
-                  scale: [1.2, 1, 1.2],
-                  opacity: [0.3, 0.5, 0.3]
-                }}
+                animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
               />
               <motion.div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-green-500/5 rounded-full blur-[180px] pointer-events-none"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [0.2, 0.3, 0.2]
-                }}
+                animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
                 transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
               />
-
-              {/* Subtle grid pattern overlay */}
               <div
                 className="absolute inset-0 pointer-events-none opacity-[0.02]"
                 style={{
@@ -361,118 +472,93 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
             </>
           )}
 
-          {/* Transition overlay for smooth zooming */}
-          <AnimatePresence>
-            {isTransitioning && (
-              <motion.div
-                className="absolute inset-0 bg-black/20 backdrop-blur-[1px] z-10 pointer-events-none"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              />
-            )}
-          </AnimatePresence>
+          {/* D3 SVG Container */}
+          <svg
+            ref={svgRef}
+            width={dimensions.width}
+            height={chartHeight}
+            className="relative z-10"
+          />
 
-          <ResponsiveCirclePacking
-            data={chartData}
-            margin={fullSection ? { top: 60, right: 60, bottom: 60, left: 60 } : { top: 20, right: 20, bottom: 20, left: 20 }}
-            id="id"
-            value="value"
-            colors={(node: any) => node.data.color || '#666'}
-            childColor={{ from: 'color', modifiers: [['brighter', 0.3]] }}
-            padding={fullSection ? 10 : 4}
-            leavesOnly={false}
-            enableLabels={true}
-            labelsFilter={(node: any) => node.depth === 1}
-            labelsSkipRadius={fullSection ? 18 : 20}
-            labelTextColor={{ from: 'color', modifiers: [['darker', 2.5]] }}
-            borderWidth={fullSection ? 2 : 1}
-            borderColor={{ from: 'color', modifiers: [['darker', 0.3]] }}
-            animate={true}
-            motionConfig={{
-              mass: 1,
-              tension: 170,
-              friction: 26,
-              clamp: false,
-              precision: 0.01,
-              velocity: 0
-            }}
-            zoomedId={zoomedId}
-            onClick={handleNodeClick}
-            onMouseEnter={(node: any) => {
-              if (node.depth > 0) setHoveredNode(node.id);
-            }}
-            onMouseLeave={() => setHoveredNode(null)}
-            tooltip={({ id, value, color, data, depth }: any) => (
+          {/* Custom Tooltip */}
+          <AnimatePresence>
+            {tooltip && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className={`bg-black/95 backdrop-blur-xl rounded-2xl px-5 py-4 shadow-2xl border border-white/10 pointer-events-none min-w-[240px] ${depth === 0 ? 'hidden' : ''}`}
-                style={{ boxShadow: `0 25px 50px -12px ${color}30, 0 0 0 1px ${color}20` }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.15 }}
+                className="absolute z-50 pointer-events-none"
+                style={{
+                  left: tooltip.x + 15,
+                  top: tooltip.y - 10,
+                  transform: tooltip.x > dimensions.width - 280 ? 'translateX(-110%)' : 'none'
+                }}
               >
-                <div className="flex items-center gap-3 mb-3 pb-3 border-b border-white/10">
-                  <div
-                    className="h-5 w-5 rounded-full ring-2 ring-white/20"
-                    style={{ backgroundColor: color, boxShadow: `0 0 30px ${color}60` }}
-                  />
-                  <span className="text-white font-semibold capitalize">{data.status}</span>
-                  <div className="ml-auto flex items-center gap-1.5 bg-white/10 px-2 py-0.5 rounded-full">
-                    <TrendingUp className="h-3 w-3 text-xandeum-orange" />
-                    <span className="text-xandeum-orange font-bold text-sm">{data.healthScore}%</span>
+                <div
+                  className="bg-black/95 backdrop-blur-xl rounded-2xl px-5 py-4 shadow-2xl border border-white/10 min-w-[240px]"
+                  style={{ boxShadow: `0 25px 50px -12px ${tooltip.data.color}30, 0 0 0 1px ${tooltip.data.color}20` }}
+                >
+                  <div className="flex items-center gap-3 mb-3 pb-3 border-b border-white/10">
+                    <div
+                      className="h-5 w-5 rounded-full ring-2 ring-white/20"
+                      style={{ backgroundColor: tooltip.data.color, boxShadow: `0 0 30px ${tooltip.data.color}60` }}
+                    />
+                    <span className="text-white font-semibold capitalize">{tooltip.data.status}</span>
+                    <div className="ml-auto flex items-center gap-1.5 bg-white/10 px-2 py-0.5 rounded-full">
+                      <TrendingUp className="h-3 w-3 text-xandeum-orange" />
+                      <span className="text-xandeum-orange font-bold text-sm">{tooltip.data.healthScore}%</span>
+                    </div>
                   </div>
-                </div>
-                <p className="font-mono text-white/80 text-xs mb-3 bg-white/5 px-2 py-1.5 rounded-lg">{data.pubkey?.slice(0, 24)}...</p>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-white/40 text-sm">Storage</span>
-                    <span className="text-xandeum-orange font-semibold">{data.storageFormatted}</span>
+                  <p className="font-mono text-white/80 text-xs mb-3 bg-white/5 px-2 py-1.5 rounded-lg">{tooltip.data.pubkey?.slice(0, 24)}...</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-white/40 text-sm">Storage</span>
+                      <span className="text-xandeum-orange font-semibold">{tooltip.data.storageFormatted}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white/40 text-sm">Health Score</span>
+                      <span className="text-green-400 font-semibold">{tooltip.data.healthScore}%</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white/40 text-sm">Utilization</span>
+                      <span className="text-white font-semibold">{tooltip.data.usagePercent?.toFixed(1)}%</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-white/40 text-sm">Health Score</span>
-                    <span className="text-green-400 font-semibold">{data.healthScore}%</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-white/40 text-sm">Utilization</span>
-                    <span className="text-white font-semibold">{data.usagePercent?.toFixed(1)}%</span>
-                  </div>
-                </div>
-                <div className="mt-4 pt-3 border-t border-white/10">
-                  <div className="flex items-center justify-center gap-2 text-xandeum-orange text-xs font-medium">
-                    <Eye className="h-3.5 w-3.5" />
-                    {zoomedId === id ? 'Click to view full details' : 'Click to focus'}
+                  <div className="mt-4 pt-3 border-t border-white/10">
+                    <div className="flex items-center justify-center gap-2 text-xandeum-orange text-xs font-medium">
+                      <Eye className="h-3.5 w-3.5" />
+                      {selectedNode === tooltip.data.pubkey ? 'Click to view details' : 'Click to select'}
+                    </div>
                   </div>
                 </div>
               </motion.div>
             )}
-          />
+          </AnimatePresence>
 
-          {/* Zoom indicator - Premium design */}
+          {/* Selection indicator */}
           <AnimatePresence>
-            {fullSection && zoomedId && (
+            {fullSection && selectedNode && (
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
-                className="absolute top-6 left-6 bg-black/90 backdrop-blur-xl rounded-2xl px-5 py-4 border border-white/10 shadow-2xl"
-                style={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)' }}
+                className="absolute top-6 left-6 bg-black/90 backdrop-blur-xl rounded-2xl px-5 py-4 border border-white/10 shadow-2xl z-20"
               >
                 <div className="flex items-center gap-4">
                   <div className="p-2.5 rounded-xl bg-gradient-to-br from-xandeum-orange to-orange-600 shadow-lg shadow-xandeum-orange/30">
                     <ZoomIn className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-white">Focused View</p>
-                    <p className="text-xs text-white/50">Click node for details</p>
+                    <p className="text-sm font-semibold text-white">Node Selected</p>
+                    <p className="text-xs text-white/50">Click again to view details</p>
                   </div>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="ml-3 h-9 px-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl transition-all duration-200"
-                    onClick={resetZoom}
-                    disabled={isTransitioning}
+                    className="ml-3 h-9 px-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl"
+                    onClick={resetSelection}
                   >
                     <RotateCcw className="h-4 w-4 mr-2" />
                     Reset
@@ -482,27 +568,27 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
             )}
           </AnimatePresence>
 
-          {/* Instructions overlay - Premium */}
+          {/* Instructions overlay */}
           <AnimatePresence>
-            {fullSection && !zoomedId && (
+            {fullSection && !selectedNode && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.3, delay: 0.5 }}
-                className="absolute bottom-6 right-6 bg-black/80 backdrop-blur-xl rounded-xl px-5 py-3 border border-white/10"
+                className="absolute bottom-6 right-6 bg-black/80 backdrop-blur-xl rounded-xl px-5 py-3 border border-white/10 z-20"
               >
                 <p className="text-sm text-white/80">
-                  <span className="text-xandeum-orange font-semibold">Click</span> any node to focus
+                  <span className="text-xandeum-orange font-semibold">Click</span> node to select
                   <span className="mx-2 text-white/30">•</span>
-                  <span className="text-xandeum-orange font-semibold">Double-click</span> for details
+                  <span className="text-xandeum-orange font-semibold">Click again</span> for details
                 </p>
               </motion.div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
-        {/* Legend - Premium design */}
+        {/* Legend */}
         <div className={`flex items-center justify-center gap-10 border-t border-white/5 bg-gradient-to-r from-transparent via-background/80 to-transparent flex-wrap ${fullSection ? 'py-6' : 'py-3'}`}>
           {[
             { color: 'bg-green-500', shadow: 'shadow-green-500/40', label: 'Online', count: filteredNodes.filter(n => n.status === 'online').length, textColor: 'text-green-400' },
