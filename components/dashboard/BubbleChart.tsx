@@ -1,7 +1,7 @@
 'use client';
 
-import { useMemo, useState, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { useMemo, useState, useCallback, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ResponsiveCirclePacking } from '@nivo/circle-packing';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { HelpCircle, Filter, ZoomIn, RotateCcw, Sparkles, Database, Activity, TrendingUp } from 'lucide-react';
+import { HelpCircle, Filter, ZoomIn, RotateCcw, Sparkles, Database, Activity, TrendingUp, Eye } from 'lucide-react';
 import { PNode } from '@/types';
 import { formatBytes } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
@@ -46,6 +46,16 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
   const router = useRouter();
   const [filter, setFilter] = useState<FilterType>('all');
   const [zoomedId, setZoomedId] = useState<string | null>(null);
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Smooth zoom transition
+  const handleZoom = useCallback((newZoomedId: string | null) => {
+    setIsTransitioning(true);
+    setZoomedId(newZoomedId);
+    // Allow animation to complete
+    setTimeout(() => setIsTransitioning(false), 600);
+  }, []);
 
   const filteredNodes = useMemo(() => {
     let filtered = [...nodes];
@@ -104,22 +114,28 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
   }), [filteredNodes]);
 
   const handleNodeClick = useCallback((node: any) => {
+    if (isTransitioning) return; // Prevent clicks during animation
+
     if (node.depth === 0) {
       // Clicking root resets zoom
-      setZoomedId(null);
+      handleZoom(null);
     } else if (node.data.pubkey) {
       // Toggle zoom or navigate
       if (zoomedId === node.id) {
         // Already zoomed, navigate to node
         router.push(`/nodes/${node.data.pubkey}`);
       } else {
-        // Zoom into this node
-        setZoomedId(node.id);
+        // Zoom into this node with smooth transition
+        handleZoom(node.id);
       }
     }
-  }, [router, zoomedId]);
+  }, [router, zoomedId, isTransitioning, handleZoom]);
 
-  const resetZoom = () => setZoomedId(null);
+  const resetZoom = useCallback(() => {
+    if (!isTransitioning) {
+      handleZoom(null);
+    }
+  }, [isTransitioning, handleZoom]);
 
   if (isLoading) {
     return (
@@ -298,129 +314,211 @@ export function BubbleChart({ nodes, isLoading, fullSection = false }: BubbleCha
       )}
 
       <CardContent className="p-0">
-        <div
-          className={`relative overflow-hidden ${fullSection ? 'bg-gradient-to-br from-[#0a0f1c] via-[#0d1425] to-[#0a0f1c]' : 'bg-gradient-to-br from-xandeum-dark/80 via-slate-900 to-xandeum-purple/20'}`}
+        <motion.div
+          className={`relative overflow-hidden ${fullSection ? 'bg-gradient-to-br from-[#050810] via-[#0a1020] to-[#050810]' : 'bg-gradient-to-br from-xandeum-dark/80 via-slate-900 to-xandeum-purple/20'}`}
           style={{ height: chartHeight }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
         >
-          {/* Background glow effects for full section */}
+          {/* Premium background effects for full section */}
           {fullSection && (
             <>
-              <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-xandeum-orange/5 rounded-full blur-[100px] pointer-events-none" />
-              <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-xandeum-purple/5 rounded-full blur-[80px] pointer-events-none" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-green-500/3 rounded-full blur-[120px] pointer-events-none" />
+              {/* Animated gradient orbs */}
+              <motion.div
+                className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-xandeum-orange/8 rounded-full blur-[150px] pointer-events-none"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.4, 0.6, 0.4]
+                }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-xandeum-purple/10 rounded-full blur-[120px] pointer-events-none"
+                animate={{
+                  scale: [1.2, 1, 1.2],
+                  opacity: [0.3, 0.5, 0.3]
+                }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-green-500/5 rounded-full blur-[180px] pointer-events-none"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  opacity: [0.2, 0.3, 0.2]
+                }}
+                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* Subtle grid pattern overlay */}
+              <div
+                className="absolute inset-0 pointer-events-none opacity-[0.02]"
+                style={{
+                  backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+                  backgroundSize: '40px 40px'
+                }}
+              />
             </>
           )}
 
+          {/* Transition overlay for smooth zooming */}
+          <AnimatePresence>
+            {isTransitioning && (
+              <motion.div
+                className="absolute inset-0 bg-black/20 backdrop-blur-[1px] z-10 pointer-events-none"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              />
+            )}
+          </AnimatePresence>
+
           <ResponsiveCirclePacking
             data={chartData}
-            margin={fullSection ? { top: 40, right: 40, bottom: 40, left: 40 } : { top: 20, right: 20, bottom: 20, left: 20 }}
+            margin={fullSection ? { top: 60, right: 60, bottom: 60, left: 60 } : { top: 20, right: 20, bottom: 20, left: 20 }}
             id="id"
             value="value"
             colors={(node: any) => node.data.color || '#666'}
-            childColor={{ from: 'color', modifiers: [['brighter', 0.4]] }}
-            padding={fullSection ? 8 : 4}
+            childColor={{ from: 'color', modifiers: [['brighter', 0.3]] }}
+            padding={fullSection ? 10 : 4}
             leavesOnly={false}
             enableLabels={true}
             labelsFilter={(node: any) => node.depth === 1}
-            labelsSkipRadius={fullSection ? 12 : 20}
-            labelTextColor={{ from: 'color', modifiers: [['darker', 3]] }}
-            borderWidth={fullSection ? 3 : 2}
-            borderColor={{ from: 'color', modifiers: [['darker', 0.5]] }}
+            labelsSkipRadius={fullSection ? 18 : 20}
+            labelTextColor={{ from: 'color', modifiers: [['darker', 2.5]] }}
+            borderWidth={fullSection ? 2 : 1}
+            borderColor={{ from: 'color', modifiers: [['darker', 0.3]] }}
             animate={true}
-            motionConfig="gentle"
+            motionConfig={{
+              mass: 1,
+              tension: 170,
+              friction: 26,
+              clamp: false,
+              precision: 0.01,
+              velocity: 0
+            }}
             zoomedId={zoomedId}
             onClick={handleNodeClick}
+            onMouseEnter={(node: any) => {
+              if (node.depth > 0) setHoveredNode(node.id);
+            }}
+            onMouseLeave={() => setHoveredNode(null)}
             tooltip={({ id, value, color, data, depth }: any) => (
-              <div className={`bg-black/95 backdrop-blur-md rounded-xl px-5 py-4 shadow-2xl border border-xandeum-orange/30 pointer-events-none min-w-[220px] ${depth === 0 ? 'hidden' : ''}`}>
-                <div className="flex items-center gap-2 mb-3 pb-2 border-b border-white/10">
-                  <motion.div
-                    className="h-4 w-4 rounded-full shadow-lg"
-                    style={{ backgroundColor: color, boxShadow: `0 0 20px ${color}50` }}
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ repeat: Infinity, duration: 1.5 }}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className={`bg-black/95 backdrop-blur-xl rounded-2xl px-5 py-4 shadow-2xl border border-white/10 pointer-events-none min-w-[240px] ${depth === 0 ? 'hidden' : ''}`}
+                style={{ boxShadow: `0 25px 50px -12px ${color}30, 0 0 0 1px ${color}20` }}
+              >
+                <div className="flex items-center gap-3 mb-3 pb-3 border-b border-white/10">
+                  <div
+                    className="h-5 w-5 rounded-full ring-2 ring-white/20"
+                    style={{ backgroundColor: color, boxShadow: `0 0 30px ${color}60` }}
                   />
-                  <span className="text-white font-semibold capitalize text-sm">{data.status}</span>
-                  <span className="ml-auto text-xandeum-orange font-bold">{data.healthScore}%</span>
+                  <span className="text-white font-semibold capitalize">{data.status}</span>
+                  <div className="ml-auto flex items-center gap-1.5 bg-white/10 px-2 py-0.5 rounded-full">
+                    <TrendingUp className="h-3 w-3 text-xandeum-orange" />
+                    <span className="text-xandeum-orange font-bold text-sm">{data.healthScore}%</span>
+                  </div>
                 </div>
-                <p className="font-mono text-white/90 text-sm mb-3">{data.pubkey?.slice(0, 20)}...</p>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                  <p className="text-white/50">Storage:</p>
-                  <p className="text-xandeum-orange font-semibold">{data.storageFormatted}</p>
-                  <p className="text-white/50">Health:</p>
-                  <p className="text-green-400 font-semibold">{data.healthScore}%</p>
-                  <p className="text-white/50">Usage:</p>
-                  <p className="text-white font-semibold">{data.usagePercent?.toFixed(1)}%</p>
+                <p className="font-mono text-white/80 text-xs mb-3 bg-white/5 px-2 py-1.5 rounded-lg">{data.pubkey?.slice(0, 24)}...</p>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-white/40 text-sm">Storage</span>
+                    <span className="text-xandeum-orange font-semibold">{data.storageFormatted}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-white/40 text-sm">Health Score</span>
+                    <span className="text-green-400 font-semibold">{data.healthScore}%</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-white/40 text-sm">Utilization</span>
+                    <span className="text-white font-semibold">{data.usagePercent?.toFixed(1)}%</span>
+                  </div>
                 </div>
-                <div className="mt-3 pt-2 border-t border-white/10 text-center">
-                  <p className="text-xandeum-orange text-xs font-medium">
-                    {zoomedId === id ? '→ Click to view node details' : '→ Click to zoom in'}
-                  </p>
+                <div className="mt-4 pt-3 border-t border-white/10">
+                  <div className="flex items-center justify-center gap-2 text-xandeum-orange text-xs font-medium">
+                    <Eye className="h-3.5 w-3.5" />
+                    {zoomedId === id ? 'Click to view full details' : 'Click to focus'}
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             )}
           />
 
-          {/* Zoom indicator - Enhanced */}
-          {fullSection && zoomedId && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="absolute top-6 left-6 bg-black/80 backdrop-blur-md rounded-xl px-4 py-3 border border-xandeum-orange/40 shadow-lg"
-            >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-xandeum-orange/20">
-                  <ZoomIn className="h-5 w-5 text-xandeum-orange" />
+          {/* Zoom indicator - Premium design */}
+          <AnimatePresence>
+            {fullSection && zoomedId && (
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="absolute top-6 left-6 bg-black/90 backdrop-blur-xl rounded-2xl px-5 py-4 border border-white/10 shadow-2xl"
+                style={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)' }}
+              >
+                <div className="flex items-center gap-4">
+                  <div className="p-2.5 rounded-xl bg-gradient-to-br from-xandeum-orange to-orange-600 shadow-lg shadow-xandeum-orange/30">
+                    <ZoomIn className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-white">Focused View</p>
+                    <p className="text-xs text-white/50">Click node for details</p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="ml-3 h-9 px-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl transition-all duration-200"
+                    onClick={resetZoom}
+                    disabled={isTransitioning}
+                  >
+                    <RotateCcw className="h-4 w-4 mr-2" />
+                    Reset
+                  </Button>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-white">Zoomed View</p>
-                  <p className="text-xs text-white/60">Click node to view details</p>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="ml-2 h-8 hover:bg-xandeum-orange/20 text-white"
-                  onClick={resetZoom}
-                >
-                  <RotateCcw className="h-4 w-4 mr-1" />
-                  Reset
-                </Button>
-              </div>
-            </motion.div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-          {/* Instructions overlay for full section */}
-          {fullSection && !zoomedId && (
-            <div className="absolute bottom-6 right-6 bg-black/60 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/10">
-              <p className="text-xs text-white/70">
-                <span className="text-xandeum-orange font-medium">Click</span> node to zoom • <span className="text-xandeum-orange font-medium">Click again</span> for details
-              </p>
+          {/* Instructions overlay - Premium */}
+          <AnimatePresence>
+            {fullSection && !zoomedId && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.3, delay: 0.5 }}
+                className="absolute bottom-6 right-6 bg-black/80 backdrop-blur-xl rounded-xl px-5 py-3 border border-white/10"
+              >
+                <p className="text-sm text-white/80">
+                  <span className="text-xandeum-orange font-semibold">Click</span> any node to focus
+                  <span className="mx-2 text-white/30">•</span>
+                  <span className="text-xandeum-orange font-semibold">Double-click</span> for details
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Legend - Premium design */}
+        <div className={`flex items-center justify-center gap-10 border-t border-white/5 bg-gradient-to-r from-transparent via-background/80 to-transparent flex-wrap ${fullSection ? 'py-6' : 'py-3'}`}>
+          {[
+            { color: 'bg-green-500', shadow: 'shadow-green-500/40', label: 'Online', count: filteredNodes.filter(n => n.status === 'online').length, textColor: 'text-green-400' },
+            { color: 'bg-xandeum-orange', shadow: 'shadow-xandeum-orange/40', label: 'Degraded', count: filteredNodes.filter(n => n.status === 'degraded').length, textColor: 'text-xandeum-orange' },
+            { color: 'bg-red-500', shadow: 'shadow-red-500/40', label: 'Offline', count: filteredNodes.filter(n => n.status === 'offline').length, textColor: 'text-red-400' },
+          ].map((item) => (
+            <div key={item.label} className="flex items-center gap-3">
+              <div className={`w-4 h-4 rounded-full ${item.color} shadow-lg ${item.shadow} ring-2 ring-white/10`} />
+              <span className={`${fullSection ? 'text-sm' : 'text-xs'} text-white/60`}>
+                {item.label} <span className={`font-bold ${item.textColor}`}>({item.count})</span>
+              </span>
             </div>
-          )}
-        </div>
-
-        {/* Legend - Enhanced for full section */}
-        <div className={`flex items-center justify-center gap-8 py-4 border-t border-border bg-background/50 flex-wrap ${fullSection ? 'py-5' : 'py-3'}`}>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-green-500 shadow-lg shadow-green-500/30" />
-            <span className={`text-muted-foreground ${fullSection ? 'text-sm' : 'text-xs'}`}>
-              Online <span className="font-semibold text-green-500">({filteredNodes.filter(n => n.status === 'online').length})</span>
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-xandeum-orange shadow-lg shadow-xandeum-orange/30" />
-            <span className={`text-muted-foreground ${fullSection ? 'text-sm' : 'text-xs'}`}>
-              Degraded <span className="font-semibold text-xandeum-orange">({filteredNodes.filter(n => n.status === 'degraded').length})</span>
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-red-500 shadow-lg shadow-red-500/30" />
-            <span className={`text-muted-foreground ${fullSection ? 'text-sm' : 'text-xs'}`}>
-              Offline <span className="font-semibold text-red-500">({filteredNodes.filter(n => n.status === 'offline').length})</span>
-            </span>
-          </div>
-          <div className={`text-muted-foreground border-l border-border pl-8 ${fullSection ? 'text-sm' : 'text-xs'}`}>
-            <Database className="h-4 w-4 inline mr-1 text-xandeum-purple" />
-            Circle size = Storage capacity
+          ))}
+          <div className={`text-white/40 border-l border-white/10 pl-10 flex items-center gap-2 ${fullSection ? 'text-sm' : 'text-xs'}`}>
+            <Database className="h-4 w-4 text-xandeum-purple" />
+            <span>Size represents storage capacity</span>
           </div>
         </div>
       </CardContent>
