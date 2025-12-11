@@ -20,8 +20,23 @@ import { RegionalDistribution } from '@/components/dashboard/RegionalDistributio
 import { NetworkHealthChart } from '@/components/dashboard/NetworkHealthChart';
 import { StorageTreemap } from '@/components/dashboard/StorageTreemap';
 import { HealthDistribution } from '@/components/dashboard/HealthDistribution';
+import { UptimeLeaderboard } from '@/components/dashboard/UptimeLeaderboard';
+import { NetworkPulse } from '@/components/dashboard/NetworkPulse';
+import { NodeTimeline } from '@/components/dashboard/NodeTimeline';
+import { VersionCompliance } from '@/components/dashboard/VersionCompliance';
 import { ErrorState } from '@/components/common/ErrorState';
 import { useStats, useNodes } from '@/hooks/useNodes';
+
+// Dynamically import 3D components
+const StorageEfficiency3D = dynamic(
+  () => import('@/components/dashboard/StorageEfficiency3D').then((mod) => mod.StorageEfficiency3D),
+  { ssr: false, loading: () => <div className="h-[400px] animate-pulse bg-muted rounded-lg" /> }
+);
+
+const Network3D = dynamic(
+  () => import('@/components/dashboard/Network3D').then((mod) => mod.Network3D),
+  { ssr: false, loading: () => <div className="h-[500px] animate-pulse bg-muted rounded-lg" /> }
+);
 
 // Dynamically import 3D components to avoid SSR issues
 const NetworkGlobe = dynamic(
@@ -236,6 +251,34 @@ export default function DashboardPage() {
           <PerformanceGauge stats={statsData?.network || null} isLoading={isLoading} />
         </motion.section>
 
+        {/* Network Pulse & Live Activity */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <NetworkPulse nodes={nodesData?.nodes || []} isLoading={isLoading} />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="lg:col-span-2"
+          >
+            <LiveActivity nodes={nodesData?.nodes || []} isLoading={isLoading} />
+          </motion.div>
+        </div>
+
+        {/* Node Activity Timeline - Full Width */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <NodeTimeline nodes={nodesData?.nodes || []} isLoading={isLoading} />
+        </motion.div>
+
         {/* Network Topology & Live Activity */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <motion.div
@@ -250,7 +293,7 @@ export default function DashboardPage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <LiveActivity nodes={nodesData?.nodes || []} isLoading={isLoading} />
+            <VersionCompliance nodes={nodesData?.nodes || []} isLoading={isLoading} />
           </motion.div>
         </div>
 
@@ -292,6 +335,33 @@ export default function DashboardPage() {
           viewport={{ once: true }}
         >
           <StorageChart nodes={nodesData?.nodes || []} isLoading={isLoading} />
+        </motion.div>
+
+        {/* 3D Visualizations Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <StorageEfficiency3D nodes={nodesData?.nodes || []} isLoading={isLoading} />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <UptimeLeaderboard nodes={nodesData?.nodes || []} isLoading={isLoading} />
+          </motion.div>
+        </div>
+
+        {/* Network 3D Topology - Full Width */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <Network3D nodes={nodesData?.nodes || []} isLoading={isLoading} />
         </motion.div>
 
         {/* New Charts Row - Treemap & Health Distribution */}
