@@ -4,7 +4,7 @@ A stunning real-time analytics dashboard for monitoring Xandeum storage provider
 
 ## Live Demo
 
-**[https://xandeum-dashboard.vercel.app](https://xandeum-dashboard.vercel.app)**
+**[https://xandeum-project.vercel.app](https://xandeum-project.vercel.app)**
 
 ![Xandeum Analytics](https://img.shields.io/badge/Xandeum-Analytics-F3771F)
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
