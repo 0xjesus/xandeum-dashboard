@@ -1,10 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { ArrowRight, Server, Activity, Zap, RefreshCw, Sparkles, Globe2, ChevronDown } from 'lucide-react';
+import { ArrowRight, Server, Activity, Zap, RefreshCw, Globe2, ChevronDown, Search, Download, FileJson, FileSpreadsheet } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { HeroStats } from '@/components/dashboard/HeroStats';
@@ -73,6 +74,7 @@ const NetworkGlobe = dynamic(
 export default function DashboardPage() {
   const { data: statsData, error: statsError, isLoading: statsLoading, mutate: mutateStats } = useStats();
   const { data: nodesData, error: nodesError, isLoading: nodesLoading, mutate: mutateNodes } = useNodes();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const isLoading = statsLoading || nodesLoading;
   const error = statsError || nodesError;
@@ -80,6 +82,34 @@ export default function DashboardPage() {
   const handleRefresh = () => {
     mutateStats();
     mutateNodes();
+  };
+
+  const exportToJSON = () => {
+    if (!nodesData?.nodes) return;
+    const dataStr = JSON.stringify(nodesData.nodes, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `xandeum-pnodes-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportToCSV = () => {
+    if (!nodesData?.nodes) return;
+    const headers = ['pubkey', 'ip', 'status', 'healthScore', 'uptime', 'version', 'storage_committed', 'storage_used', 'is_public'];
+    const rows = nodesData.nodes.map(n => [
+      n.pubkey, n.ip, n.status, n.healthScore, n.uptime, n.version, n.storage_committed, n.storage_used, n.is_public
+    ]);
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `xandeum-pnodes-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   if (error) {
@@ -241,21 +271,74 @@ export default function DashboardPage() {
 
       {/* Main Content */}
       <div className="container py-12 space-y-8">
-        {/* Refresh Button */}
-        <div className="flex justify-between items-center">
+        {/* Search & Actions Bar */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <h2 className="text-2xl font-bold flex items-center gap-3">
             <Image src="/logo.svg" alt="Xandeum" width={32} height={32} />
             Network Analytics
           </h2>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRefresh}
-            disabled={isLoading}
-          >
-            <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-            Refresh Data
-          </Button>
+
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            {/* Quick Search */}
+            <div className="relative flex-1 sm:flex-initial">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search by IP or pubkey..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full sm:w-64 pl-9 pr-4 py-2 text-sm bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-xandeum-orange/50"
+              />
+              {searchQuery && nodesData?.nodes && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-background border border-border rounded-lg shadow-xl z-50 max-h-60 overflow-auto">
+                  {nodesData.nodes
+                    .filter(n => n.ip.includes(searchQuery) || n.pubkey.toLowerCase().includes(searchQuery.toLowerCase()))
+                    .slice(0, 5)
+                    .map(node => (
+                      <Link
+                        key={node.pubkey}
+                        href={`/nodes/${node.pubkey}`}
+                        className="flex items-center gap-3 px-4 py-2 hover:bg-muted transition-colors"
+                        onClick={() => setSearchQuery('')}
+                      >
+                        <div className={`w-2 h-2 rounded-full ${node.status === 'online' ? 'bg-green-500' : node.status === 'degraded' ? 'bg-orange-500' : 'bg-red-500'}`} />
+                        <div>
+                          <p className="text-sm font-medium">{node.ip}</p>
+                          <p className="text-xs text-muted-foreground font-mono">{node.pubkey.slice(0, 16)}...</p>
+                        </div>
+                      </Link>
+                    ))
+                  }
+                  {nodesData.nodes.filter(n => n.ip.includes(searchQuery) || n.pubkey.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && (
+                    <p className="px-4 py-2 text-sm text-muted-foreground">No nodes found</p>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Export Buttons */}
+            <div className="flex items-center gap-1">
+              <Button variant="outline" size="sm" onClick={exportToJSON} disabled={!nodesData?.nodes}>
+                <FileJson className="h-4 w-4 sm:mr-1" />
+                <span className="hidden sm:inline">JSON</span>
+              </Button>
+              <Button variant="outline" size="sm" onClick={exportToCSV} disabled={!nodesData?.nodes}>
+                <FileSpreadsheet className="h-4 w-4 sm:mr-1" />
+                <span className="hidden sm:inline">CSV</span>
+              </Button>
+            </div>
+
+            {/* Refresh */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRefresh}
+              disabled={isLoading}
+            >
+              <RefreshCw className={`h-4 w-4 sm:mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+              <span className="hidden sm:inline">Refresh</span>
+            </Button>
+          </div>
         </div>
 
         {/* Hero Stats */}
@@ -362,21 +445,6 @@ export default function DashboardPage() {
           <StorageChart nodes={nodesData?.nodes || []} isLoading={isLoading} />
         </motion.div>
 
-        {/* 3D Visualizations Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center py-8"
-        >
-          <h2 className="text-3xl font-bold mb-2">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-xandeum-orange via-orange-400 to-yellow-500">
-              3D Network Visualizations
-            </span>
-          </h2>
-          <p className="text-muted-foreground">Interactive real-time network topology and data flow</p>
-        </motion.div>
-
         {/* Network 3D Topology - Full Width Hero */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -439,21 +507,6 @@ export default function DashboardPage() {
             <HealthDistribution nodes={nodesData?.nodes || []} isLoading={isLoading} />
           </motion.div>
         </div>
-
-        {/* Mathematical 3D Visualizations Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center py-8"
-        >
-          <h2 className="text-3xl font-bold mb-2">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-              Mathematical Visualizations
-            </span>
-          </h2>
-          <p className="text-muted-foreground">Fibonacci spirals, particle galaxies & DNA helixes</p>
-        </motion.div>
 
         {/* Fibonacci Health Spiral - Full Width */}
         <motion.div
