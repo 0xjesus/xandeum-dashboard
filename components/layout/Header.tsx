@@ -34,23 +34,22 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-3">
+        <Link href="/" className="flex items-center space-x-4 group">
           <div className="relative">
+            <div className="absolute inset-0 bg-xandeum-orange/20 rounded-xl blur-xl group-hover:bg-xandeum-orange/30 transition-all" />
             <Image
               src="/xandeum-logo.png"
               alt="Xandeum"
-              width={40}
-              height={40}
-              className="rounded-lg"
+              width={180}
+              height={50}
+              className="relative h-10 w-auto sm:h-12"
               priority
             />
-            <div className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-background" />
-          </div>
-          <div className="hidden sm:block">
-            <span className="text-lg font-semibold bg-gradient-to-r from-xandeum-orange to-xandeum-purple bg-clip-text text-transparent">
-              Xandeum
-            </span>
-            <span className="ml-1 text-sm text-muted-foreground">pNodes</span>
+            <motion.div
+              className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full bg-green-500 ring-2 ring-background"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+            />
           </div>
         </Link>
 

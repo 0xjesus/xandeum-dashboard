@@ -48,6 +48,21 @@ const Network3D = dynamic(
   { ssr: false, loading: () => <div className="h-[550px] animate-pulse bg-muted rounded-lg" /> }
 );
 
+const FibonacciHealth3D = dynamic(
+  () => import('@/components/dashboard/FibonacciHealth3D').then((mod) => mod.FibonacciHealth3D),
+  { ssr: false, loading: () => <div className="h-[500px] animate-pulse bg-muted rounded-lg" /> }
+);
+
+const ParticleGalaxy3D = dynamic(
+  () => import('@/components/dashboard/ParticleGalaxy3D').then((mod) => mod.ParticleGalaxy3D),
+  { ssr: false, loading: () => <div className="h-[500px] animate-pulse bg-muted rounded-lg" /> }
+);
+
+const VersionHelix3D = dynamic(
+  () => import('@/components/dashboard/VersionHelix3D').then((mod) => mod.VersionHelix3D),
+  { ssr: false, loading: () => <div className="h-[500px] animate-pulse bg-muted rounded-lg" /> }
+);
+
 // Dynamically import 3D components to avoid SSR issues
 const NetworkGlobe = dynamic(
   () => import('@/components/three/NetworkGlobe').then((mod) => mod.NetworkGlobe),
@@ -422,6 +437,48 @@ export default function DashboardPage() {
             viewport={{ once: true }}
           >
             <HealthDistribution nodes={nodesData?.nodes || []} isLoading={isLoading} />
+          </motion.div>
+        </div>
+
+        {/* Mathematical 3D Visualizations Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center py-8"
+        >
+          <h2 className="text-3xl font-bold mb-2">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+              Mathematical Visualizations
+            </span>
+          </h2>
+          <p className="text-muted-foreground">Fibonacci spirals, particle galaxies & DNA helixes</p>
+        </motion.div>
+
+        {/* Fibonacci Health Spiral - Full Width */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <FibonacciHealth3D nodes={nodesData?.nodes || []} isLoading={isLoading} />
+        </motion.div>
+
+        {/* Galaxy & DNA Helix Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <ParticleGalaxy3D nodes={nodesData?.nodes || []} isLoading={isLoading} />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <VersionHelix3D nodes={nodesData?.nodes || []} isLoading={isLoading} />
           </motion.div>
         </div>
 
