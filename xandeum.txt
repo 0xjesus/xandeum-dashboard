@@ -1,0 +1,4953 @@
+---
+title: Getting Started
+slug: docs.xandeum.network
+createdAt: 2025-11-05T16:45:21.943Z
+updatedAt: 2025-12-04T18:38:14.176Z
+---
+
+![Xandeum Exabytes for Solana Programs](https://app.archbee.com/api/optimize/ePevXmvzgG-7aqJ72Gpg_/VDQyu5F-6c32A1aVQ67d3_logo.png)
+
+Welcome to Xandeum Network, the groundbreaking scalable storage platform transforming Solana with scalable, secure, and smart contract-native solutions for data-intensive Web3 applications.&#x20;
+
+Built to tackle network congestion and reliability challenges, Xandeum empowers developers and users with exabyte-scale storage, innovative pNodes for distributed data management, and the XAND token for seamless governance and rewards.&#x20;
+
+Join us in redefining blockchain efficiency and unlocking the future of decentralized innovation.
+
+::::LinkArray{contentSource="CUSTOM"}
+:::LinkArrayItem{headerImage headerColor}
+🚀
+
+[**Introduction**](docId:9H8B1KzzqMzP8j8pp6Avi)&#x20;
+
+Xandeum is a revolutionary scalable storage solution on Solana, enabling fast, data-intensive Web3 apps with exabyte-scale capacity, seamless smart contracts, and true decentralization.
+:::
+
+:::LinkArrayItem{headerImage headerColor}
+
+
+[**The blockchain storage trilemma**](docId:1695ASjyFElrDBdcO4oCj)
+
+Xandeum solves the blockchain storage trilemma by delivering exabyte-scale scalability, seamless smart contract-native integration, and instant random access, empowering data-intensive Web3 apps on Solana without compromises.
+:::
+
+:::LinkArrayItem{headerImage headerColor}
+
+
+[**Xandeum's scalable storage solution**](docId\:oc7rTZO4z3w0dTQPYT-9B)
+
+Xandeum operates as a complementary infrastructure to Solana, and it extends Solana's capabilities through seamless primitives that allow smart contracts to store, retrieve, and verify large datasets.
+:::
+::::
+---
+title: Introduction
+slug: introduction
+createdAt: 2025-11-05T16:45:31.201Z
+updatedAt: 2025-11-13T13:13:07.079Z
+---
+
+Imagine unlocking the full potential of Solana as a "world computer", that's exactly what Xandeum delivers as a groundbreaking, scalable storage solution. Built natively on Solana, it empowers developers to craft lightning-fast, data-heavy Web3 apps (sedApps) with mind-boggling exabyte-scale capacity, effortless smart contract integration, and instant random access, leaving behind clunky centralized or off-chain alternatives that slow innovation.&#x20;
+
+Through a vibrant, community-powered network of cutting-edge provider nodes (pNodes) and innovative tools like Xandeum Web3.js, it redefines possibilities for real-world hits like decentralized social networks buzzing with user content, AI-driven governance platforms, or immersive multimedia experiences, all secured with unbreakable decentralization. Xandeum stands out by conquering the blockchain storage trilemma (explored next), using clever tricks like erasure coding for bulletproof data sharding and gossip protocols for unstoppable distribution.&#x20;
+
+Dive deeper into its inner workings, from pNode setups and rewarding Storage Income (STOINC) with NFT boosts to seamless Solana synergy. As of November 10, 2025, Xandeum's charging ahead in its South Era roadmap, with fresh triumphs like the Herrenberg release fueling the sprint to mainnet and explosive ecosystem expansion.
+
+## 1. What Xandeum Does
+
+At its core, Xandeum acts as Solana's missing storage powerhouse, enabling sedApps to handle massive datasets efficiently without the usual blockchain bottlenecks.&#x20;
+
+It offloads data from validators to a distributed pNode network, ensuring high-throughput operations for everything from file-sharing prototypes to AI tools, all while keeping costs low and security high, unlike traditional solutions that force trade-offs between speed and decentralization.
+
+It offloads data from validators to a secure, distributed storage provider (pNode) network, unlocking lightning-fast throughput for any application craving a blockchain-powered file system; from file-sharing protocols and cutting-edge AI tools with massive datasets, to seamless web hosting, NFT storage, and robust databases. If it fits in a traditional Web2 file system, it thrives on the Xandeum Scalable Storage Layer, revolutionizing decentralized efficiency like never before.
+
+## 2. What Makes Xandeum Different
+
+Xandeum differentiates itself through native Solana integration and community incentives, such as liquid staking with xandSOL and governance via $XAND tokens, creating a self-sustaining ecosystem where operators earn amplified rewards. This contrasts with bolted-on layers or centralized clouds, offering true on-chain data sovereignty and features like real-time heartbeats for reliability, setting the stage for a Web3 revolution without intermediaries.
+
+## Conclusion
+
+Xandeum isn't just storage, it's the key to scaling Solana for tomorrow's dApps, blending innovation with accessibility. For the challenges it solves, see the trilemma breakdown; for its technical blueprint, explore the storage solution details.---
+title: The blockchain storage trilemma
+slug: the-blockchain-storage-trilemma
+createdAt: 2025-10-27T16:25:30.160Z
+updatedAt: 2025-11-13T16:53:38.368Z
+---
+
+The blockchain storage trilemma is a key challenge in decentralized systems, particularly for platforms like Solana, where traditional storage solutions often fail to balance three essential properties simultaneously: scalability, smart contract-native integration, and random access. Xandeum, a scalable storage layer built on Solana, is designed to solve this trilemma by enabling exabyte-scale storage that integrates seamlessly with smart contracts while allowing efficient, granular data retrieval. Below is a break down of each component of the trilemma and how Xandeum addresses it.
+
+## 1. Scalability
+
+This refers to the ability to handle massive amounts of data without performance degradation or prohibitive costs. In blockchain contexts, storage often becomes a bottleneck as networks grow, limiting the size and complexity of applications (e.g., dApps struggling with large datasets like social media feeds or AI models).&#x20;
+
+Xandeum tackles this by creating a scalable network of provider nodes (pNodes) that collectively offer exabyte-scale (and beyond) storage capacity. Through features like erasure coding (which splits data into redundant shards distributed across pods of pNodes), the system ensures tamper-proof, high-volume storage without relying on centralized servers, making it suitable for data-intensive Web3 applications.
+
+## 2. Smart Contract-Native Integration
+
+Many storage solutions are bolted onto blockchains as separate layers, leading to inefficiencies, high latency, or compatibility issues when interacting with smart contracts. Smart contract-native integration means storage operations are inherently compatible and optimized for direct use within blockchain programs.&#x20;
+
+Xandeum achieves this by extending Solana's ecosystem with tools like Xandeum Web3.js (an enhanced version of Solana's Web3.js library) and pNode-specific RPC interfaces. This allows developers to call storage primitives (e.g., upload, retrieve, or query data) directly from smart contracts, enabling seamless, high-performance interactions for storage-enabled dApps (sedApps) without intermediaries.
+
+## 3. Random Access
+
+Traditional decentralized storage often operates at the file level, requiring full downloads to access specific parts of data, which is slow and resource-intensive. Random access enables quick, targeted retrieval of any data segment, similar to how traditional file systems work.&#x20;
+
+Xandeum supports this through its pNode pod-based storage units (scalable, file-system-like structures) combined with features like crude search capabilities and gossip protocols for dynamic data distribution. This ensures low-latency queries and reconstructions, even in exabyte-scale environments, empowering applications like decentralized social platforms, AI governance tools, or research hubs where precise, real-time data access is crucial.
+
+## &#x20;Conclusion
+
+By resolving this trilemma, Xandeum positions itself as a foundational layer for Solana, fostering a more robust Web3 ecosystem. Its phased innovation eras (e.g., Deep South for foundational pNodes, South for prototypes like Munich and Herrenberg) progressively build toward mainnet readiness, with ongoing developments like reward tracking and redundancy further enhancing these capabilities.---
+title: Xandeum's scalable storage solution
+slug: xandeums-scalable-storage-solution
+createdAt: 2025-10-27T16:38:31.084Z
+updatedAt: 2025-11-13T13:15:39.268Z
+---
+
+Xandeum's scalable storage solution is a scaling innovation designed specifically for the Solana blockchain, enabling exabyte-scale data storage that supports high-performance, data-intensive decentralized applications (dApps) without compromising on decentralization or efficiency.&#x20;
+
+It addresses the limitations of traditional blockchain storage, where data is often expensive, slow, or reliant on centralized providers, by creating a global network of community-operated nodes that integrate seamlessly with Solana's smart contracts.&#x20;
+
+This allows developers to build "storage-enabled dApps" (sedApps) for use cases like decentralized social platforms, AI governance tools, research hubs, or file-sharing systems, all while maintaining low-latency access and security.
+
+## Core Architecture and How It Works
+
+At its foundation, Xandeum uses a distributed network of **provider nodes (pNodes)**, which are hardware devices or servers run by community participants to store and serve data. Data uploaded to the network is processed through **erasure coding**, a technique that splits files into multiple shards (fragments) with built-in redundancy. This ensures that even if some pNodes go offline or fail, the data can be fully reconstructed from the remaining shards, providing tamper-proof reliability and minimizing storage overhead (e.g., achieving high efficiency without needing full duplication).&#x20;
+
+These shards are distributed across **pods&#x20;**(groups of pNodes that communicate via a **gossip protocol**) for dynamic status updates, data availability checks, and efficient distribution. **Validator nodes (vNodes)** monitor the network's integrity using cryptographic proofs, preventing downtime and enabling seamless recovery.
+
+Storage is organized into scalable, file-system-like containers for data. Users and sedApps interact with these through a **pNode-specific RPC interface** (distinct from Solana's standard RPC), allowing programmatic queries for uploads, retrievals, or status checks. This is facilitated by **Xandeum Web3.js**, an extension of Solana's Web3.js library, which lets developers call storage primitives directly from smart contracts.&#x20;
+
+Fees for storage operations are paid in SOL, which feeds into Xandeum's liquid staking mechanism: staked SOL (converted to xandSOL) earns rewards, including Storage Income (STOINC) amplified by NFT multipliers, and XAND governance tokens. This incentivizes pNode operators and stakers, creating a self-sustaining ecosystem.
+
+## Integration with Solana
+
+Xandeum is natively built on Solana, offloading data from validators to pNodes to reduce network congestion while keeping storage operations on-chain. sedApps can efficiently store and access large datasets (e.g., user profiles, media files, or AI models) without external oracles or off-chain hacks. For example, in recent demos, prototype sedApps like scalable file-sharing tools or AI governance apps showcased real-time operations across global pNodes (from the US to Nigeria and Japan). This integration ensures Solana's high throughput (thousands of TPS) extends to storage-heavy applications, making it viable for Web3 equivalents of centralized services like Dropbox or social media platforms.
+
+## Resolution of the Blockchain Storage Trilemma
+
+Xandeum explicitly solves the "storage trilemma" which is the challenge of balancing scalability, smart contract-native integration, and random access:
+
+- **Scalability**: Supports exabytes+ of storage through distributed pNodes and erasure coding, far beyond typical blockchain limits.
+- **Smart Contract-Native Integration**: Storage is directly callable from Solana programs, avoiding silos and enabling efficient, on-chain data handling.
+- **Random Access**: Unlike file-level systems that require full downloads, Xandeum allows granular, low-latency queries (e.g., via crude search capabilities in buckets), ensuring quick retrieval of specific data segments.
+
+## Development Status and Innovations
+
+As of October 27, 2025, Xandeum is in the South Era of its six-phase innovation roadmap, having completed the Deep South Era (with 300 incentivized devnet pNodes sold out) and advanced through releases like Munich (first operational pNode prototype with basic file hosting and analytics) and Herrenberg (September 2025: added gossip protocol, RPC interface, 100% reconstructability, crude search, and custom analytics). The Herrenberg release, described as a "new POV" for intelligent decentralized storage, coincided with a Dutch Auction raising funds for the Xandeum Foundation and introducing NFT-boosted rewards. Upcoming releases like Engold (reward tracking) and Stodgard (redundancy for mainnet) aim for full mainnet launch by late 2025.
+
+Unique innovations include the **XandMiner tool** for easy pNode management (e.g., key generation, registration, and monitoring via a web GUI with Pod Monitor analytics), security best practices (non-standard ports, SSH key-only access), and community-driven features like real-time heartbeats (every 30 seconds) for STOINC eligibility. Recent community discussions highlight clarifications on RPC types (one for storage primitives to pNodes, another for analytics) and excitement for sedApps that "think" via AI/ML integration.&#x20;
+
+Overall, Xandeum transforms Solana into a complete platform for Web3, combining speed with unlimited, secure storage. For hands-on involvement, operators can set up pNodes via docs.xandeum.network, and stakers can participate through the Foundation Delegation Program.
+---
+title: v0.7 Heidelberg
+slug: v07-heidelberg
+createdAt: 2025-11-13T14:58:01.891Z
+updatedAt: 2025-12-09T12:47:33.193Z
+---
+
+# State of Development Post-Heidelberg
+
+Heidelberg (v0.7) advances Xandeum's South Era by introducing comprehensive paging statistics, enabling detailed monitoring and optimization of data pages in file systems. Building on Stuttgart's redundancy mechanisms and earlier prototypes, it focuses on analytics for page-level operations. These analytics provide insights into usage, retrieval efficiency, and storage health, helping pNode operators and sedApp developers make informed decisions. This release enhances mainnet readiness by integrating more robust metrics. These improvements support performance tuning and improve ecosystem scalability for smart contract-integrated file systems.
+
+## Core Features
+
+- **Improved gossip timing**: Pods' gossip update frequency improved from 120 seconds to 400 ms, reducing latency in pNode discovery.
+  - Also adds multiple open entrypoints, providing an extra layer of redundancy.
+  - This improves the **gossip protocol** and prevents pNodes from failing to appear in the gossip list.
+- **Bug fixes**: such as correcting excessive outgoing packet size.
+- **Enhanced API**: e.g, addition of a detailed API call.
+
+::::CodeDrawer{title="get-pods-with-stats" codeEditorData="[object Object]" responsesEditorData="[object Object]" isResponseExpanded="true"}
+:::CodeblockTabsExamples
+```curl
+curl -X POST http://localhost:6000/rpc   -H "Content-Type: application/json"   -d '{
+    "jsonrpc": "2.0",
+    "method": "get-pods-with-stats",
+    "id": 1
+  }' | jq .
+```
+:::
+
+:::CodeblockTabsResponses
+```javascript
+{
+        "address": "109.199.96.218:9001",
+        "is_public": true,
+        "last_seen_timestamp": 1765204349,
+        "pubkey": "2asTHq4vVGazKrmEa3YTXKuYiNZBdv1cQoLc1Tr2kvaw",
+        "rpc_port": 6000,
+        "storage_committed": 104857600,
+        "storage_usage_percent": 0.02486133575439453,
+        "storage_used": 26069,
+        "uptime": 3271,
+        "version": "0.7.0"
+},
+```
+:::
+::::
+
+- **Analytics Enhancements**: Expands Pod Monitor with page-specific visualizations, including real-time stats on data paging, errors, and throughput.
+  - Divert to a different port with a change to your **SSH script** e.g.
+
+```bash
+ssh -i .ssh\MyKey -L 3000:localhost:3000 -L 4000:localhost:4000 -L 8000:localhost:80  root@<MyIP>
+```
+
+![](https://chat.google.com/u/0/api/get_attachment_url?url_type=FIFE_URL\&content_type=image%2Fpng\&attachment_token=AOo0EEWgBTmwSzFepDw2abIS0Sd3a%2Be%2FjwQFVTDfEM2u2S8C7ECv68ZDz0jZJ4Qm68WzrrtGlrZMrmNXyWZQdC510Z%2FwINwz5iYpzToRepUi4JYXs%2FKYMDDI6ovlGwUwiUune7Hxs3ZWFMlAom4Utc1uC0fds8k8kYRbnL1J%2BTR%2FPhuHqvcJ6XpqSBx0YrFcDl8KRkDyj1WgivUqI1CxpRWrgBNTAyfGFpzH%2F7wdJbWnlJZ%2Fds0gS5Bd29QpqfyssRJGLyHwYhgwnWS5mK5ow9WrkTBmAdM2IF7g%2FA8eUoC6uRyUD2geOABIIAcZfRnhmDc9HBn343tJbu4LN%2Fs4A3SbU%2BvL4QBP4NVntMooqt9G4p1u45gL7hDvLnXTpWfPOe3pTuxENRnz3sJJPh1yDZFWnMh3uFVrUoSIZ1ubo4nH9TeADI%2FfpHwYYmIA%2F2haNHRjFVcYoj9G07q%2FlH15g8npd6CNWbuQaNRsBP%2BnlZHe%2F2JbPQDlXdo66tCV2FqWMeohneYYrvXjvNDC8umCpQc9pqneFjeTbAei5dJ7PTH%2FpAIllM5aMo3rqlyDe5%2Bh5DCFVRRtIeM84gIzoyfVpg%3D%3D\&allow_caching=true\&sz=w512)
+
+### What's New in Heidelberg
+
+**Paging stats** in Heidelberg provide granular insights into the handling of data pages within scalable file systems, enabling operators to monitor and optimize storage performance while adding visibility into how pages are accessed and managed across pNodes.&#x20;
+
+The **Paging Statistics System** tracks page access frequency, **hit/miss rates**, replication status, and storage utilization per file system. These metrics are accessible through APIs and dashboards.
+
+**Performance Monitoring** introduces tools for querying paging stats, helping with redundancy set optimization and load balancing.&#x20;
+
+**Optimization Tools** add multithreading for stats aggregation and basic alerting for anomalous paging behavior.&#x20;
+
+**On-chain integration** which anchors key paging metrics for verifiable performance data, and ties them into STOINC calculations.
+
+## pNode Rewards and Integration
+
+- Builds on Ingolstadt's credits: Improved monitoring boosts scores for XAND allocations (10,000 monthly via Foundation Program).
+- Analytics via Pod Monitor include paging dashboards and community tools.
+
+## Summary
+
+Heidelberg (v0.7) advances Xandeum's South Era by introducing comprehensive paging statistics. This enables detailed monitoring and optimization of data pages in file systems. This release adds detailed metrics for page access patterns, hit and miss behavior, replication status, and storage utilization. These metrics are available through new and expanded API calls such as get-pods-with-stats, as well as through updated Pod Monitor dashboards. Together, they give operators clearer insight into how pages are being managed across the network.
+
+The release also improves core network behavior with significantly faster gossip propagation, multiple entrypoints for added redundancy, and several stability fixes. Pod environments now support improved monitoring and real-time visualizations. Heidelberg strengthens the operational foundation of the storage layer, supports more accurate performance tuning, and prepares the system for upcoming Main Era capabilities and the planned mainnet launch in late 2025.---
+title: Core Concepts
+slug: core-concepts
+createdAt: 2025-10-30T17:15:34.626Z
+updatedAt: 2025-11-16T15:11:41.545Z
+---
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/VDQyu5F-6c32A1aVQ67d3_logo.png)
+
+### The Xandeum difference
+
+Xandeum is a decentralized storage layer built on Solana, designed to overcome the blockchain's storage limitations by enabling scalable, smart contract-native storage up to exabytes for data-intensive applications like DeFi, NFTs, AI, and big data.
+
+- **Scalable Storage Layer**: A blockchain-enabled file system that allows Solana programs to store and access massive amounts of data (e.g., terabytes or more) with seamless random access, unlike Solana's limited account-based storage.
+- **Proof of History Integration**: Leverages Solana's PoH for timestamping and ordering storage operations, ensuring efficient, verifiable data management without compromising the base layer's speed.
+- **Erasure Coding for Redundancy**: Data is split into pages, encoded with configurable redundancy (e.g., Reed-Solomon codes), and distributed across nodes to provide fault tolerance and data availability while minimizing storage overhead.
+- **Cryptographic Proofs (Poke, Peek, Prove)**: Core primitives for interacting with storage; Poke offloads data to pods, Peek retrieves it on-chain, and Prove verifies integrity using zero-knowledge-like proofs, all wrapped in Solana transactions.
+- **Decentralized Node Network**: Comprises pNodes (provider nodes for actual data storage) and vNodes (validator nodes for supervision), creating a supervised, incentivized ecosystem that scales storage without burdening Solana validators.
+- **Liquid Staking and DAO Governance**: Powered by XAND (governance token) and XandSOL (liquid staking token for SOL), enabling users to stake, earn rewards, and participate in community-driven decisions via the Xandeum DAO.
+- **Storage Fees in SOL**: Fees for storage operations are paid in SOL, distributed to validators, pNodes, and the DAO treasury, fostering economic alignment with the broader Solana ecosystem.
+
+***
+
+### Investor Perspective: Investing in XAND and XandSOL
+
+Xandeum offers investment opportunities through its tokens, XAND (governance and utility token) and XandSOL (liquid staking token), with a focus on rewards, governance, and network growth. The model emphasizes community incentives, airdrops, and treasury accrual from fees, positioning it for long-term value in Solana's expanding ecosystem.
+
+- **XAND Tokenomics**: Fixed supply of 4.015 billion tokens, with allocations for marketing (10%), ecosystem development (10%), community grants (2%), airdrops, and DAO treasury; circulating supply starts low (580 million on day 1) with vesting cliffs to manage inflation and reward long-term holders.
+- **Governance and Voting Power**: XAND holders lock tokens to vote in the DAO, influencing network upgrades, parameter changes (e.g., fees), and treasury spending, (staking commissions, storage transactions) flow to the treasury, creating value accrual for stakers.
+- **Airdrops**: Five planned airdrops (e.g., snapshot-based, with 50% immediate claim and 50% vesting);&#x20;
+- **XandSOL Liquid Staking**: Stake SOL to receive XandSOL, which earns XAND rewards through seasonal programs (3-month cycles); multipliers like 10x in early phases (Hyperdrive for \<30k SOL staked) boost yields, with real-time accrual and end-of-season claims—staking volume has exceeded 30,000 SOL (over $8M TVL), offering industry-leading APY of around 15%, double that of competitors like Jito and Marinade.
+- **Raydium Liquidity Provision Opportunities**: Investors can provide liquidity to a XandSOL-related pool on Raydium (e.g., SOL-XAND) to earn trading fees and potential farming rewards with high APRs with liquidity amounts reaching $100,000.
+
+**Incentives**: Early investors (XANDC holders) upgrade 1:1 with partial unlocks, plus referral bonuses and liquidity incentives for DEX/CEX providers.
+
+**Reward Seasons and Boosts**: Structured phases (Hyperdrive, Launchpad, Liftoff, Cruising) based on total staked SOL, offering higher rewards for early adopters; DAO can adjust distributions, aligning incentives with network growth.
+
+**Economic Alignment with Solana**: Storage fees in SOL fund the ecosystem, while XAND staking provides yields; foundation reserves support partnerships and development, reducing risk through community control post-Season 4.
+
+**Risk and Potential**: Low initial liquidity for XandSOL requires caution, especially in early Raydium pools; however, deflationary mechanics (e.g., fee burns), treasury growth from adoption, and milestones like staking volume exceeding 30,000 SOL could drive appreciation as storage demand rises.
+
+***
+
+### Developer Perspective: Participating in pNodes, vNodes, RPC, pRPC
+
+Xandeum empowers developers to build and participate in its storage infrastructure, integrating seamlessly with Solana for creating data-heavy dApps. Focus is on running nodes, using protocols for storage access, and contributing to the network for rewards.
+
+- **pNodes (Provider Nodes)**: Decentralized storage nodes responsible for holding encrypted data pages; participate by running hardware/software setups (e.g., via devnet guides), earning SOL fees and XAND rewards for availability and integrity, when possible join wait lists for sales and incentives.
+- **vNodes (Validator Nodes)**: Supervisory nodes that cryptographically monitor pNodes using proofs to ensure data redundancy and prevent faults; developers can run vNodes on Solana's devnet/martinet, contributing to consensus and earning commissions from the DAO treasury.
+- **RPC (Remote Procedure Call)**: Refers to mechanisms for random access and integrity challenges in storage operations; developers implement RPC in dApps for querying/verifying pNode data off-chain, integrating with Solana RPC endpoints for seamless calls.
+- **pRPC (Provider RPC)**: Extension for provider-side handling, possibly physical node-specific protocols for data replication and challenges; participate by configuring pNodes to respond to pRPC requests, ensuring cryptographic supervision and earning rewards for compliance.
+- **Devnet Participation**: Start by running a devnet validator or pNode using official docs; test storage primitives (Poke/Peek/Prove) in Solana programs, with tools for erasure coding and redundancy configuration.
+- **Building dApps**: Use Xandeum-enabled RPC nodes to extend Solana accounts with Web3 storage; developers can create storage-intensive apps (e.g., AI models, big data) and propose grants via DAO for ecosystem funding.
+- **Rewards and Governance**: Earn from storage income (STOINC) programs, with sold-out pNode rounds indicating high demand, a focus on uptime and performance for merit-based incentives.---
+title: Xandeum Greenpaper
+slug: xandeum-greenpaper
+createdAt: 2025-01-01T01:13:08.344Z
+updatedAt: 2025-11-12T04:01:10.626Z
+---
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/VDQyu5F-6c32A1aVQ67d3_logo.png)
+
+# The Xandeum Transformation
+
+# 1. Introduction and Motivation
+
+Try storing a **few gigabytes** of data directly on any blockchain, and watch the costs soar into the **stratosphere**. Yet, Web2 apps run on **massive datasets every day** without breaking a sweat. Enter Xandeum: a new approach that merges Solana’s lightning-fast consensus with an infinitely **scalable storage layer**—enabling sedApps (storage-enabled dApps) that rival (and even surpass) traditional centralized services.
+
+Building truly decentralized applications requires more than just trustless computation and state (account) management—it demands **scalable, cost-effective, and random-access data storage** that's 100% integrated into the smart contract platform. While protocols like Filecoin and Arweave have made strides in decentralized storage, they prioritize "whole file" (S3-like) and/or archival use cases over fast, granular reads and writes with read/write heads that can be set to any position. Meanwhile, storing significant data on-chain (e.g., within Solana’s account model) is expensive and limited in capacity. This disconnect is at the core of what we call the [**blockchain storage trilemma**](https://www.xandeum.network/blockchain-storage-trilemma): balancing decentralization, cost, and efficient random access has proven notoriously difficult.
+
+Xandeum resolves this challenge by **extending Solana’s native account model** with an integrated storage layer that implements the “file system” model to developers while still maintaining on-chain verifiability. In other words, Solana dApp devs get fine-grained, random-access data operations—backed by a decentralized network—without sacrificing performance or affordability. By allowing data to flow seamlessly between standard Solana accounts and Xandeum’s scalable file system, we remove the friction that limits what decentralized apps (dApps) can achieve.
+
+This unified approach sets the stage for a “**Cambrian explosion**” of innovative projects ported from Web2 and entirely new categories of **sedApps** (storage-enabled decentralized applications). From large-scale social platforms to data-heavy research hubs and open knowledge repositories, Xandeum empowers developers to operate at Web2 efficiency and scale, all under the trust guarantees of a blockchain.
+
+In the following chapters, we will explore the architectural principles behind Xandeum’s storage layer, discuss how developers can build and deploy sedApps, and illustrate real-world use cases that exemplify the transformative potential of this technology.
+
+
+
+# 2. Xandeum Fundamentals
+
+Xandeum’s core innovation is its **scalable, file-system-based storage layer** that integrates seamlessly with Solana’s high-throughput blockchain. By treating data as files and folders rather than merely on-chain accounts, developers gain flexible, random-access capabilities—without compromising on decentralization or performance. This file system architecture, with their limited set of primitives but including important possibilities called `read()`, `write()` and `seek()` in Unix, has been proven over decades to facilitate a plethora of classes of apps.
+
+### Core Architecture
+
+
+
+1. **Extended Solana Account Model**
+
+   Solana handles the trustless execution of smart contracts, while Xandeum manages large data sets in an off-chain but **cryptographically verifiable, blockchain-grade** environment.
+
+   Developers can use specific Xandeum transactions (Xtransactions), sent to Xandeum-aware RPC nodes, to copy data from Solana accounts to a given position within a (mostly larger) Xandeum file inside a Xandeum file system and vice versa.
+
+   That way, the Solana accounts act as the "RAM" of the world computer (Solana in this case), and the Xandeum scalable storage layer as the (so far missing) "disk".
+
+2. **Distributed Storage Nodes**
+
+   Xandeum relies on a set of storage nodes that collectively maintain and replicate files, ensuring **high availability** and **fault tolerance** while being **tamper-proof**, **censorship-resistant** and **crytographically verifiable**, hence the term blockchain-grade storage.
+
+   Data is split into pages (borrowed from Unix memory management) and encrypted, so no single node holds a complete plaintext copy. This deters censorship and preserves user privacy.
+
+3. **Random-Access Protocol**
+
+   Rather than storing data in “write-once” layers, Xandeum’s architecture allows for **granular reads and writes**, similar to a traditional file system.
+
+   This innovation underpins the blockchain storage trilemma solution, enabling cost-effective, rapid data queries without large overhead or complex retrieval processes.
+
+
+
+## Key Protocols & Security
+
+1. **pNode Stake Consensus (BFT-Light)**
+   - Xandeum’s storage is maintained by **provider nodes (pNodes)**, each of which stakes tokens or collateral to participate.
+   - A lightweight Byzantine Fault Tolerance (BFT) mechanism ensures that honest pNodes can continue serving data—even if a subset becomes malicious or fails.
+   - This partial consensus avoids excessive overhead by leveraging **Solana** for primary trust anchoring, focusing pNode consensus on storage correctness and availability.
+2. **Paging, Replication & Self-Repair**
+   - Files are **paged** and **erasure-coded** across multiple pNodes, so that data can be reconstructed even if some nodes lose or corrupt their pieces. We're borrowing from both Unix memory management for the paging as well as ZFS for the redundancy mechanisms.
+   - The pNode network maintains the **configurable redundancy** level as set by the storage-enabled dApp (sedApp).
+   - A **self-repair** protocol continuously monitors data distribution. If redundancy drops below a safe threshold, new replicas are automatically generated and reassigned to maintain reliability.
+3. **Threshold Signature Schemes (TSS)**
+   - Xandeum uses **TSS** for cryptographic operations that require joint authorization (e.g., validating data integrity or performing privileged network tasks).
+   - Rather than relying on a single signer, TSS splits signing authority among multiple pNodes, reducing the attack surface and strengthening network security.
+4. **Periodic Storage Challenges**
+   - Similar to Filecoin’s proof-of-storage and proof of space-time (PoST) concepts, **pNodes** must respond to **periodic challenges** from a set of **validators**—proving they still hold the correct data shards.
+   - The difference: Xandeum reduces overhead by **anchoring** these proofs on **Solana** rather than running resource-intensive verifications entirely on the storage layer.
+   - Validators verify challenge responses and can penalize pNodes that fail or refuse to produce valid proofs, ensuring persistent data availability.
+5. **Anchoring to Solana’s Ledger**
+   - Each file operation (create, update, delete) and key network event is still **anchored** to **Solana** for finality and verifiability.
+   - This hybrid approach unites **pNode**-level checks (ensuring actual data availability) with **Solana**’s trust guarantees (ensuring tamper-proof records of changes).
+
+
+
+By combining these protocols—**pNode stake consensus**, **erasure coding**, **TSS**, **periodic challenges**, and **on-chain anchoring**—Xandeum delivers **blockchain-grade** reliability, availability, and integrity for large-scale file storage. Developers can trust that their data is continuously secured by the network, while enjoying the **random-access** performance and ease of use made possible by Xandeum’s **file-system-based** approach.
+
+
+
+### Developer Experience
+
+1. **Familiar File-System Interface**
+
+   Rather than forcing developers to grapple with raw storage opcodes, Xandeum’s APIs abstract data interactions into straightforward file and folder operations.
+
+   This **reduces the cognitive load** for teams transitioning from Web2 infrastructures.
+
+2. **Transparent Integration with Solana**
+
+   Developers can use standard Solana tooling (such as the Solana Program Library, CLI tools, and popular frameworks) to orchestrate on-chain logic.
+
+   Data writes and reads in Xandeum are triggered by simple function calls, creating a **unified** workflow.
+
+3. **Flexibility for sedApps**
+
+   By offering **storage-at-scale** plus **rapid state transitions**, sedApps can adopt new user experiences once reserved for centralized platforms.
+
+   This paves the way for the Cambrian explosion of decentralized services Xandeum seeks to ignite.
+
+
+
+With these fundamentals, Xandeum balances security, cost-efficiency, and random-access performance—ultimately enabling a new class of **storage-enabled dApps** (sedApps) to thrive on Solana and beyond. In the next chapter, we’ll explore how developers can harness these capabilities to build, deploy, and manage **sedApps** in practice.
+
+
+
+# 3. Building sedApps on Xandeum
+
+Developing **storage-enabled dApps (sedApps)** on Xandeum combines the speed and familiarity of **Solana**’s account-based architecture with a **file-system-based** storage interface that scales to meet real-world data demands. This chapter offers a high-level view of how to build, test, and deploy sedApps—while highlighting best practices for leveraging Xandeum’s integrated storage layer.
+
+***
+
+## Guiding Principles
+
+1. **Embrace Solana’s Core Strengths**
+   - Solana handles high throughput, robust consensus, and standard tooling for transaction settlement and on-chain logic.
+   - Your dApp logic remains centered around smart contracts (programs) and accounts, just as it would on Solana alone.
+2. **Offload Data to Xandeum**
+   - Whenever you need to store large or frequently accessed datasets, shift that data to Xandeum’s file system based layer instead of bloating on-chain accounts.
+   - This keeps your application fast and economical, while giving you **granular**, **random-access** operations.
+3. **Maintain Trust Anchoring**
+   - Leverage Solana (and potentially other blockchains) for **data anchoring**.
+   - Each critical file operation references a hash or **Merkle root** stored on-chain, ensuring immutability and transparency without storing bulky content directly on the ledger.
+4. **Prioritize User Experience**
+   - **sedApps** are designed to feel smooth and inviting—similar to Web2 solutions—but underpinned by blockchain-grade trust.
+   - Whether you’re building a wiki or an online game, simplify the process of reading and writing data so end users barely notice the decentralized mechanics behind the scenes.
+
+***
+
+## Developer Workflow
+
+1. **Set Up Your Environment**
+   - Install [**Solana’s tooling**](https://docs.solana.com/getstarted) for smart contract compilation, deployment, and testing.
+   - Configure access to Xandeum’s developer environment (Devnet) and SDK, which expose file storage operations in a structure akin to directories and files.
+2. **Design Data Schemas**
+   - Map out which elements of your dApp should remain in **Solana accounts** versus which belong in Xandeum’s storage layer.
+   - For instance:
+     - Small counters or user balances might be on-chain.
+     - Large documents or media attachments, databases (see demo applications below), extensive customer data go into Xandeum.
+   - Define the app's **redundancy level**, e.g. 7 or 43. That means you'll require to always have 7 pNodes to store pages of your data. This is one of the key factors why Xandeum storage is scalable - we're **not bound&#x20;**&#x74;o Solana account's "Redundancy level is 3,000, period" approach, assuming there are 3,000 validators is the cluster.
+3. **Implement Smart Contracts (Solana Programs)**
+   - Write or adapt existing programs to reference Xandeum file locations, storing **hashes** or **pointers** in the on-chain state.
+   - Ensure that any critical transactions (like file creation or updates) emit **events** and update these pointers for auditability.
+4. **Handle File Operations**
+   - Use **Xandeum**’s APIs to **create, peek** (read)**, poke** (update), or **delete&#x20;**&#x66;iles just as you would in a **Web2 file system**. We're peeking and poking our way through data, an homage to those glorious, spaghetti-coded days of BASIC.
+   - Each operation triggers **cryptographic proof** generation, which can be anchored to **Solana**, preserving trust and audit trails.
+5. **Testing and Debugging**
+   - Deploy your program to **Solana Devnet** and interact with **Xandeum**’s storage **Devnet**.
+   - Confirm that file hashes match the values stored on-chain, ensuring consistent integration between the two layers.
+6. **Deployment and Scaling**
+   - Once your **sedApp** is tested, deploy it to the **Xandeum-Solana Mainnet** (when available) or continue to refine on **Devnet**.
+   - Plan for **horizontal scaling** as your data volume grows.
+   - **Xandeum**’s storage layer handles large datasets and surges in traffic without compromising performance.
+
+***
+
+## Working with the Scalable Storage Layer
+
+1. **Granular File-Access**
+   - Peek and Poke files in small chunks, rather than dealing with entire blobs or "objects" as in ObjectStore solutions.
+   - This flexibility is key for **real-time applications**, **collaborative documents&#x20;**&#x6F;r large **structured, interconnected&#x20;**&#x61;n&#x64;**&#x20;dynamically generated content**.
+2. **Optional Versioning**
+   - For use cases that require detailed historical tracking (e.g., collaborative docs, governance records), Xandeum can log file updates as **“versions.”**
+   - Each version is tied to a verifiable proof, which can be anchored on-chain at intervals or on demand.
+   - Developers who don’t need a full edit history can skip version logging to minimize overhead.
+3. **Integration Patterns**
+   - **Direct Reference**
+     - Store file references in **Solana** accounts, updated by your program whenever a user uploads or modifies data.
+   - **Off-Chain Index**
+     - For large datasets, maintain an index in **Xandeum**’s file tree that links to specific file shards or directories.
+     - Anchor periodic **Merkle roots** on-chain for transparent auditing.
+
+***
+
+## Looking Ahead
+
+By combining the **Solana** account model with a decentralized, random-access **file-system-based** approach, **Xandeum** unlocks a wealth of possibilities for **sedApps**. This workflow and architecture will feel familiar to developers who’ve built on Web2 or traditional dApp frameworks—now enhanced by **blockchain-grade** properties and tight integration into **Solana**, supervised, overseen, and challenged by the validators, and massively reducing the cost of storage by minimizing redundancy in a configurable way.
+
+In a broader sense, by **eliminating the storage bottleneck** that has prevented large-scale Web2 apps from becoming trustless and decentralized, **Xandeum** paves the way for a new wave of **sedApps**—ultimately propelling us closer to a **self-determined future** where any application can operate without sacrificing speed, usability, or freedom.
+
+In the next chapter, we’ll spotlight **demo applications** that illustrate these principles. From a fast-paced binary guessing game (**iKnowIt.live**) to an open, community-driven wiki (**info.wiki**), we’ll show how **Xandeum**’s **scalable storage layer** can power **data-intensive dApps** at scale.
+
+
+
+
+
+# 4. Demo Applications
+
+To demonstrate how Xandeum’s **scalable storage layer** expands the possibilities for decentralized apps, we’re unveiling two early **sedApp** prototypes. **iKnowIt.live** shows off the real-time, interactive potential of offloading data-intensive operations to Xandeum, while **info.wiki** highlights how massive public data sets can be collaboratively managed and governed on-chain. Both demo apps are to be released open source to showcase the ease with which storage-enabled dApps (sedApps) can built on Xandeum.
+
+***
+
+## iKnowIt.live
+
+A **binary guessing game** currently under development, aiming to launch live at **iKnowIt.live** later this year. Inspired by popular “think of a character, the app guesses who it is” games, **iKnowIt.live** takes a collaborative twist: players co-create and refine the knowledge base behind the game, adding or updating the distinguishing questions that help narrow down the correct answer. Over time, the knowledge tree grows deeper and more nuanced, giving the platform a sense of collective “intelligence.”
+
+### Gameplay & Mechanics
+
+- **Yes/No Questions**
+  Players think of a person, object, or concept. The game asks a series of binary (yes/no) questions to make its guess.
+- **Community-Driven Knowledge**
+  If the game fails or struggles, players can help enrich the database by suggesting new questions or revising existing ones. This collaborative model ensures the knowledge grows organically.
+- **Transparency & Co-Creation**
+  Unlike an opaque AI model, **iKnowIt.live** allows the community to inspect, edit, and expand the underlying knowledge base directly, creating a shared sense of ownership and discovery.
+
+### Why It Matters
+
+- **Solana for Speed**
+  The core game logic—like generating questions, accepting answers, and updating immediate state—relies on **Solana**. It’s fast, just like **RAM**, handling near-real-time interactions with minimal latency.
+- **Xandeum for Capacity**
+  **iKnowIt.live** stores its ever-growing knowledge base in **Xandeum**, analogous to **disk** storage. This approach ensures large data sets remain **affordable** and **scalable**, so the game can keep evolving without skyrocketing costs.
+- **Avoiding On-Chain Bloat**
+  Left to **Solana** alone, storing every user’s contributions and the full knowledge tree would be **prohibitively expensive**—and potentially **technically impossible** if it grows to terabytes of data. **Xandeum** solves that by offloading the biggest storage burdens.
+
+### Timeline & Growth
+
+- **Development in Progress**
+  Work is underway to build out the core mechanics and user interface, with an **alpha version** targeted for release soon.
+- **Projected Expansion**
+  As the knowledge base matures and user numbers soar, the data volume could become massive—potentially reaching gigabytes (or more). **Xandeum** ensures this growth stays feasible.
+- **Proof-of-Concept & Beyond**
+  Though it’s “just a game,” **iKnowIt.live** illustrates how any data-rich dApp can exceed the practical limits of on-chain storage alone. With **Xandeum**, developers gain capacity to store significant, ever-expanding data sets while retaining the trust guarantees of **Solana**.
+
+### Key Takeaways
+
+- **Massive, Blockchain-Grade Data, Readily Accessible to Solana Programs**
+  Large user bases and deep data sets remain practical through **Xandeum**’s file-system-based storage.
+- **Cost-Efficiency**
+  High-speed operations still happen on **Solana**, while **Xandeum** handles archival and bulk data needs without incurring exorbitant fees.
+- **Endless Scalability**
+  The game can add new questions, track detailed stats, and expand to new domains over time without hitting a storage wall—unlocking a truly **limitless** knowledge-driven dApp.
+
+##
+
+***
+
+## info.wiki
+
+A **community-driven knowledge repository**—inspired by Wikipedia—fueling a new wave of **open, fully decentralized collaboration**. By leveraging **Xandeum**’s storage approach, **info.wiki** can handle massive datasets while maintaining on-chain verifiability and governance.
+
+### Concept
+
+- Start with Wikipedia’s openly licensed database of articles (roughly **250GB** without media).
+- Store this data on **Xandeum** for random-access reads and writes, while **Solana** anchors updates and community decisions.
+- Over time, new articles and edits are published under **info.wiki**’s own license, requiring only that the source Wikipedia content remains properly attributed.
+
+### Key Features
+
+- **Massive Data Capacity**
+  - **info.wiki** demonstrates how high-volume storage becomes practical in a decentralized setting.
+  - By offloading article text and revision histories onto **Xandeum**, we avoid the high costs typically associated with on-chain data.
+- **Version Control & History**
+  - Each edit to an article is captured in a **Merkle-based** versioning structure, ensuring a tamper-evident revision history.
+  - Periodic anchors on **Solana** guarantee transparency and trust in the editorial process.
+- **Community-Driven Curation**
+  - Edits, article creations, and reorganizations can be governed by a dedicated  community wiki token.
+  - Stake-weighted proposals determine content disputes, editorial guidelines, and other governance matters.
+
+### Governance Model
+
+- **Community Wiki Token**
+  - Distributed to early contributors, editors, and those who help maintain the platform’s health.
+  - Token-holders can vote on community proposals (e.g., new editorial policies, software improvements, or curation rules).
+- **On-Chain Anchoring**
+  - All governance proposals and decisions live on **Solana**, ensuring transparent polling and results.
+  - Major structural changes (like rewriting a significant chunk of the wiki) anchor new file states to **Solana** for verifiability.
+
+### Roadmap
+
+- **Summer / Late Summer 2025**
+  - Initial launch of **info.wiki**, seeded with the Wikipedia dataset.
+  - Open invitations for community governance participation, content updates, and feature requests.
+- **Scalability & Beyond**
+  - Explore multi-chain anchoring as the platform grows, potentially tapping into other networks for added security or specialized user communities.
+  - Introduce advanced editorial features and expansions (e.g., media file storage) via **Xandeum**’s evolving capabilities.
+
+***
+
+## Why These Demos Matter
+
+Both **iKnowIt.live** and **info.wiki** bring to life **Xandeum**’s defining advantage: combining **Solana**’s high-speed, low-latency consensus with a **file-system-based** storage solution capable of handling **massive** amounts of data. While **iKnowIt.live** demonstrates how even a knowledge-driven, user-generated gaming experience can grow without hitting on-chain storage limits, **info.wiki** explores the far-reaching potential of large-scale collaborative editing on a decentralized knowledge platform.
+
+These examples underscore a central theme: with **Xandeum**, developers can **offload** big data requirements—everything from user-contributed content to gargantuan public datasets—onto a secure yet cost-efficient layer. That means greater freedom to innovate and **scale**, and less time spent wrestling with the prohibitive economics or technical hurdles of storing everything on-chain. As a result, **sedApps** on **Xandeum** can **rival** (and often surpass) their Web2 counterparts in functionality, all while retaining **trust**, **transparency**, and **decentralization**.
+
+By solving the storage bottleneck, **Xandeum** paves the way for a genuine **Cambrian Explosion** of new and ported applications—ultimately moving us closer to a future where **every** app can be **self-determined** and free from centralized gatekeepers. In the next chapter, we’ll explore **Xandeum**’s **roadmap**, including how developers, token-holders, and ecosystem partners can help shape the platform as it progresses toward **mainnet** and **broad** adoption.
+
+
+
+# 5. Conclusion & Outlook
+
+From **iKnowIt.live**’s real-time interactivity to **info.wiki**’s large-scale, community-curated knowledge base, **Xandeum** demonstrates that decentralized applications no longer need to sacrifice performance for trust. By coupling **Solana**’s high-throughput blockchain with a **file-system-based** storage layer, we enable **sedApps** to operate at scales and speeds once considered unthinkable on-chain.
+
+The **blockchain storage trilemma** is tackled through **random-access** data operations, anchored in secure, decentralized proofs. This fundamental shift paves the way for a **Cambrian Explosion** of innovative apps—whether they’re reimagined from Web2 or entirely new concepts that leverage decentralized infrastructures at scale.
+
+We invite you to explore, build, and collaborate within the **Xandeum** ecosystem. Join our community channels, contribute to the codebase, and experiment with **Devnet** today. Together, we can forge a future where **sedApps** harness the full potential of blockchain technology—without compromising on speed, user experience, or the richness developers have come to expect from modern applications.
+
+#
+---
+title: Original Xandeum Whitepaper
+slug: original-xandeum-whitepaper
+createdAt: 2025-10-30T17:28:23.742Z
+updatedAt: 2025-11-12T04:00:49.290Z
+---
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/VDQyu5F-6c32A1aVQ67d3_logo.png)
+
+Here you can find the original Xandeum Whitepaper. We have evolved some ideas and concepts and completly changed some others (such as originally being visioned as an L1 Blockchain). This represents our roots and our vision to transform how we can use Blockchain!
+[**https://github.com/Xandeum/WhitePaper**](https://github.com/Xandeum/WhitePaper)---
+title: Operator Guides
+slug: operator-guides
+createdAt: 2025-10-28T18:49:39.156Z
+updatedAt: 2025-11-26T17:28:19.513Z
+---
+
+![Xandeum Exabytes for Solana Programs](https://app.archbee.com/api/optimize/ePevXmvzgG-7aqJ72Gpg_/VDQyu5F-6c32A1aVQ67d3_logo.png)
+
+# Overview
+
+Xandeum's Setup Guide is a streamlined resource for launching your participation in Solana's scalable storage revolution. Whether you're deploying a pNode to contribute storage capacity or a vNode to validate network integrity, this guide equips you with step-by-step instructions.
+
+Below, explore summaries of the pNode and vNode guides, with links to details for hands-on implementation.
+
+## pNode Setup
+
+pNodes form the backbone of Xandeum's scalable storage, enabling data sharding via erasure coding and gossip protocols. The guide covers hardware requirements (e.g., minimum CPU/RAM/disk specs for DevNet), software installation (Ubuntu preferred), installation, and key steps: generating key pairs with XandMiner, registering via the daemon (XandMinerD).&#x20;
+
+It highlights security best practices (non-standard ports, SSH keys) and troubleshooting for common issues like connectivity failures.&#x20;
+
+For full instructions, see the [**Xandeum pNode Setup Guide**](docId\:d5u0eE4dArWEkaw11p9VQ) section.
+
+## vNode Setup
+
+vNodes ensure network trust by monitoring pNode integrity through cryptographic proofs, offloading validation from Solana's core chain. This section outlines prerequisites (e.g., Solana CLI tools, sufficient SOL for staking), software installation of validator software, configuration for DevNet syncing, and activation via the Foundation Delegation Program.&#x20;
+
+It includes tips for optimizing uptime, integrating with Pod Monitor analytics, and handling epoch-based rewards. Aligned with the Green Paper's vision for tamper-proof resilience, vNodes support the storage trilemma resolution by enabling seamless data reconstruction. Dive into the complete walkthrough in the [**Validator Home**](docId\:NZ-58KgjBp-toFSlvYgaw) section.
+
+## Conclusion
+
+Xandeum's setup guide bridges theory to action, empowering you to join a community-operated ecosystem that's evolving rapidly through eras like South (foundational pNodes) and North (intelligent prototypes). Once configured, monitor performance via the web GUI and contribute to mainnet milestones. Start today to unlock rewards and shape Solana's scalable storage future. For deeper context, reference the Innovation Eras overview or Green Paper for technical foundations.---
+title: Validator Home
+slug: validator-home
+description: Learn how to install and configure a validator on Xandeum Foundation's Devnet with this comprehensive document. Includes step-by-step instructions, a helpful walkthrough video, setting up server access, configuring ports and disks, installation and
+createdAt: 2023-08-19T02:59:26.867Z
+updatedAt: 2025-11-13T16:59:08.503Z
+---
+
+![Xandeum Exabytes for Solana Programs](https://app.archbee.com/api/optimize/ePevXmvzgG-7aqJ72Gpg_/VDQyu5F-6c32A1aVQ67d3_logo.png)
+
+# Instructions for the installation and configuration of a Xandeum validator.
+
+## Xandeum DevNet
+
+### Based on Agave codebas&#x65;**&#x20;v2.2.0**
+
+&#x20;
+
+:::hint{type="danger"}
+NOTE: NEW VERSION OF THIS GUIDE WILL BE COMING SOON!
+SOME SECTIONS ARE OUTDATED AND NOT RELEVANT.
+:::
+
+
+
+Complete in order:
+
+- [**Old Server housekeeping**](docId\:mtDBFB19PE6hBSmwcBQyX)&#x20;
+- [**Access your server**](docId\:Zfe1yVUNsXwBAs-gS62nZ)
+- [**Ports Setup**](docId\:j0pESfiSYOf0pOjvko-Mp)
+- [**Setup Your Disks**](docId\:pdGnCjvolHQmV1wGVCQ53)
+- [**Validator Installation**](docId\:A0DBbe-YQ--wWLU4Ojjfn)
+- [**Setup System Service**](docId:_z4VVag78Oly1DTLPVmmb)
+- [**Setup LogRotate**](docId\:OLsHuypkjco2MYsxJL9P3)
+- [**Starting your validator**](docId\:QT-gKqLryy-cYMxMcoZYe)
+- [**Monitoring your validator**](docId\:H7WUjkBUV1l28im8DQxRD)
+- [**Onboarding**](docId:13z9rNSejJ8SU0NCV5u2Z)
+- [**Validator Commands**](docId\:IZ8K2IUlzWiP78mLxBgE1)
+- [**Learn Tmux**](docId:4ivv9szuCMvtZAXZxUxhj)
+
+[**Troubleshooting**](docId\:T7w-jycONeX1Pe8ePlFIC)
+
+
+
+Update a running Validator:
+
+[**Validator UPDATE version**](docId\:Sf_gT0LbYBo9LL93wc2l7)&#x20;
+
+
+
+vNode Xandeum-RPC upgrade guide (Coming Soon)
+
+&#x20;[**Enable Xandeum RPC functions**](docId\:EgqaPduFHCbNuxMDdezT-)&#x20;
+
+
+
+Faucet Repayment / Funding your ID Account
+
+- [**Faucet Repayment**](docId:6ZnCulKrlV9HONhhniS-s)
+---
+title: Old Server housekeeping
+slug: old-server-housekeeping
+createdAt: 2024-12-31T21:21:02.591Z
+updatedAt: 2025-11-12T03:36:21.510Z
+---
+
+# Update your server
+
+Run as `sudo` / `root` user
+
+:::hint{type="info"}
+Reboot if you have a new kernel installed during the update that needs loaded.
+:::
+
+```bash
+sudo -s &&
+```
+
+```bash
+apt-get update -y && apt upgrade
+```
+
+# Stop old system service
+
+Use  `status` to check if its running, `stop` to stop the service, and `disable` to prevent it from loading next reboot
+
+```bash
+systemctl status xand.service
+systemctl disable xand.service
+systemctl stop xand.service
+```
+
+# SSH Keys
+
+If you want to make a new user `sol` to match the new guide, then make sure your ssh keys to login remotly are stored in your home dir for `sol` or `root` users (not only in `xand` home dir. Careful with the ssh keys...if you remove them you could lock yourself out of your server...
+
+Check for keys in root
+
+```bash
+sudo cat ~/.ssh/authorized_keys
+```
+
+Check for keys in `xand`
+
+```bash
+su xand
+```
+
+```bash
+cd ~
+cat ~/.ssh/authorized_keys
+```
+
+Copy from xand and append to root keys file
+
+```bash
+sudo -i
+```
+
+```bash
+sudo cat /home/xand/.ssh/authorized_keys >> /root/.ssh/authorized_keys
+```
+
+# Validator Keypairs
+
+Make sure you have copied your validator keypairs if they are needed for the new server.
+
+Otherwise they can be created new during install of the validator software.&#x20;
+
+There is no reason to re-use the old one, only personal preferance.
+
+# Remove xand user account
+
+Once you have sucessfully logged into your server using either `root` or `sol` user, and copied/backed up any files you need, you may wish to remove everything from `xand` user and their files.
+
+```bash
+sudo -s
+```
+
+```bash
+userdel -rf xand
+```
+
+
+---
+title: Ports Setup
+slug: ports-setup
+description: Learn how to internally forward ports 8000-10000 tcp & udp to your validator using the `~/validator-start.sh` script. Find instructions on setting up port forwarding rules for your router model to ensure seamless operation. Benefit your cluster by obtaini
+createdAt: 2023-08-21T18:38:00.532Z
+updatedAt: 2025-11-12T03:36:21.510Z
+---
+
+The `~/validator-start.sh` script assumes ports 8000-10000 tcp & udp are internally forwarded to the validator via a DST NAT (port forwarding) Rule.
+
+Please run a few searches on port forwarding rules on your router model before asking for help on this. There are so many router models that we can't possibly know them all.
+
+- Search Terms:
+  - how to port forward my router
+  - setup virtual server on my router
+  - how to set destination nat rules on my firewall
+
+The over all idea is that when a request is made to your Public IP Address on a port (ie 8000) Your router has to take that request and forward it through your router (firewall) and submit it to the Internal IP address of your validator.
+
+:::hint{type="danger"}
+STATIC PUBLIC IP: It would be benificial to the entire cluster if your public IP address from your internet provider is set as static. This means that you will always have the same IP address even if you reboot your modem/router or if you change your equipment. **They may ask why you need it so make sure you know your terms of service and the description of what you're doing before inquiring. You're running a home server and would prefer a static IP address.**
+
+STATIC PRIVATE IP: It would also be benificial if you are running your validator behined a router (ie running at home or office vs data center) to make sure you set up your validator server to always aquire the same IP address from your router. This can be done during the installation of ubuntu or it can be done in your router by way of a function called a `dhcp reservation`.&#x20;
+:::
+
+
+
+
+---
+title: Setup Your Disks
+slug: setup-your-disks
+description: Learn how to increase your storage space on Ubuntu by using commands like `df -h` and `lsblk`. Follow step-by-step instructions to format a new drive, create a directory for storage, and mount the spare device. Optimize storage on your machine with ease.
+createdAt: 2023-09-08T11:54:54.851Z
+updatedAt: 2025-11-12T03:36:21.510Z
+---
+
+You will want to verify you have at lease 400gb avaiable on your machine using&#x20;
+`df -h`. Here you see 940G in my `/` mount point on drive `/dev/sdc/`. The Ubuntu installer will default to 100G and leave much of your space unused unless you tell it what to do.
+
+::Image[]{src="https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/xnDd4IZfl0EaCiC7Oqqm9_image.png" signedSrc size="60" width="715" height="223" position="center" caption}
+
+If your machine has 2 Disks, we want to separate the Ledger to the larger disk.&#x20;
+
+
+:::hint{type="info"}
+NOTE: if you change ledger to a separate drive, you will need to modify your `Ledger Dir` in other commands and locations later in the guide.
+:::
+
+
+
+### Process to mount a new directory:
+
+Run `lsblk` to see your storage devices on your system
+
+If you have a drive not being used, you can run `sudo mkfs -t ext4 /dev/sdd` but adjusting for your device name.
+
+Then you can make your ledger dir in some folder such as `sudo mkdir -p /mnt/ledger`
+
+And change ownership to your non-privledged user `sudo chown -R sol:sol /mnt/ledger`
+
+And then mount it to your spare device `sudo mount /dev/sdd /mnt/ledger`
+
+Now anything you put in the `/mnt/ledger` directory will be held in the additional drive (possibly a faster nvme drive).---
+title: Install Validator Software
+slug: install-validator-software
+description: Learn how to set up a Xandeum DevNet Validator and a Solana validator node with this comprehensive guide. It covers everything from installing necessary binaries and updating the installation to configuring system settings and creating validator accounts.
+createdAt: 2023-08-19T03:02:55.649Z
+updatedAt: 2025-11-12T03:36:21.510Z
+---
+
+
+
+How To Setup a Xandeum DevNet Validator
+(Build from source)
+===================
+
+:::hint{type="info"}
+**NOTE:** This guide shows commands for text editors `nano` and `vim`. A quick search can find a guide or video to operate these text editors more efficiently and make your life easier.
+:::
+
+
+
+##
+
+## 1) Installation of the needed binaries.
+
+Start with a fresh instance of Linux as the `root` user.&#x20;
+
+These instructions use [**Ubuntu Server 24.04LTS**](https://ubuntu.com/download/server)
+
+:::hint{type="danger"}
+BEFORE YOU CONTINUE!
+
+Make sure you see your entire drive space as available!
+Use `df -h` to see your free space. You want to see that you have all your space in a free partition. Ubuntu will want to default to 100g LVM. The preferance is to eliminate LVM and Raid and use all available space for your `/` mount point. If you don't show all your disk space, run the Ubuntu installer again and pay attention to the storage section.
+:::
+
+
+
+### Get `root` user
+
+:::hint{type="warning"}
+Run as `sudo` or `root` user. If you don't have access to the root user, then you will need to prepend all your requests in this section with sudo.&#x20;
+
+Notice in the screenshot below I start as user `sol` change to `root` user then back to `sol`.&#x20;
+
+Root user has ALL the privledges and won't require sudo. But some items NEED to be ran as the `sol` user (ie rust install, validator build, etc)
+
+Use `sudo -i` to change to root user and `exit` to end root user
+:::
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/0naV05D9KRSBrRYLcDmc6_image.png)
+
+### Update your installation
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo apt-get update -y && 
+sudo apt-get upgrade -y
+```
+:::
+
+### Install prerequestite packages
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo apt -y install sudo curl git build-essential pkg-config libssl-dev libudev-dev zlib1g-dev llvm clang cmake make libprotobuf-dev protobuf-compiler tmux vnstat 
+```
+:::
+
+- Press OK to restart services if prompted
+
+### Enable `vnstat` to monitor your bandwidth usage on your machine
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo systemctl enable --now vnstat
+```
+:::
+
+:::hint{type="info"}
+Note: research `vnstat` to find many different ways to view information on your bandwidth usage.
+:::
+
+
+
+### Create Xandeum Validator Account
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo adduser sol
+```
+:::
+
+:::hint{type="info"}
+Enter a password and accept defaults to the following questions:
+
+`New password:`
+` Retype new password:`
+` passwd: password updated successfully`
+` Changing the user information for xand`
+` Enter the new value, or press ENTER for the default`
+`        Full Name []:`
+`        Room Number []:`
+`        Work Phone []:`
+`        Home Phone []:`
+`        Other []:`
+`Is the information correct? [Y/n] y`
+:::
+
+
+
+### Add new user to sudo group
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo usermod -aG sudo sol
+```
+:::
+
+### Change to the sol user account
+
+:::CodeblockTabs
+CLI
+
+```linux
+su sol
+```
+:::
+
+
+
+Switch the sol home directory
+
+:::CodeblockTabs
+CLI
+
+```linux
+cd ~
+```
+:::
+
+###
+
+### Install Rust, Cargo, and restmft
+
+:::hint{type="warning"}
+Run as `sol` user without `sudo` privledges.
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+curl https://sh.rustup.rs -sSf | sh
+```
+:::
+
+- Take care to select option #1 when prompted to.
+
+### Dont forget to set the source for .cargo
+
+:::CodeblockTabs
+CLI
+
+```linux
+source $HOME/.cargo/env
+```
+:::
+
+### Add rustfm
+
+:::CodeblockTabs
+CLI
+
+```linux
+rustup component add rustfmt
+```
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+rustup update
+```
+:::
+
+### Set to compile using native cpu flags
+
+:::CodeblockTabs
+CLI
+
+```linux
+export RUSTFLAGS="-O -C target-cpu=native"
+```
+:::
+
+:::hint{type="warning"}
+### Special Note:
+
+If you run into issues w/ Rust compiling, or if you receive `illegal instruction` errors upon starting your validator (usually only if running on a hypervisor), replace the export command with the export below:
+
+- This will generally impact Antsle owners (and some other Virtualization software/hardware) where CPUs will show up as Westmere E56xx/L56xx/X56xx (Nehalem-C)
+- Also if your cpu doesn't support AVX2 instruction set you may need this additional RUST Flag. Check if your CPU supports AVX2 using this command:
+  `lscpu | grep --color=always -i  avx2` and avx2 should show up in red if its supported.
+- May serverly limit efficiency of the binaries.
+:::
+
+:::CodeblockTabs
+ONLY USE IF ON A SYSTEM WITHOUT AVX2
+
+```linux
+export RUST_REED_SOLOMON_ERASURE_ARCH=native
+```
+:::
+
+
+
+### Clone the Xandeum Validator Repo&#x20;
+
+:::CodeblockTabs
+CLI
+
+```linux
+cd ~
+git clone https://github.com/Xandeum/xandeum-agave.git
+```
+:::
+
+### cd into new repo dir
+
+:::CodeblockTabs
+CLI
+
+```linux
+cd xandeum-agave
+```
+:::
+
+### Choose which release you want to compile
+
+:::CodeblockTabs
+CLI
+
+```linux
+git checkout v2.2.0-munich
+```
+:::
+
+### Build (compile) the validator software
+
+:::CodeblockTabs
+CLI
+
+```linux
+./cargo build --release
+```
+:::
+
+:::hint{type="warning"}
+- `error: toolchain` can be ignored, missing toolchains will be installed.
+:::
+
+:::hint{type="info"}
+- To use less processor, try adding jobs limit with ` -j 2`
+:::
+
+:::hint{type="success"}
+- This process is going to take some time. Get a beverage, walk the dog,&#x20;
+  take the kids to the pool. 10-40 minutes typical depending on cpu.
+:::
+
+***
+
+##
+
+## 2) After build completes:
+
+:::hint{type="info"}
+Run as `sol` user in home dir (use `cd ~`)
+:::
+
+### Create directories and parent folders `-p` for the validator files
+
+:::CodeblockTabs
+CLI
+
+```linux
+mkdir $HOME/data/compiled/x2.2.0-munich/bin/ -p
+```
+:::
+
+### Move the newly created binary (application files) to the appropriate release folder
+
+:::CodeblockTabs
+CLI
+
+```linux
+cd ~/xandeum-agave/target/release
+```
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+rsync -aHA ./ $HOME/data/compiled/x2.2.0-munich/bin/
+```
+:::
+
+
+
+### Create symlinks (shortcuts) to the directories. This will allow us to change the version that is loaded by creating a symlink to a newer set of binaries
+
+:::CodeblockTabs
+CLI
+
+```linux
+ln -sf $HOME/data/compiled/x2.2.0-munich/bin $HOME/data/compiled/active_release
+```
+:::
+
+### Verify the symlonk was created properly
+
+:::CodeblockTabs
+CLI
+
+```linux
+ls -la $HOME/data/compiled/
+```
+:::
+
+### Backup the old $PATH for reference.
+
+:::CodeblockTabs
+CLI
+
+```linux
+echo $PATH >> ~/PATH.bak
+```
+:::
+
+### Using your favorite editor to open the bashrc config:
+
+:::CodeblockTabs
+nano
+
+```linux
+nano ~/.bashrc
+```
+
+vim
+
+```linux
+vim ~/.bashrc
+```
+:::
+
+### Add the following lines at the very bottom and save your changes and exit.
+
+:::CodeblockTabs
+text
+
+```linux
+export PATH="$HOME/data/compiled/active_release:$PATH"
+alias l="ls -a --color=auto"
+alias ll="ls -alh --color=auto"
+alias sv="solana validators --sort skip-rate --reverse"
+alias sg="solana gossip"
+alias se="solana epoch-info"
+```
+:::
+
+- Fully exit all shells and come back in. (logout / login to server)
+
+### Check your Install of the software
+
+After logging back in as `sol` user, time to test if everything worked.
+
+- Check solana version:
+
+:::CodeblockTabs
+CLI
+
+```linux
+cd ~
+solana -V
+
+more accutatly, check the version of agave-validator client:
+agave-validator -V
+```
+:::
+
+- Results should appear simlar to the following
+
+::Image[]{src="https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/pR92FqNOzhXFEEVVgymQX_screenshot-2023-08-18-230744.png" signedSrc="https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/pR92FqNOzhXFEEVVgymQX_screenshot-2023-08-18-230744.png" size="88" width="711" height="75" position="flex-start" caption darkWidth="711" darkHeight="75"}
+
+:::hint{type="success"}
+If you are working on a virtual machine, now would be the ideal time to take a snapshot & backup your work just in case you have any issues beyond this point. It is also advisable for bare metal too.
+:::
+
+
+
+***
+
+##
+
+## 3) Configure your validator instance.
+
+:::hint{type="danger"}
+Please observe proper security of your private keys!&#x20;
+
+Record your 12 words (and bip39 passphrase) in a safe spot. For DevNet it's not critical if you lose them...but if on MainNet, losing the keys equals LOST FUNDS. There is no recovering from lost keys.
+
+- For MainNet, your withdraw authority key should never be on your machine!
+:::
+
+
+
+### Generate your 3 DevNet keys.
+
+:::hint{type="info"}
+- You can leave the  bip39 passphrase empty (only applies to DevNet/TesNet since it is not real money).
+- Your 12 words and pubkey are shown immediatly after the prompt for bip39 passphrase.
+- Take note of the public key it provides you (copy it down). It will help us help you should there be an issue.
+:::
+
+:::hint{type="warning"}
+Run as `sol` user!
+:::
+
+
+
+:::CodeblockTabs
+CLI
+
+```linux
+mkdir ~/keys/
+cd ~/keys
+```
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana-keygen new -o ~/keys/validator-keypair.json
+solana-keygen new -o ~/keys/vote-keypair.json
+solana-keygen new -o ~/keys/withdraw-keypair.json
+solana-keygen pubkey ~/keys/validator-keypair.json
+```
+:::
+
+To view your public key later
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana-keygen pubkey ~/keys/validator-keypair.json
+```
+:::
+
+View your current configuration information
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana config get
+```
+:::
+
+### Switch to Xandeum cluster
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana config set --url https://api.devnet.xandeum.com:8899
+```
+:::
+
+### Set your new keypair to be used by default.
+
+:::CodeblockTabs
+CLI
+
+```text
+solana config set --keypair ~/validator-keypair.json
+```
+:::
+
+### Testing our work so far.
+
+- Check your connecrtion to the cluster
+
+```linux
+solana gossip
+```
+
+- Request an airdrop from the Xand Faucet
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana airdrop 1 ~/validator-keypair.json
+```
+:::
+
+Do this again 4 more times. (We are also giving you fake XAND/SOL to get started.)
+
+- There is a daily limit per wallet...These tokens on TestNet/DevNet are not real.
+
+### Check your wallet balance.
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana balance
+```
+:::
+
+You should have \~5 tokens present if you do it 5x's.
+
+
+
+### Create your vote account.
+
+- Submit a transaction on the blockchain setting up your vote account
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana create-vote-account ~/vote-keypair.json ~/validator-keypair.json ~/withdraw-keypair.json
+```
+:::
+
+To find your Vote Account Pubkey later, use:
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana-keygen pubkey ~/vote-keypair.json
+```
+:::
+
+***
+
+##
+
+## 4) Configure your Start Script Configuration
+
+### Create your validator configuration file using your editor
+
+:::CodeblockTabs
+nano
+
+```linux
+nano ~/validator-start.sh
+```
+
+vim
+
+```linux
+vim ~/validator-start.sh
+```
+:::
+
+- There will be nothing in here, so copy and paste in the following configurations. Save and Exit.
+
+:::CodeblockTabs
+text
+
+```none
+#!/bin/bash
+exec solana-validator \
+        --known-validator HhuygLTeS6grue95pKKzak2UPuQMXepWbvQv2ToQfbZN \
+        --known-validator 6vy4sYV6nTLJQ4tBcXUGgPTuGorVh2FJkm6ToVMFSfr2 \
+        --known-validator CYQCxRcrSNg2XUiM42tp6bUtbWzZEdmTNawhBg5hSLoo \
+        --known-validator 3dZiYo933M7VftTSb7WudJV92cg69QwVYS1s753xRc59 \
+        --known-validator 2X8DQyB88vac5yZnkVzz6JxogWzSEhJBfNz7UHbQms1i \
+        --known-validator 2Ww2DYCYegUrwxC44funMmdp7Ttyu38jFvUUkrzyyLMw \
+        --entrypoint xand-1.devnet.xandeum.com:8000 \
+        --entrypoint xand-2.devnet.xandeum.com:8000 \
+        --entrypoint xand-3.devnet.xandeum.com:8000 \
+        --entrypoint xand-4.devnet.xandeum.com:8000 \
+        --expected-shred-version 46090 \
+        --expected-genesis-hash 9MJobEeGZJH9KjQNzMcRDuPNFUwJtAnBEEgpWgAgy4VL \
+        --snapshot-interval-slots 300 \
+        --full-snapshot-interval-slots 3000 \
+        --identity ~/validator-keypair.json \
+        --vote-account ~/vote-keypair.json \
+        --ledger ~/ledger/ \
+        --dynamic-port-range 8000-10000 \
+        --rpc-port 8899 \
+        --log ~/xand-validator.log \
+        --limit-ledger-size 50000000 \
+#       --expected-bank-hash 3UQBGcNj3s5jfGKVa1jhqyXyPv6anm4PADbZdMCKY3ht \
+#       --wait-for-supermajority 610426 \
+#       --no-snapshot-fetch \
+#       --no-genesis-fetch \
+```
+:::
+
+:::hint{type="warning"}
+**Note**: Every trailing `\` is important!
+Any commented lines `#` must be at the bottom of the script. This is to save a command that may be needed later but not used now.
+:::
+
+:::hint{type="info"}
+**Note**: Change the location of `ledger` in the script to your second drive if you aren't using raid0
+:::
+
+:::hint{type="success"}
+Here are the known-validators:
+
+Xand1-known-validator HhuygLTeS6grue95pKKzak2UPuQMXepWbvQv2ToQfbZN \\
+Xand2-known-validator 6vy4sYV6nTLJQ4tBcXUGgPTuGorVh2FJkm6ToVMFSfr2 \\
+Xand3-known-validator CYQCxRcrSNg2XUiM42tp6bUtbWzZEdmTNawhBg5hSLoo \\
+Xand4-known-validator 3dZiYo933M7VftTSb7WudJV92cg69QwVYS1s753xRc59 \\
+t3chie-known-validator 2X8DQyB88vac5yZnkVzz6JxogWzSEhJBfNz7UHbQms1i \\
+bernie-known-validator 2Ww2DYCYegUrwxC44funMmdp7Ttyu38jFvUUkrzyyLMw \\
+:::
+
+
+
+### Make the script you just made executable.
+
+:::CodeblockTabs
+CLI
+
+```linux
+chmod +x ~/validator-start.sh
+```
+:::
+
+***
+
+##
+
+## 5) System Tuning
+
+:::hint{type="warning"}
+Run as `root` user, use `sudo -i`
+:::
+
+
+
+Optimize sysctl knobs (copy block and paste into teminal, press return)
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo bash -c "cat >/etc/sysctl.d/21-solana-validator.conf <<EOF
+# Increase UDP buffer sizes
+net.core.rmem_default = 134217728
+net.core.rmem_max = 134217728
+net.core.wmem_default = 134217728
+net.core.wmem_max = 134217728
+
+# Increase memory mapped files limit
+vm.max_map_count = 1000000
+
+# Increase number of allowed open file descriptors
+fs.nr_open = 1000000
+EOF"
+```
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo sysctl -p /etc/sysctl.d/21-solana-validator.conf
+```
+:::
+
+Open the file `/etc/systemd/system.conf` in your editor
+
+:::CodeblockTabs
+nano
+
+```linux
+sudo nano /etc/systemd/system.conf
+```
+
+vim
+
+```linux
+sudo vim /etc/systemd/system.conf
+```
+:::
+
+Add the following to the `[Manager]` section. Save and exit.
+
+:::CodeblockTabs
+CLI
+
+```linux
+DefaultLimitNOFILE=1000000
+```
+:::
+
+Reload the daemon
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo systemctl daemon-reload
+```
+:::
+
+Increase process file desriptor count limit. (copy block and paste into teminal, press return)
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo bash -c "cat >/etc/security/limits.d/90-solana-nofiles.conf <<EOF
+# Increase process file descriptor count limit
+* - nofile 1000000
+EOF"
+```
+:::
+
+:::hint{type="success"}
+This section is complete. Exit all shells or reboot to activate changes!
+:::
+
+
+
+
+
+Continue on to [**Setup System Service**](docId\:kFV3d5pRtdndrjBOcbBMB)
+
+
+---
+title: Setup System Service
+slug: setup-system-service
+description: Learn how to create a systemctl config file for running the powerful Xandeum Validator program effortlessly. This comprehensive document covers all the necessary specifications for executing the program, restart behavior, user privileges, and file limits.
+createdAt: 2023-08-19T21:17:46.187Z
+updatedAt: 2025-11-12T03:36:21.510Z
+---
+
+:::hint{type="warning"}
+Run as `root` user, use `sudo -i`
+:::
+
+Create your systemctl config file
+
+:::CodeblockTabs
+nano
+
+```linux
+sudo nano /etc/systemd/system/validator.service
+```
+
+vim
+
+```linux
+sudo vim /etc/systemd/system/validator.service
+```
+:::
+
+Paste into editor, make any changes to ledger dir or $PATH if you have deviated from the guide. Save and exit.
+
+
+
+:::CodeblockTabs
+CLI
+
+```linux
+[Unit]
+Description=Agave Validator
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+User=sol
+LimitNOFILE=2000000
+LogRateLimitIntervalSec=0
+Environment="PATH=/bin:/usr/bin:/home/sol/.local/share/xandeum/install/releases/active_release"
+ExecStart=/home/sol/validator-start.sh
+
+[Install]
+WantedBy=multi-user.target
+```
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo systemctl daemon-reload
+```
+:::
+
+
+
+:::hint{type="warning"}
+Note: You will start the validator using Option 2 on the Starting your validator section later on in the guide.
+:::
+
+
+
+Continue on to [**Setup LogRotate**](docId\:OLsHuypkjco2MYsxJL9P3)---
+title: Setup LogRotate
+slug: setup-logrotate
+description: Learn how to use LogRotate, a powerful tool for managing log files. This document explains how to avoid downtime by ensuring the validator start script starts with "exec". Follow the step-by-step guide to run LogRotate as the root user using "sudo -i" and
+createdAt: 2023-08-19T21:18:17.523Z
+updatedAt: 2025-11-12T03:36:21.510Z
+---
+
+# LogRotate
+
+LogRotate will break your log into a new file daily and keep 7 days of logs and discard old logs.
+
+:::hint{type="warning"}
+**Important:** Make sure your validator start script starts with `exec` or your validator will go offline for a time each time the logs rotate.
+:::
+
+:::hint{type="info"}
+Run as `root` user, use `sudo -i`
+:::
+
+Copy code block and paste into terminal.
+
+:::CodeblockTabs
+CLI
+
+```linux
+cat > logrotate.agave <<EOF
+/home/sol/validator.log {
+  rotate 7
+  daily
+  missingok
+  postrotate
+	systemctl kill -s USR1 validator.service
+  endscript
+}
+EOF
+sudo cp logrotate.agave /etc/logrotate.d/agave
+
+```
+:::
+
+Restart logrotate service
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo systemctl restart logrotate.service
+```
+:::
+
+
+
+Continue on to [**Starting your validator**](docId\:QT-gKqLryy-cYMxMcoZYe)---
+title: Starting your validator
+slug: starting-your-validator
+description: Learn two methods to start a validator for optimal performance. Choose between manual activation, keeping your terminal open, or set up a system service for automatic startup after system reboots. Follow the step-by-step guide for enabling and checking th
+createdAt: 2023-08-19T21:26:17.108Z
+updatedAt: 2025-11-12T03:36:21.510Z
+---
+
+# There are two methods to start your validator.&#x20;
+
+:::hint{type="warning"}
+**Only run one method or the other. If you have followed the guide, then proceed to option 2 below to start as a background service.**
+:::
+
+
+
+## 1) Manual&#x20;
+
+:::hint{type="info"}
+Manual will require you to keep the terminal window open or use a terminal multiplexor (tmux) as the validatator will die if the window closes.
+:::
+
+
+
+Run the exec file from the home dir&#x20;
+
+:::CodeblockTabs
+CLI
+
+```linux
+cd ~
+```
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+./validator-start.sh
+```
+:::
+
+
+
+
+
+
+
+
+
+## 2) System Service (Auto)
+
+The service will run in the background and will auto start 1 second after the system reboots.&#x20;
+
+:::hint{type="info"}
+NOTE: complete the section [**Setup System Service**](docId:_z4VVag78Oly1DTLPVmmb) first.
+
+Run as `sudo` or `root` user
+:::
+
+Enable the service to run in auto
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo systemctl daemon-reload
+sudo systemctl enable --now validator.service
+```
+:::
+
+Check if the service started and stayed running
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo systemctl status validator.service
+```
+:::
+
+:::hint{type="info"}
+Note: You should see the service is `active (running)` and you should see no `exit code` in the log at the bottom of the status window as shown below.&#x20;
+
+Press `q` to quit.
+:::
+
+
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/os3oF3j94hZi5I0TcFJ8a_screenshot-2023-08-19-201410.png)
+
+Continue to [**Monitoring your validator**](docId\:MYh9NcGnA169K2hipDjBA)---
+title: Monitoring your validator
+slug: monitoring-your-validator
+description: Learn how to monitor and troubleshoot log files using various scripts. This document explains how to create a monitor script, a catchup script, and utilize a watchtower system for effective monitoring. The monitor script allows you to execute specific com
+createdAt: 2023-08-19T21:28:06.533Z
+updatedAt: 2025-11-12T03:36:21.510Z
+---
+
+# Tail your log file
+
+Watch the latest entries in your log file for errors. It moves fast...so may need to stop the tail and read before restarting. Here are several ways to run it.&#x20;
+
+:::hint{type="info"}
+When the validator is first starting up, it asks the `entrypoint` in the start script "what IP address do you see me at?" Then it proceeds to ask the entrypoint if the required ports are open for it to use. This can be searched for during the startup sequence using the last tail option below that will grep 10 lines before and 50 after the search term to see if you are reachable. There is a ton of good connection debugging info in this search. See screenshot below.
+:::
+
+:::hint{type="warning"}
+Run as `sol`  user
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+su sol
+cd ~
+```
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+tail -f ~/validator.log
+```
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+tail -f ~/validator.log | grep "search terms"
+```
+:::
+
+This will restart your validator then grep the log file for initial connection info:
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo systemctl restart validator.service &&
+tail -f ~/validator.log | grep --color=always -B 10 -A 50 "Checking that tcp ports"
+```
+:::
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/56jMMbbVixqAyEt8RMziI_image.png "Correct ports are reachable")
+
+#
+
+# mon.sh
+
+Create a `monitor` script to easily run the monitor command
+
+:::hint{type="info"}
+Run as `sol` user
+:::
+
+Create a blank file named `mon.sh` in your home dir with editor.
+
+:::CodeblockTabs
+CLI
+
+```linux
+cd ~
+```
+:::
+
+:::CodeblockTabs
+nano
+
+```linux
+nano mon.sh
+```
+
+vim
+
+```linux
+vim mon.sh
+```
+:::
+
+Copy the code block into the file, correcting your ledger path if needed. Save and exit.
+
+:::CodeblockTabs
+CLI
+
+```linux
+agave-validator --ledger ~/ledger monitor
+```
+:::
+
+Make the file executable
+
+:::CodeblockTabs
+CLI
+
+```linux
+chmod a+x mon.sh
+```
+:::
+
+Run the monitor from home dir
+
+:::CodeblockTabs
+CLI
+
+```linux
+cd ~
+./mon.sh
+```
+:::
+
+:::hint{type="info"}
+NOTE: Press `enter` to drop a line to compare old values and press `ctrl+c` to exit the monitor command.
+:::
+
+
+
+# catchup.sh
+
+Create a `catchup` script that compares your machine to the RPC that you are connected to.
+
+
+Create a blank file named `catchup.sh` in your home dir with editor.
+
+:::CodeblockTabs
+CLI
+
+```linux
+cd ~
+```
+:::
+
+:::CodeblockTabs
+nano
+
+```linux
+nano catchup.sh
+```
+
+vim
+
+```linux
+vim catchup.sh
+```
+:::
+
+Copy the code block into the file. Save and exit.
+
+:::hint{type="warning"}
+Note: if using the ALT method for catchup because localhost is not working for you...be sure to grab your validator ID pubkey using `solana-keygen pubkey ~/validator-keypair.json`
+:::
+
+
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana catchup -k ~/validator-keypair.json --our-localhost --follow --verbose
+```
+
+ALT
+
+```linux
+solana catchup --url https://api.devnet.xandeum.com:8899 <validator ID pubkey> --follow --verbose
+```
+:::
+
+Make the file executable
+
+:::CodeblockTabs
+CLI
+
+```linux
+chmod a+x catchup.sh
+```
+:::
+
+Run the monitor from home dir
+
+:::CodeblockTabs
+CLI
+
+```linux
+cd ~
+./catchup.sh
+```
+:::
+
+:::hint{type="info"}
+NOTE: Press `enter` to drop a line to compare old values and press `ctrl+c` to exit the catchup command.
+:::
+
+
+
+Watchtower
+
+
+
+:::hint{type="warning"}
+NOTE: `agave-watchtower` is an optional monitoring system **running on a separate computer** that will alert you in your own personal discord. Setup is required that is not shown in this guide.&#x20;
+:::
+
+
+
+:::hint{type="info"}
+Run as `sol` user without sudo
+:::
+
+
+
+Watchtower should be ran from a remote computer that is running 24/7. It works by asking the RPC node if your Validator passes all the sanity checks. It can be added as a service or ran in a tmux window that never closes. You will need the  software compiled to the point that `solana -V` works after a reboot. You will need to create a Discord or Slack channel with a webhook to make this work. Telegram, PagerDudy, and Twilio are also supported.
+
+This example script checks every `<interval>` seconds and alerts to Discord and Slack if `<unhealthy-threshold>` number of failures show in a row\...ie 900 seconds
+
+Multiple scripts can be running with different `--validator-identity` and pumped into the same alert channel and use the `--name-suffix` to uniquely identify which machine is failing.
+
+
+
+:::hint{type="warning"}
+NOTE: If our RPC node goes down or is unreachable from your location...you will get false positives that your machine is down...this can be added if desired:
+
+`--ignore-http-bad-gateway`   &#x20;
+
+`Ignore HTTP 502 Bad Gateway errors from the JSON RPC URL. This flag can help reduce false positives, at the expense of no alerting should a Bad Gateway error be a side effect of the real problem`
+:::
+
+
+
+:::CodeblockTabs
+nano
+
+```linux
+nano watchtower-alerts.sh
+```
+
+vim
+
+```linux
+vim watchtower-alerts.sh
+```
+:::
+
+Add text to file and modify for your needs:
+
+:::CodeblockTabs
+text
+
+```linux
+export DISCORD_WEBHOOK=https://discord.com/api/webhooks/xxxxxxx/yyyyyyyyyy
+export SLACK_WEBHOOK=https://hooks.slack.com/services/xxxxxxxxx/yyyyyyyy/zzzzzz
+#note for google spaces output, use the same format as slack but add double quotes, see below.
+export SLACK_WEBHOOK="https://chat.googleapis.com/v1/spaces/xxxxxxxxx/messages?key=yyyyyyyyyyy-yyyyyyyytoken=zzzzzzzzzzzzzzz"
+
+#! /bin/sh
+exec agave-watchtower \
+         --url https://api.devnet.xandeum.com:8899/ \
+         --validator-identity <Validator ID> \
+         --name-suffix ::<Alert>:: \
+         --interval 300 \
+         --unhealthy-threshold 3 \
+         --minimum-validator-identity-balance 3 \
+
+```
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+chmod a+x watchtower-alerts.sh
+```
+:::
+
+Run the script! You may want this running in a tmux session so it stays active when you close your teminal. [**Learn Tmux**](docId:4ivv9szuCMvtZAXZxUxhj)
+
+:::CodeblockTabs
+CLI
+
+```linux
+./watchtower-alerts.sh
+```
+:::
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/PqxUCTwyd5VdRxwma1um__image.png)
+
+From the script, we will see that 3 ERRORS in a row checked at 300 second intervals will trigger the alert to be sent to our Discord webhook.
+
+
+
+Consider next [**Zabbix Installation**](docId\:MLb0ziv_jx0kZbybDclo2)---
+title: Onboarding
+slug: onboarding
+description: Learn how to onboard a validator seamlessly with this step-by-step guide. Check the validator's status, CPU cores, and current slot. Ensure blockchain synchronization by running scripts and submit essential details like IP address, hostname, Validator ID,
+createdAt: 2023-08-31T23:37:22.217Z
+updatedAt: 2025-11-12T03:36:21.510Z
+---
+
+# Onboarding Process
+
+**Follow All the steps on this page to verify you are ready to onboard your validator!**
+
+:::hint{type="info"}
+1. **After you have the validator running for at least 1 hour,** please follow steps 2-6 to ensure you are ready to onboard and start validating transactions!
+2. Check `htop` to see if your cpu cores are active (meaning validator is running)
+3. Check the current slot `solana slot`
+4. Run your `mon.sh` script and verify you are above the slot listed in 2
+5. Run `catchup.sh` script to verify you are staying in pace with the blockchain...ie `0 slot(s) behind (us:12345 them:12345)` and watch for 5 minutes
+6. Grab the needed info below and submit onboarding form with your IP address, hostname, Validator ID, and Vote ID using the button below.
+:::
+
+:::hint{type="warning"}
+Use `sol` user
+:::
+
+
+
+Find your Validator ID Pubkey
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana-keygen pubkey ~/validator-keypair.json
+```
+:::
+
+Find your Vote Account Pubkey
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana-keygen pubkey ~/vote-keypair.json
+```
+:::
+
+Find your Public IP Address with a suitable method, here are two:
+
+:::CodeblockTabs
+dig
+
+```linux
+dig +short myip.opendns.com @resolver1.opendns.com
+```
+
+curl
+
+```linux
+curl https://ipinfo.io/ip/
+```
+:::
+
+
+
+::::hint{type="success"}
+:::CtaButton{label="Submit Onboarding Details" docId docAnchorId externalHref="https://xand-devnet-2.paperform.co" openInNewTab="true"}
+
+:::
+
+**Please take a moment to grab your Public IP address, hostname, Validator Pubkey and Vote Pubkey. Submit to Xandeum Foundation using this form!&#x20;**
+::::
+
+
+Check out more [**Validator Commands**](docId\:IZ8K2IUlzWiP78mLxBgE1)---
+title: Validator Commands
+slug: validator-commands
+description: Learn how to efficiently use the Xandeum validator software with this comprehensive document. Discover a range of useful commands such as checking connected machines, sorting validators by skip-rate, accessing log files, shutting down properly, and obtain
+createdAt: 2023-08-21T02:39:22.358Z
+updatedAt: 2025-11-12T03:36:21.510Z
+---
+
+# Help
+
+Check the help file.&#x20;
+
+Add `--help` behind ANY validator command to get help on that command or subcommand (ie `solana validators --help`)
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana --help
+```
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+agave-validator --help
+```
+:::
+
+#
+
+# Gossip
+
+Check the machines connected to the cluster
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana gossip
+```
+:::
+
+#
+
+# Validators
+
+Check the current and delinquent validators, stake and software version.
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana validators
+```
+:::
+
+This will sort by highest skip-rate.
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana validators --sort skip-rate --reverse
+```
+:::
+
+#
+
+# Delinquent Validators
+
+Show only delinquent validators by grep for the ⚠️ symbol
+
+:::CodeblockTabs
+CLI
+
+```linux
+
+solana validators | grep -P '\x{26A0}'
+```
+
+CLI
+
+```linux
+solana validators | grep ⚠️ 
+```
+:::
+
+#
+
+# LOGS
+
+Follow the log file (it moves fast, can be combined with options such as pipe to grep)
+
+:::CodeblockTabs
+CLI
+
+```linux
+tail -f validator.log
+```
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+tail -f validator.log | grep "search terms"
+```
+:::
+
+#
+
+# EXIT
+
+To properly shut down a validator
+
+Use exit command to:
+
+- Check for upcoming leader slots
+  - Note: with our cluster size, we will almost always be missing leader slots by shutting down so we need to bypass this check with `--min-idle-time`
+- Check cluster for delinquent stake
+- Take local snapshot
+- Stop your validator
+
+:::CodeblockTabs
+CLI
+
+```linux
+agave-validator --ledger ~/ledger exit --max-delinquent-stake 10 --min-idle-time 0 --monitor
+```
+:::
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/Yfk--p-f7d2S50x_VMsSA_screenshot-2023-08-20-215530.png "Exit is holding for upcoming leader slot")
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/Y9W6cuiUzqlgbxnKBuEFs_screenshot-2023-08-20-220527.png)
+
+:::hint{type="warning"}
+NOTE: If you have a system service set up on the machine, then you also need to `stop` the service or it will auto-restart!
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo systemctl stop validator.service
+```
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+sudo systemctl status validator.service
+```
+:::
+
+#
+
+# Get Config
+
+:::CodeblockTabs
+CLI
+
+```linux
+solana config get
+```
+:::
+
+
+
+
+
+
+
+
+---
+title: Learn Tmux
+slug: learn-tmux
+description: Learn how to maximize productivity with Tmux, the powerful terminal multiplexor. Effortlessly manage multiple terminal instances, switch between them seamlessly, and create multiple pages with panes for enhanced multitasking. Discover the added advantage 
+createdAt: 2023-08-19T21:27:12.088Z
+updatedAt: 2025-11-12T03:36:21.510Z
+---
+
+Tmux is a teminal multiplexor...allowing you to run more than one terminal instance in the same window and switch between them.&#x20;
+
+It also allows you multiple pages that can have one or more panes of terminal windows.
+
+Added benifits are that the windows all stay running and multiple people can view and work on the same session at the same time.
+
+[**https://www.redhat.com/sysadmin/introduction-tmux-linux**](https://www.redhat.com/sysadmin/introduction-tmux-linux)
+
+[**https://tmuxcheatsheet.com/**](https://tmuxcheatsheet.com/)
+
+This isn't required, but is a helpful tool once you learn how to use it.
+
+
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/LErpaZ-pef_eg6wViTBfS_screenshot-2023-08-19-172928.png)
+---
+title: Xandeum pNode Setup Guide
+slug: xandeum-pnode-setup-guide
+createdAt: 2025-02-27T17:28:05.404Z
+updatedAt: 2025-11-13T16:59:29.602Z
+---
+
+![Xandeum Exabytes for Solana Programs](https://app.archbee.com/api/optimize/ePevXmvzgG-7aqJ72Gpg_/VDQyu5F-6c32A1aVQ67d3_logo.png)
+
+This document provides step-by-step instructions for setting up and managing a pNode for the Xandeum Network. Each section covers a specific part of the process, from prerequisites to troubleshooting.
+
+***
+
+:::hint{type="info"}
+If you have already run through the prerequisites and security concerns, you can skip to the installation:
+
+[****](https://app.archbee.com/docs/jJnL3gd8VnRbIK0kH13OK/dxThFWSwJQtbz2GYN2gPv#ibw0o)
+:::
+
+
+
+# Prerequisites for Setting Up a pNode for Xandeum
+
+Before you begin setting up your pNode for the Xandeum Network, ensure you meet the following requirements. These steps will prepare your hardware, software, and environment to run xandminer and xandminerd effectively.
+
+### Hardware Requirements
+
+- **Recommended VPS:** We recommend using a Virtual Private Server (VPS) from Contabo for $5.50/month. However, Contabo’s default 20 GB SSD storage is insufficient for Xandeum’s needs. Ensure your VPS or server has at least:
+  - 4 CPU core
+  - 4 GB RAM
+  - 80 GB SSD storage (20 GB for system operations + an additional at least 60GiB free space to dedicate to the Xandeum Network)
+  - 1 Gbps network
+- **Alternative Options:** You can use any Ubuntu-based machine, including home servers or other VPS providers, as long as they meet the minimum specs above and have a stable internet connection.
+- **Storage for Blockchain-Grade Data:** Ensure your pNode has sufficient storage (e.g., additional drives or partitions) to handle Xandeum’s blockchain-grade storage needs. xandminerd will interface with your hardware to query drives and partitions.
+
+### Software Requirements
+
+- **Operating System on pNode:**
+  - Ubuntu 24.04 LTS or later (recommended for stability and compatibility with Xandeum software).
+  - Ensure the pNode has a clean, updated Ubuntu installation.
+- **Local Machine OS (for Managing pNode):**
+  - Windows 10 or later, macOS, or any Linux distribution (e.g., Ubuntu, Fedora).
+  - Windows users must have PowerShell or Command Prompt available (built into Windows 10/11).
+- **SSH Client:**
+  - Windows: Built-in OpenSSH client (available since Windows 10).
+  - macOS/Linux: Built-in `ssh` command (via OpenSSH).
+- **Web Browser:** Any modern browser (e.g., Chrome, Firefox, Edge) to access the xandminer GUI at `http://localhost:3000`.
+
+### Network Requirements
+
+- **Stable Internet Connection:** Your pNode and local machine need a reliable internet connection for SSH access and software updates.
+- **Port Availability:** Ensure ports 3000 and 4000 are not blocked by firewalls or your ISP on your pNode, as it will be used for the xandminer GUI and xandminerd background service via an SSH tunnel.
+- **Static IP (Recommended):** A static IP address for your pNode is recommended for consistent access, though dynamic IPs can work with proper DNS configuration.
+
+### Tools and Access
+
+- **Git:** Installed on your pNode to clone repositories from GitHub.
+- **SSH Keys:** You’ll need to generate an SSH key pair (Ed25519 recommended) on your local machine and add it to your pNode for secure access. Instructions for this are in the next section.
+- **Basic Command-Line Knowledge:** Familiarity with terminal commands (e.g., `ssh`, `curl`, `git`) on your local machine and pNode.
+
+### Notes
+
+:::BlockQuote
+**Important:** These prerequisites ensure your pNode can run xandminer [**https://github.com/Xandeum/xandminer**](https://github.com/Xandeum/xandminer) and xandminerd [**https://github.com/Xandeum/xandminerd**](https://github.com/Xandeum/xandminerd) effectively. If you have questions or encounter issues, consult our Troubleshooting section or join our community on X/Discord for support.
+:::
+
+:::BlockQuote
+**Future BFT Consensus:** As Xandeum evolves to include Byzantine Fault Tolerance (BFT) consensus, your pNode will need additional resources. We’ll provide updates in future sections.
+:::
+
+:::BlockQuote
+**Xandeum Network Branding:** Note that “Xandeum Network” is our official branding, with both words capitalized. Visit our main website at [**xandeum.network**](https://xandeum.network) for more information.
+:::
+
+***
+
+# SSH Key Setup for pNode Access
+
+To securely access and manage your pNode, you'll need to generate an SSH key pair on your local machine and configure it on your pNode. We recommend using Ed25519 keys for their security and performance, but RSA 4096 is also supported as a fallback.
+
+### Generating an SSH Key Pair
+
+Follow these steps based on your local machine's operating system.
+
+### On Windows (Using OpenSSH)
+
+- **Requirements:** Ensure you're running Windows 10 or later with PowerShell or Command Prompt available.
+- **Generate an Ed25519 Key:**
+  1. Open PowerShell or Command Prompt.
+  2. Run the following command to generate an Ed25519 key pair: `ssh-keygen -t ed25519`
+  3. Press Enter to accept the default file location (`C:\Users\<username>\.ssh\id_ed25519`) or specify a custom path.
+  4. Optionally, enter a passphrase for added security (recommended, but optional).
+  5. This will create two files: `id_ed25519` (private key) and `id_ed25519.pub` (public key) in your `.ssh` directory.
+- **Fallback to RSA 4096 (if Needed):**
+  If Ed25519 isn't compatible with your pNode, generate an RSA 4096 key with:
+  `ssh-keygen -t rsa -b 4096`
+- **Verify the Key:** Check that the keys were generated by listing the `.ssh` directory:
+  `dir C:\Users\<username>\.ssh`
+
+### On Linux or macOS
+
+- **Generate an Ed25519 Key:**
+  1. Open a terminal.
+  2. Run the following command to generate an Ed25519 key pair:
+     `ssh-keygen -t ed25519`
+  3. Press Enter to accept the default file location (`/home/<username>/.ssh/id_ed25519`) or specify a custom path.
+  4. Optionally, enter a passphrase for added security (recommended, but optional).
+  5. This will create `id_ed25519` (private key) and `id_ed25519.pub` (public key) in your `.ssh` directory.
+- **Fallback to RSA 4096 (if Needed):**
+  If Ed25519 isn't compatible, generate an RSA 4096 key with:
+  `ssh-keygen -t rsa -b 4096`
+- **Verify the Key:** Check the keys by listing the `.ssh` directory:
+  `ls -l ~/.ssh`
+
+### Adding the Public Key to Your pNode
+
+1. Copy the public key (`id_ed25519.pub` or `id_rsa.pub`, depending on the key type you generated) to your clipboard:
+   - On Windows (PowerShell):
+     `type C:\Users\<username>\.ssh\id_ed25519.pub | clip`
+   - On Linux/macOS:
+     `cat ~/.ssh/id_ed25519.pub | pbcopy  # macOS`
+     `cat ~/.ssh/id_ed25519.pub | xclip    # Linux (if xclip is installed)`
+2. SSH into your pNode using password authentication (you'll disable this later):
+   `ssh root@<my.p.node.ip>`
+   Replace `<my.p.node.ip>` with your pNode's IP address.
+3. Create or edit the `~/.ssh/authorized_keys` file on your pNode:
+   `mkdir -p ~/.ssh`
+   `nano ~/.ssh/authorized_keys`
+   Paste your public key into the file, save, and exit (Ctrl+O, Enter, Ctrl+X in `nano`).
+4. Ensure the permissions are correct:
+   `chmod 700 ~/.ssh`
+   `chmod 600 ~/.ssh/authorized_keys`
+
+### Testing SSH Access
+
+- Exit the pNode (`exit`) and test SSH access using your private key:
+  - On Windows (PowerShell):
+    `ssh -i C:\Users\<username>\.ssh\id_ed25519 root@<my.p.node.ip>`
+  - On Linux/macOS:
+    `ssh -i ~/.ssh/id_ed25519 root@<my.p.node.ip>`
+- **If prompted, enter your SSH key passphrase (if you set one). You should now access your pNode without a password. If you are still prompted for a password, go back through the above steps or ask for assistance from the community.**
+
+### Disabling Password Login for Enhanced Security
+
+To maximize the security of your pNode, you should disable password-based SSH login and rely solely on SSH keys. This prevents brute-force attacks and ensures only authorized users with SSH keys can access your pNode. However, this step is irreversible without access to your SSH private key, so proceed carefully.
+
+### Important Precautions
+
+- Ensure you've successfully tested SSH key-based access (as described earlier in this guide) before proceeding.
+- Keep your SSH private key safe and backed up. If you lose it, you won't be able to access your pNode without assistance from your hosting provider.
+- Run this step from a secure connection, and keep your current SSH session open in case you need to revert changes.
+
+### Using Our Script to Disable Password Login
+
+We've created a simple script to safely disable password login on your pNode, handling common configuration file variations (e.g., `/etc/ssh/sshd.d`). Follow these steps:
+Note: will only work if you are using file naming from above (ie `~/.ssh/id_ed25519`)
+
+:::hint{type="info"}
+Note: Option 4 In the Xandeum pNode Software Installer will handle SSH hardening also. You may use either method.
+:::
+
+
+
+1. Download our SSH hardening script by running the following command in your terminal:
+   `wget https://gist.github.com/bernieblume/7c49b49e718f9e41d4802e94e7a9e103/raw/nopwlogin.sh`
+2. Make the script executable:
+   `chmod +x nopwlogin.sh`
+3. Run the script with sudo:
+   `sudo ./nopwlogin.sh`
+4. Follow the on-screen instructions and verify that you can still access your pNode using your SSH key.
+
+### Manual Instructions (Advanced Users)
+
+If you prefer to disable password login manually or the script doesn't work for your setup, follow these steps:
+
+1. SSH from your local machine into your pNode using your SSH key:
+   `ssh -i ~/.ssh/id_ed25519 root@<my.p.node.ip>`
+2. Open the SSH configuration file in a text editor (e.g., `nano` or `vim`):
+   `nano /etc/ssh/sshd_config`
+3. Look for the following lines and set them to `no`. If the lines are commented (start with `#`), uncomment them by removing the `#`:
+   `PasswordAuthentication no`
+   `ChallengeResponseAuthentication no`
+4. Check if `/etc/ssh/sshd_config.d/` exists. If it does, create or edit a file (e.g., `10-disable-password-auth.conf`) in that directory and add:
+   `PasswordAuthentication no`
+   `ChallengeResponseAuthentication no`
+5. Save the file and exit the editor (in `nano`, press Ctrl+O, Enter, then Ctrl+X).
+6. Restart the SSH service:
+   `systemctl restart ssh`
+   or, if that doesn't work:
+   `service ssh restart`
+7. Test SSH access with your key to ensure you're not locked out:
+   `ssh -i ~/.ssh/id_ed25519 root@<my.p.node.ip>`
+
+### Troubleshooting
+
+- If you're locked out, restore from the backups created by the script (located at `/etc/ssh/sshd_config.bak-*` and `/etc/ssh/sshd_config.d.bak-*`) or contact your hosting provider for console access.
+- If password login is still enabled, check for conflicting settings in `/etc/ssh/sshd_config.d/` files and ensure the SSH service restarted correctly.
+
+:::BlockQuote
+**Note:** Disabling password login is permanent unless you re-enable it manually or via console access. Always test key-based access before proceeding.
+:::
+
+***
+
+# Installing and Configuring xandminer on Your pNode
+
+Now that you've secured your pNode with SSH key-based authentication and disabled password login, it's time to install and configure the xandminer software to set up your pNode as a mining node. This chapter guides you through downloading and running the pNode installer script, which automates the setup of xandminer and xandminerd, including repository management, systemd service configuration, and verification steps.
+
+### Prerequisites
+
+Before proceeding, ensure the following:
+
+- You have SSH access to your pNode using your SSH key (as configured in the previous chapter).
+  - **Optionally, open an ssh session tunnel that forwards the ports that will be needed later as well:**
+  - `ssh -i ~/.ssh/id_ed25519 root@<my.p.node.ip> -L 4000:localhost:4000 -L 3000:localhost:3000 8000:localhost:8000`
+    - This will allow port `http://localhost:3000` in your web browser to connect through the ssh tunnel to your xandminer
+    - Port 4000 is used to connect the GUI to the xandminerd service
+    - Port 8000 is used for the stats page
+- Your pNode is running a compatible Linux distribution (e.g., Ubuntu 20.04 or later, Debian 11 or later).
+- You have `root` privileges on your pNode.
+- Git, curl, and systemd are installed on your pNode. You can install them with:
+  `apt update && apt install -y git curl systemd`
+- Restart if prompted to load newer kernel
+
+### Downloading and Running the pNode Installer
+
+We've created a simple installer script to automate the setup of xandminer and xandminerd on your pNode. This script checks for critical security settings, clones or updates the repositories, configures systemd services, and provides instructions for the next steps.
+
+### Steps to Run the Installer
+
+1. SSH from your local machine into your pNode using your SSH key:
+   `ssh -i ~/.ssh/id_ed25519 root@<my.p.node.ip> -L 4000:localhost:4000 -L 3000:localhost:3000 8000:localhost:8000`
+   Replace `<my.p.node.ip>` with your pNode's IP address.
+2. Download the installer script by running the following command in your terminal:
+   `wget -O install.sh "https://raw.githubusercontent.com/Xandeum/xandminer-installer/refs/heads/master/install.sh"`
+3. Make `install.sh` executable
+   `chmod a+x install.sh`
+4. Run the script with sudo:
+   `./install.sh`
+5. Follow the on-screen instructions and verify the output to ensure the installation completed successfully. Choose option:
+   &#x20;`1. Install Xandeum pNode Software`
+
+### What the Installer Script Does
+
+The installer script performs the following actions:
+
+- **Repository Management**:
+  - Checks if the `xandminer` and `xandminerd` directories exist in `/root`.
+  - If the directories don't exist, the script clones the respective Git repositories into `/root/xandminer` and `/root/xandminerd`.
+  - If the directories exist, the script changes into each directory and runs `git pull` to update the repositories to the latest version.
+- **Systemd Service Configuration**:
+  - Copies the `xandminer.service` and `xandminerd.service` files (located in the root directory of their respective repositories) to `/etc/systemd/system`.
+  - Enablesand starts the services using `systemctl enable xandminer.service --now` and `systemctl enable xandminerd.service --now`
+- **Success Message**: Outputs a success message indicating that the services are enabled and running, along with a link to the documentation for further instructions (using a placeholder for now, e.g., `<docs-link>`).
+
+### Troubleshooting
+
+- If Git cloning or pulling fails, ensure you have an active internet connection and the necessary permissions on your pNode.
+- If systemd service configuration fails, check the permissions of `/etc/systemd/system` and ensure systemd is properly installed and running.
+
+
+
+### Next Steps
+
+Once the installer script has completed successfully, it is reccomeended to restart your pNode to load any new kernel drivers. Xandminer and xandminerd services will be running upon reboot. Refer to the documentation at `<docs-link>` for detailed instructions on starting, monitoring, and troubleshooting the services, as well as configuring xandminer for optimal mining performance.
+
+***
+
+# Starting and Monitoring xandminer Services
+
+Now that you’ve installed and enabled the xandminer and xandminerd services on your pNode using the installer script, it’s time to start them and monitor their operation. This chapter walks you through manually starting the services, checking their status, reviewing logs, and troubleshooting common issues to ensure your pNode is mining effectively.
+
+### Prerequisites
+
+Before proceeding, ensure the following:
+
+- You have SSH access to your pNode using your SSH key (as configured in the “SSH Key Setup” chapter).
+- The xandminer and xandminerd services are installed and enabled on your pNode (as described in the “Installing and Configuring xandminer on Your pNode” chapter).
+- You have `root` privileges on your pNode.
+
+### Starting the xandminer and xandminerd Services
+
+The installer script enabled the services but did not start them. Follow these steps to manually start the services:
+
+1. SSH into your pNode using your SSH key:
+   `ssh -i ~/.ssh/id_ed25519 root@<my.p.node.ip> -L 4000:localhost:4000 -L 3000:localhost:3000 8000:localhost:8000`
+   Replace `<my.p.node.ip>` with your pNode’s IP address.
+2. Start the xandminer service:
+   `systemctl start xandminer`
+3. Start the xandminerd service:
+   `systemctl start xandminerd`
+
+### Checking Service Status
+
+After starting the services, verify they are running correctly:
+
+1. Check the status of the xandminer service:
+   `systemctl status xandminer`
+   Look for output indicating “active (running)” and no errors. If the service isn’t running, you’ll see “inactive” or “failed.”
+2. Check the status of the xandminerd service:
+   `systemctl status xandminerd`
+
+### Sample Output for a Running Service
+
+Here’s an example of what a running service status might look like:
+
+```text
+xandminer.service - xandminer Mining Service
+   Loaded: loaded (/etc/systemd/system/xandminer.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2025-02-21 10:00:00 UTC; 5min ago
+ Main PID: 12345 (xandminer)
+    Tasks: 10 (limit: 4915)
+   Memory: 50.0M
+   CGroup: /system.slice/xandminer.service
+           └─12345 /usr/bin/xandminer --config /root/xandminer/config.json
+```
+
+Or, if there’s an issue:
+
+```text
+xandminer.service - xandminer Mining Service
+   Loaded: loaded (/etc/systemd/system/xandminer.service; enabled; vendor preset: enabled)
+   Active: failed (Result: exit-code) since Fri 2025-02-21 10:05:00 UTC; 1min ago
+     Docs: <docs-link>
+  Process: 12346 ExecStart=/usr/bin/xandminer --config /root/xandminer/config.json (code=exited, status=1/FAILURE)
+
+### Monitoring Logs
+To troubleshoot or monitor the services, check their logs using `journalctl`:
+
+1. View logs for xandminer:
+   `journalctl -u xandminer`
+2. View logs for xandminerd:
+   `journalctl -u xandminerd`
+
+You can also tail the logs in real-time:
+   `journalctl -u xandminer -f`
+   `journalctl -u xandminerd -f`
+```
+
+Look for any error messages, warnings, or indications of successful mining activity (e.g., connection to the mining pool, hash rates, etc.).
+
+### Troubleshooting Common Issues
+
+If the services fail to start or aren’t running as expected, try the following:
+
+- **Check Permissions**: Ensure the service files in `/etc/systemd/system` and the repository directories (`/root/xandminer`, `/root/xandminerd`) have the correct permissions:
+
+```text
+   chmod 644 /etc/systemd/system/xandminer.service
+   chmod 644 /etc/systemd/system/xandminerd.service
+   chmod -R 755 /root/xandminer
+   chmod -R 755 /root/xandminerd
+```
+
+- **Restart Services**: If you make changes, restart the services:
+  `systemctl restart xandminer`
+  `systemctl restart xandminerd`
+- **Review Logs**: Use `journalctl` to identify specific errors (e.g., missing dependencies, configuration issues, or network problems).
+- **Verify Dependencies**: Ensure all required dependencies for xandminer and xandminerd are installed.&#x20;
+- **Check Network**: Ensure your pNode has internet access and can connect to the mining pool (if applicable).
+
+### Enabling Automatic Startup (Optional)
+
+If you want the services to start automatically on boot (in addition to manual starting), you can enable them (though this was already done by the installer):
+`systemctl enable xandminer`
+`systemctl enable xandminerd`
+
+### Next Steps
+
+Once the services are running and monitored, you can configure xandminer for optimal mining performance.
+
+***
+
+# Setting Up an SSH Tunnel and Accessing the xandminer Web GUI
+
+To manage your pNode remotely and access the xandminer web-based graphical user interface (GUI) securely, you can set up an SSH tunnel using OpenSSH on Windows. This chapter guides you through creating an SSH tunnel to forward traffic from your local machine to the xandminer web GUI running on your pNode, ensuring secure and encrypted access.
+
+### Prerequisites
+
+Before proceeding, ensure the following:
+
+- You have SSH access to your pNode using your SSH key (as configured in the “SSH Key Setup” chapter).
+- The xandminer and xandminerd services are installed, enabled, and running (as described in the “Starting and Monitoring xandminer Services” chapter).
+- The xandminer web GUI is enabled and configured on your pNode.
+- You have `root` privileges on your pNode.
+- You have OpenSSH installed on your Windows machine. You can install it via Windows 10/11 Settings under “Optional Features” or through Windows Subsystem for Linux (WSL).
+
+### Enabling the xandminer Web GUI
+
+Open an SSH tunnel that forwards the proper ports through the tunnel, ensure the xandminer service is enabled and running on your pNode:
+
+1. SSH into your pNode using OpenSSH on Windows:
+   `ssh -i %userprofile%\.ssh\id_ed25519 root@<my.p.node.ip> -L 4000:localhost:4000 -L 3000:localhost:3000 8000:localhost:8000`
+   Replace `<my.p.node.ip>` with your pNode’s IP address.
+2. Check if the xandminer web GUI service is installed and enabled:
+   `systemctl status xandminer`
+   If the service isn’t running or installed, refer to the xandminer installation instructions.
+3. Start and enable the xandminer web GUI service:
+   `systemctl enable --now xandminer`
+4. Verify the GUI is accessible locally on the pNode (if on the same network) by opening a web browser on the pNode and navigating to `http://localhost:3000` (or the port specified in the documentation).
+
+
+### Setting Up an SSH Tunnel with OpenSSH on Windows
+
+The xandminer web GUI typically runs on a local port (e.g., 3000) on your pNode, but it may not be exposed publicly for security reasons. You can use an SSH tunnel with OpenSSH on Windows to forward traffic from your local machine to the pNode’s GUI port securely.
+
+1. Open a Windows Command Prompt, PowerShell, or WSL terminal on your local machine and create an SSH tunnel to forward local ports 3000 and 4000 to the pNode’s ports 3000 and 4000:
+   `ssh -i %userprofile%\.ssh\id_ed25519 -L 4000:localhost:4000 -L 3000:localhost:3000 8000:localhost:8000 root@<my.p.node.ip>`
+   - `-L 3000:localhost:3000` forwards local port 3000 to port 3000 on the pNode.
+   - `-L 4000:localhost:4000` forwards local port 4000 to port 4000 on the pNode.
+   - `-L 8000:localhost:8000` forwards local port 8000 to port 8000 on the pNode.
+   - Replace `<my.p.node.ip>` with your pNode’s IP address.
+2. Keep the terminal window open to maintain the tunnel. The SSH connection will stay active until you close the terminal, the session times out, or the connection is interrupted.
+3. Open a web browser on your local machine and navigate to `http://localhost:3000` to access the xandminer web GUI.
+
+### Managing the SSH Tunnel
+
+When using an SSH tunnel, consider the following guidance to manage it effectively and securely:
+
+- **Leaving the Tunnel Open**: You can leave the SSH tunnel open while actively managing your pNode via the xandminer web GUI. This allows continuous access to the GUI without needing to recreate the tunnel frequently. However, be aware that the tunnel might close over time due to network interruptions, idle timeouts, or system sleep/hibernate modes on your local machine or pNode.
+- **Reopening the Tunnel**: If the tunnel closes (e.g., due to a network disconnection or timeout), you’ll need to reopen it by rerunning the SSH command:
+  `ssh -i %userprofile%\.ssh\id_ed25519 -L 4000:localhost:4000 -L 3000:localhost:3000 root@<my.p.node.ip>`
+  Check the terminal for error messages (e.g., “Connection closed” or “Connection timed out”) to diagnose why the tunnel closed.
+- **Avoid Leaving Unattended for Too Long**: Do not leave the SSH tunnel open for extended periods when you’re not actively using it, such as when you leave your PC unattended for hours or overnight. Leaving the tunnel open unnecessarily can expose your pNode to potential security risks if the connection is compromised or if your local machine is left unsecured. Close the terminal or disconnect the SSH session (`exit` or Ctrl+C) when you’re done using the GUI to minimize risks.
+
+### Checking the pNode ports:
+
+Use this one-line command to check if the correct ports are accessible from the public interent.&#x20;
+It tests public UDP 5000 and localhost TCP 3000 and TCP 4000
+The tool uses nc (netcat) and ss (socket statistics) to test the pNode ports.
+
+:::CodeblockTabs
+CLI
+
+```bash
+MY_IP=$(curl -s https://ipinfo.io/ip) && echo " UDP 5000 on $MY_IP" && if command -v nc >/dev/null 2>&1; then timeout 10 nc -zu $MY_IP 5000 && echo "✅ UDP 5000 PUBLIC" || echo "❌ UDP 5000 NOT PUBLIC"; else echo "⚠️  netcat (nc) not installed - cannot test UDP 5000"; fi && echo " Localhost TCP:" && for port in 3000 4000; do ss -tlnp 2>/dev/null | grep -q "127.0.0.1:$port " && echo "✅ $port" || echo "❌ $port"; done
+```
+:::
+
+:::hint{type="info"}
+The output should look like this:
+If you have any red X marks next to a port you need to investigate the connection issues.
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/q9eePtm-hB2ORFmoBIA5C_image.png)
+:::
+
+:::hint{type="success"}
+This section is now complete. See below for advanced and future features.
+
+Otherwise, continue on to [**Register your pNode**](docId:7V5bNlOBkun6-EPMcPJYf) on the Xandeum DevNet.
+:::
+
+
+
+
+
+### Troubleshooting SSH Tunnels and Web GUI Access
+
+If you encounter issues, try the following:
+
+- **Connection Refused**: Ensure the xandminer web GUI service is running on the pNode:
+  `sudo systemctl status xandminer`
+  Start it if necessary: `sudo systemctl enable --now xandminer`.
+- **Port Conflict**: Verify port 3000 (or the configured GUI port) isn’t in use by another service on your local machine or pNode:
+  `sudo netstat -tuln | grep 3000`
+- **SSH Key Issues**: Confirm your SSH key is correctly configured and permissions are set (e.g., `chmod 600 %userprofile%\.ssh\id_ed25519` on WSL or via a Linux-like file manager on Windows).
+- **Firewall Rules**: Ensure port 3000 is open on the pNode for local access (if not using a tunnel, though tunnels bypass external firewalls):
+  `ufw allow 3000/tcp`
+- **Browser Issues**: Clear your browser cache or try a different browser if the GUI doesn’t load.
+
+### Automating SSH Tunnels (Optional)
+
+For frequent access, automate the SSH tunnel using a batch script or SSH configuration:
+
+- Create a batch script (e.g., `start_ssh_tunnel.bat`):
+  @echo off
+  start cmd /k "ssh -i %userprofile%.ssh\id\_ed25519 -L 3000\:localhost:3000 -L 4000\:localhost:4000 root@\<my.p.node.ip>"
+  Save it, double-click to run, and it will open a new Command Prompt window with the tunnel. Close the window to terminate the tunnel.
+- Or, edit your SSH config (`%userprofile%\.ssh\config`) to include a tunnel:
+  Host \<pnode-hostname>
+  HostName \<my.p.node.ip>
+  User root
+  IdentityFile %userprofile%.ssh\id\_ed25519
+  LocalForward 3000 localhost:3000
+  LocalForward 4000 localhost:4000
+  LocalForward 8000 localhost:8000
+
+
+Then connect with: `ssh pnode`
+
+### Next Steps
+
+With the SSH tunnel and xandminer web GUI set up, you can remotely manage your pNode’s mining operations securely. Use the GUI to complement the command-line tools and monitoring scripts from previous chapters.&#x20;
+
+
+
+***
+
+
+
+***
+---
+title: Register your pNode
+slug: register-your-pnode
+createdAt: 2025-03-09T01:22:43.902Z
+updatedAt: 2025-11-12T03:22:40.864Z
+---
+
+# Setting Up an SSH Tunnel and Accessing the xandminer Web GUI
+
+To manage your pNode remotely and access the xandminer web-based graphical user interface (GUI) securely, you can set up an SSH tunnel using OpenSSH on Windows. This chapter guides you through creating an SSH tunnel to forward traffic from your local machine to the xandminer web GUI running on your pNode, ensuring secure and encrypted access.
+
+### Prerequisites
+
+Before proceeding, ensure the following:
+
+- You have SSH access to your pNode using your SSH key (as configured in the “SSH Key Setup” chapter).
+- The xandminer and xandminerd services are installed, enabled, and running (as described in the “Starting and Monitoring xandminer Services” chapter).
+- The xandminer web GUI is enabled and configured on your pNode.
+- You have `root` privileges on your pNode.
+- You have OpenSSH installed on your Windows machine. You can install it via Windows 10/11 Settings under “Optional Features” or through Windows Subsystem for Linux (WSL).
+
+### Enabling the xandminer Web GUI
+
+Open an SSH tunnel that forwards the proper ports through the tunnel, ensure the xandminer service is enabled and running on your pNode:
+
+1. SSH into your pNode using OpenSSH on Windows:
+   `ssh -i %userprofile%\.ssh\id_ed25519 root@<my.p.node.ip> -L 4000:localhost:4000 -L 3000:localhost:3000`
+   Replace `<my.p.node.ip>` with your pNode’s IP address.
+   1. port 3000 is for the GUI connection (http\://localhost:3000)
+   2. port 4000 is for the xandminerd connection
+2. Check if the xandminer and xandminerd services are installed and enabled:
+   `sudo systemctl status xandminer`
+   `sudo systemctl status xandminerd`
+3. If the service isn’t installed, refer to the xandminer installation instructions.
+4. Start and enable the xandminer services:
+   `sudo systemctl enable --now xandminer`
+   `sudo systemctl enable --now xandminerd`
+5. Verify the GUI is accessible locally on the opening a web browser on the remote Windows machine and navigating to `http://localhost:3000`.
+
+A sucessful connection will look like the screenshot below:
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/FTnUwhjUPyAwSSRud1GS8_image.png)
+
+# Connect your wallet
+
+Using Phantom wallet or Solflare wallet, connect your Manager wallet using the "Select Wallet" button, and choose your wallet that has purchased at least one pNode license.
+
+- A manager can have up to 3 pNode licenses
+- Each pNode will need its own ip address
+
+After your wallet is connected, generate a keypair on your pNode using the "Generate Identity Key-pair" button.
+
+::Image[]{src="https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/rTywDF8TK8yDvyRFY0fg3_image.png" signedSrc size="24" width="282" height="447" position="center" caption}
+
+- the keypair will be created on the pnode and the pubkey can be viewed in he Xandminer GUI
+- Press on the pNode Identity Keypair button again to copy the pubkey to your clipboard
+
+Next, press the "register pNode" button to register your pNode onto the Xandeum Network
+
+::Image[]{src="https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/gfRsKeyJT8srNzOFCImgE_image.png" signedSrc size="24" width="282" height="421" position="center" caption}
+
+
+---
+title: Onboard your pNode
+slug: onboard-your-pnode
+createdAt: 2025-05-11T18:08:04.766Z
+updatedAt: 2025-11-12T03:22:40.864Z
+---
+
+Each pnode must be onboarded separatly using this form to be eligible for Devnet rewards.
+
+[**https://pnode-onboarding.paperform.co/**](https://pnode-onboarding.paperform.co/)
+---
+title: pNode UPDATE version
+slug: pnode-update-version
+description: Update your elready set up Xandeum pNode using this update guide.
+createdAt: 2023-08-19T03:02:55.649Z
+updatedAt: 2025-11-13T16:32:46.092Z
+---
+
+
+
+Connect to your pNode via SSH, forwarding the proper ports into the localhost of the pNode.
+
+If you're using windows, you'll use `cmd.exe` or `power shell` , use this format:
+****Be sure to verify the location of your SSH identity file and public IP address.****
+
+:::CodeblockTabs
+CLI
+
+```linux
+ssh -i "C:\path to ssh key\id_ed25519.pub" root@<my.p.node.ip> -L 4000:localhost:4000 -L 3000:localhost:3000 -L 8000:localhost:8000 
+```
+:::
+
+If using Mac terminal or Linux, use this format:
+****Be sure to verify the location of your SSH identity file and public IP address.****
+
+:::CodeblockTabs
+CLI
+
+```linux
+ssh -i ~/.ssh/id_ed25519 root@<my.p.node.ip> -L 4000:localhost:4000 -L 3000:localhost:3000 -L 8000:localhost:8000 
+```
+:::
+
+
+
+
+
+Run the newest version of the `install.sh` script, and use Option 2 to Upgrade:
+
+:::hint{type="warning"}
+Run as `root` user
+use `sudo -i` to change to root user
+Sudo password may be required
+:::
+
+:::CodeblockTabs
+CLI
+
+```linux
+wget -O install.sh "https://raw.githubusercontent.com/Xandeum/xandminer-installer/refs/heads/master/install.sh" && chmod a+x install.sh && ./install.sh
+```
+:::
+
+::::hint{type="success"}
+:::BlockQuote
+After running Option 2, Wait for the completion messages. It may take several minutes and will look like this when done:
+
+Xandminerd Service Running On Port : 4000
+To access your Xandminer, use address localhost:3000 in your web browser
+Setup completed successfully!
+Upgrade completed successfully!
+Restarting Xandeum service...
+Service restart completed.
+
+:::
+::::
+
+
+
+Go to your local web browser and check your xandminer status in the web GUI
+
+:::CodeblockTabs
+CLI
+
+```linux
+http://localhost:3000/
+```
+:::
+
+
+
+A completed upgrade will show the correct versions, see screenshot:
+
+
+![](https://archbee-image-uploads.s3.amazonaws.com/ePevXmvzgG-7aqJ72Gpg_/1gZJMHyvbN5TB2KUb3zDp_image.png)
+
+Congratulations, you completed the upgrade!
+
+
+
+
+:::hint{type="warning"}
+Check your pNode is accessible on the correct ports here:
+&#x20;[**https://pnodes.xandeum.network/#nYHpd**](https://pnodes.xandeum.network/#nYHpd)
+----------------------------------------------------------------------------------------
+:::
+
+
+
+***Don't forget to enable storage by using the "Dedicate and Earn" button!***
+
+
+***
+---
+title: @xandeum/web3.js
+slug: api
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:38:24.390Z
+---
+
+**Xandeum Web3 Library v1.12.0**
+
+***
+
+:::BlockQuote
+Solana transaction builder for interacting with a file system on the Xandeum network.
+:::
+
+This package provides a JavaScript/TypeScript interface to construct Solana transactions for creating, modifying, and managing  file systems on-chain using the Xandeum program.
+
+## ✨ Features
+
+- Create and delete file systems (`bigbang`, `armageddon`)
+- Manage files and directories (`create`, `rename`, `remove`, `copy`)
+- Read and write file contents with byte-level control (`peek`, `poke`)
+- Secure path validation and serialization
+- Compatible with `@solana/web3.js`
+
+## 📦 Installation
+
+```bash
+npm install @xandeum/web3.js
+```
+
+or
+
+```text
+yarn add @xandeum/web3.js
+```
+
+🚀 Usage
+
+```text
+import {
+  bigbang,
+  armageddon,
+  createFile,
+  poke,
+  peek,
+  copyPath
+} from '@xandeum/web3.js'
+
+import {
+  Connection,
+  sendAndConfirmTransaction,
+  Keypair,
+  PublicKey
+} from '@solana/web3.js'
+
+const connection = new Connection('https://apis.devnet.xandeum.com)
+const signer = Keypair.generate()
+const wallet = signer.publicKey
+
+async function main() {
+  // Create a new file system
+  const tx1 = await bigbang(wallet)
+  await sendAndConfirmTransaction(connection, tx1, [signer])
+
+  // Create a file
+  const tx2 = await createFile('1', '/','hello.txt', wallet)
+  await sendAndConfirmTransaction(connection, tx2, [signer])
+
+  const dataAccount = new PublicKey("FBM4G63KPUneqyLwQy6zVu81AsMqmkQjsdxNGBKq3dkv");
+  
+  // Write data
+  const tx3 = await poke('1', '/hello.txt', 0, Buffer.from('Hello Xandeum!'), wallet)
+  await sendAndConfirmTransaction(connection, tx3, [signer])
+
+  // Read data
+  const tx4 = await peek('1', '/hello.txt', 0, 14, wallet)
+  await sendAndConfirmTransaction(connection, tx4, [signer])
+}
+```
+
+## 🧩 API Overview
+
+bigbang(wallet: PublicKey): Promise:::Iframe{code="<Transaction>"}
+
+:::
+Creates a new file system account.
+
+armageddon(fsid: string, wallet: PublicKey): Promise:::Iframe{code="<Transaction>"}
+
+:::
+Deletes a file system by ID.
+
+createFile(fsid: string, path: string, wallet: PublicKey): Promise:::Iframe{code="<Transaction>"}
+
+:::
+Creates a new file at the given path.
+
+poke(fsid: string, path: string, offset: number, data: Buffer, wallet: PublicKey): Promise:::Iframe{code="<Transaction>"}
+
+:::
+Writes bytes to a file starting at a specific offset.
+
+peek(fsid: string, path: string, offset: number, length: number, wallet: PublicKey): Promise:::Iframe{code="<Transaction>"}
+
+:::
+Reads bytes from a file.
+
+copyPath(fsid: string, srcPath: string, destPath: string, wallet: PublicKey): Promise:::Iframe{code="<Transaction>"}
+
+:::
+Copies a file or directory from one path to another.
+
+Other available functions 
+
+renamePath 
+
+removeFile 
+
+removeDirectory 
+
+createDirectory 
+
+exists 
+
+listDirectoryEntry 
+
+getMetadata 
+
+
+All functions that accept a file or directory path will validate inputs using sanitizePath to prevent invalid characters.
+
+## 🌐 WebSocket Subscription
+
+subscribeResult(connection: Connection,tx: string, onResult: (result: ResultValue) => void, onError?: (err: any) => void, onClose?: () => void): void
+Subscribes to results from a transaction via WebSocket. Used for listening  events triggered by the transaction.
+
+### Parameters:
+
+connection - The solana web3 connection with Xandeum-compatible JSON-RPC endpoint (e.g., `'https://api.devnet.solana.com'`).
+tx — Transaction signature to subscribe to
+onResult(result) — Called when a valid result is received
+onError(err) — Optional callback for connection errors
+onClose() — Optional callback for connection closure
+Example:
+
+```text
+subscribeResult(
+  connection,
+  'transactionSignatureHere',
+  result => {
+    console.log('Result:', result)
+  }
+)
+```
+
+Example
+
+```text
+import {
+  bigbang,
+  createFile,
+  poke,
+  peek,
+  subscribeResult
+} from '@xandeum/web3.js'
+
+import {
+  Connection,
+  sendAndConfirmTransaction,
+  Keypair
+} from '@solana/web3.js'
+
+const connection = new Connection('https://api.mainnet-beta.solana.com')
+const signer = Keypair.generate()
+const wallet = signer.publicKey
+
+async function main() {
+  const tx = await createFile('1', '/hello.txt', wallet)
+  const txSignature = await sendAndConfirmTransaction(connection, tx, [signer])
+
+  subscribeResult(
+    connection,
+    txSignature,
+    result => {
+      console.log('Received result:', result)
+    },
+    err => console.error('WebSocket error:', err),
+    () => console.log('WebSocket closed')
+  )
+}
+```
+
+Apache-2.0 © Xandeum
+
+👤 Author
+
+Built by Xandeum to provide decentralized, programmable file systems on Solana via the Xandeum protocol.
+---
+title: Xandeum Web3 Library v1.12.0
+slug: api/xandeum-web3-library-v1120
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:38:24.390Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+## Functions
+
+- [**Function: armageddon()**](docId\:q_DGbEld1_hHnFQCe-Xx7)
+- [**Function: bigbang()**](docId:2y8w8mjDEiK-pL_lwNBgt)
+- [**Function: copyPath()**](docId\:qElLGaNcXjCVC8ZzYs-EO)
+- [**Function: createDirectory()**](docId\:ivaWVDpAoN8_59-KTl0sd)
+- [**Function: createFile()**](docId\:g4hpvJzDbmlJA9gEj-hvw)
+- [**Function: exists()**](docId\:BcP0dImGnzb22vawSPyeI)
+- [**Function: getMetadata()**](docId\:NVF7vOkDfAeVy3iLWY-jA)
+- [**Function: getXandeumResult()**](docId\:USU9ec3_vtmNWaQzwHBem)
+- [**Function: listDirectoryEntry()**](docId:1JvjE8jqr5ugLworNFrC_)
+- [**Function: move()**](docId\:msTbE8MX11hI_WJ-N6VW3)
+- [**Function: peek()**](docId\:asr3Yg2KR5EUwaGKi76D_)
+- [**Function: poke()**](docId\:x9IZGfqtPv8V5mFO9zfKF)
+- [**Function: removeDirectory()**](docId:8HDO3LquCcO7DVpysA7lq)
+- [**Function: removeFile()**](docId:7_XlmNkSly7KtiLeSxonZ)
+- [**Function: renamePath()**](docId\:rBXepczf8aeDAvNFy2l8R)
+- [**Function: subscribeResult()**](docId\:bEZrcCXRk828on9a1ak2r)
+- [**Function: unsubscribeResult()**](docId\:TDHCb64ElWhWtyVITvMfP)---
+title: Function: bigbang()
+slug: api/function-bigbang
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:38:55.127Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / bigbang
+
+:::BlockQuote
+**bigbang**(`wallet`): `Promise`\<`Transaction`>
+:::
+
+Defined in: [**bigbang.ts:10**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/bigbang.ts#L10)
+
+Constructs a Solana transaction that triggers the "bigbang" instruction and create new file system.
+
+## Parameters
+
+### wallet
+
+`PublicKey`
+
+The public key of the wallet that will sign and authorize the transaction.
+
+## Returns
+
+`Promise`\<`Transaction`>
+
+A Promise that resolves to a Solana `Transaction` object containing the bigbang instruction.---
+title: Function: armageddon()
+slug: api/function-armageddon
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:38:55.127Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / armageddon
+
+:::BlockQuote
+**armageddon**(`fsid`, `wallet`): `Promise`\<`Transaction`>
+:::
+
+Defined in: [**armageddon.ts:13**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/armageddon.ts#L13)
+
+Constructs a Solana transaction that triggers the "armageddon" instruction
+on the specified file system (fsid).
+
+## Parameters
+
+### fsid
+
+`string`
+
+A stringified integer representing the file system ID to be used in the instruction.
+
+### wallet
+
+`PublicKey`
+
+The public key of the wallet that will sign and authorize the transaction.
+
+## Returns
+
+`Promise`\<`Transaction`>
+
+A Promise that resolves to a Solana `Transaction` object containing the armageddon instruction.---
+title: Function: createFile()
+slug: api/function-createfile
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:39:21.362Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / createFile
+
+:::BlockQuote
+**createFile**(`fsid`, `path`, `name`, `wallet`): `Promise`\<`Transaction`>
+:::
+
+Defined in: [**createFile.ts:17**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/createFile.ts#L17)
+
+Constructs a Solana transaction to create a new file
+within a file system, identified by a file system ID (`fsid`).
+
+## Parameters
+
+### fsid
+
+`string`
+
+A stringified integer representing the file system ID where the file is to be created.
+
+### path
+
+`string`
+
+The absolute or relative path within the file system where the file should be created.
+
+### name
+
+`string`
+
+The name of the new file or directory to be created.
+
+### wallet
+
+`PublicKey`
+
+The public key of the wallet that will sign and authorize the transaction.
+
+## Returns
+
+`Promise`\<`Transaction`>
+
+A Promise that resolves to a Solana `Transaction` object containing the createFile instruction.
+
+## Throws
+
+Will throw an error if `path` or `name` contains invalid characters.---
+title: Function: removeFile()
+slug: api/function-removefile
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:39:21.362Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / removeFile
+
+:::BlockQuote
+**removeFile**(`fsid`, `path`, `wallet`): `Promise`\<`Transaction`>
+:::
+
+Defined in: [**removeFile.ts:17**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/removeFile.ts#L17)
+
+Constructs a Solana transaction to remove a file from a  file system,
+identified by a file system ID (`fsid`) and a UTF-8 encoded file path.
+
+## Parameters
+
+### fsid
+
+`string`
+
+A stringified integer representing the file system ID in which the file resides.
+
+### path
+
+`string`
+
+The full path to the file to be deleted.
+
+### wallet
+
+`PublicKey`
+
+The public key of the wallet that signs and authorizes the transaction.
+
+## Returns
+
+`Promise`\<`Transaction`>
+
+A Promise that resolves to a Solana `Transaction` object containing the remove file instruction.
+
+## Throws
+
+May throw an error if `path` is invalid per `sanitizePath`.---
+title: Function: copyPath()
+slug: api/function-copypath
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:39:21.362Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / copyPath
+
+:::BlockQuote
+**copyPath**(`fsid`, `srcPath`, `destPath`, `wallet`): `Promise`\<`Transaction`>
+:::
+
+Defined in: [**copyPath.ts:18**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/copyPath.ts#L18)
+
+Constructs a Solana transaction to copy a file or directory from one  path to another.
+
+## Parameters
+
+### fsid
+
+`string`
+
+The unique numeric identifier representing the target file system.
+
+### srcPath
+
+`string`
+
+The source path to copy from (e.g., `/documents/report.txt`).
+
+### destPath
+
+`string`
+
+The destination path to copy to (e.g., `/archive/report.txt`).
+
+### wallet
+
+`PublicKey`
+
+The wallet public key used to sign and authorize the transaction.
+
+## Returns
+
+`Promise`\<`Transaction`>
+
+A Promise that resolves to a Solana `Transaction` object containing the copyPath instruction.
+
+## Throws
+
+Will throw an error if `srcPath` or `destPath` contains invalid characters.---
+title: Function: renamePath()
+slug: api/function-renamepath
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:39:21.362Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / renamePath
+
+:::BlockQuote
+**renamePath**(`fsid`, `oldPath`, `name`, `wallet`): `Promise`\<`Transaction`>
+:::
+
+Defined in: [**renamePath.ts:18**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/renamePath.ts#L18)
+
+Constructs a Solana transaction to rename (or move) a file or directory
+within a file system, based on a provided file system ID (`fsid`).
+
+## Parameters
+
+### fsid
+
+`string`
+
+A stringified integer representing the file system ID where the path exists.
+
+### oldPath
+
+`string`
+
+The current path of the file or directory to be renamed or moved.
+
+### name
+
+`string`
+
+The new name to assign to the file or directory.
+
+### wallet
+
+`PublicKey`
+
+The public key of the wallet that signs and authorizes the transaction.
+
+## Returns
+
+`Promise`\<`Transaction`>
+
+A Promise that resolves to a Solana `Transaction` object containing the rename path instruction.
+
+## Throws
+
+May throw an error if either `oldPath` or `newPath` is invalid per `sanitizePath`.---
+title: Function: move()
+slug: api/function-move
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:39:21.362Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / move
+
+:::BlockQuote
+**move**(`fsid`, `srcPath`, `destPath`, `name`, `wallet`): `Promise`\<`Transaction`>
+:::
+
+Defined in: [**move.ts:19**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/move.ts#L19)
+
+Constructs a Solana transaction to copy a file or directory from one  path to another.
+
+## Parameters
+
+### fsid
+
+`string`
+
+The unique numeric identifier representing the target file system.
+
+### srcPath
+
+`string`
+
+The source path to copy from (e.g., `/documents`).
+
+### destPath
+
+`string`
+
+The destination path to copy to (e.g., `/archive`).
+
+### name
+
+`string`
+
+The name of the new file or directory at the destination (e.g., `report.txt`).
+
+### wallet
+
+`PublicKey`
+
+The wallet public key used to sign and authorize the transaction.
+
+## Returns
+
+`Promise`\<`Transaction`>
+
+A Promise that resolves to a Solana `Transaction` object containing the copyPath instruction.
+
+## Throws
+
+Will throw an error if `srcPath` or `destPath` contains invalid characters.---
+title: Function: createDirectory()
+slug: api/function-createdirectory
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:40:30.245Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / createDirectory
+
+:::BlockQuote
+**createDirectory**(`fsid`, `path`, `name`, `wallet`): `Promise`\<`Transaction`>
+:::
+
+Defined in: [**createDirectory.ts:17**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/createDirectory.ts#L17)
+
+Constructs a Solana transaction to create a new directory within a  file system.
+
+## Parameters
+
+### fsid
+
+`string`
+
+A numeric filesystem identifier used to scope the directory creation.
+
+### path
+
+`string`
+
+The parent path where the directory should be created (e.g., `/documents`).
+
+### name
+
+`string`
+
+The name of the new directory (e.g., `reports`).
+
+### wallet
+
+`PublicKey`
+
+The signer’s public key that authorizes the transaction.
+
+## Returns
+
+`Promise`\<`Transaction`>
+
+A Promise that resolves to a Solana `Transaction` object containing the createDirectory instruction.
+
+## Throws
+
+Will throw an error if `path` or `name` contains invalid characters.\@throws Will throw if the combined path is invalid (non-alphanumeric or unsupported characters).---
+title: Function: removeDirectory()
+slug: api/function-removedirectory
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:40:30.245Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / removeDirectory
+
+:::BlockQuote
+**removeDirectory**(`fsid`, `path`, `wallet`): `Promise`\<`Transaction`>
+:::
+
+Defined in: [**removeDirectory.ts:17**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/removeDirectory.ts#L17)
+
+Constructs a Solana transaction to perform a "remove directory" operation
+in a  file system, identified by a file system ID (`fsid`).
+
+## Parameters
+
+### fsid
+
+`string`
+
+A stringified integer representing the file system ID containing the directory.
+
+### path
+
+`string`
+
+The full path to the directory that should be removed.
+
+### wallet
+
+`PublicKey`
+
+The public key of the wallet that will sign and authorize the transaction.
+
+## Returns
+
+`Promise`\<`Transaction`>
+
+A Promise that resolves to a Solana `Transaction` object containing the remove directory instruction.
+
+## Throws
+
+May throw an error if the `path` fails validation in `sanitizePath`.---
+title: Function: listDirectoryEntry()
+slug: api/function-listdirectoryentry
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:40:30.245Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / listDirectoryEntry
+
+:::BlockQuote
+**listDirectoryEntry**(`connection`, `path`): `Promise`\<`any`>
+:::
+
+Defined in: [**listDirectoryEntery.ts:24**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/listDirectoryEntery.ts#L24)
+
+Sends a JSON-RPC request to the Xandeum RPC endpoint to list all entries (files and subdirectories)
+within a specified path.
+
+This function calls the custom RPC method `listDirs`, which is  return an array of
+directory entry metadata — names, types etc.
+
+## Parameters
+
+### connection
+
+`Connection`
+
+The solana web3 connection with Xandeum-compatible JSON-RPC endpoint (e.g., `'https://api.devnet.solana.com'`).
+
+### path
+
+`string`
+
+The  filesystem path representing the directory to list (e.g., `/documents`).
+
+## Returns
+
+`Promise`\<`any`>
+
+A `Promise<any>` resolving to the parsed JSON response from the RPC server,
+typically including a `result` array containing directory entry objects.---
+title: Function: peek()
+slug: api/function-peek
+createdAt: 2025-11-21T10:56:35.129Z
+updatedAt: 2025-11-26T17:40:41.259Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / peek
+
+:::BlockQuote
+**peek**(`fsid`, `path`, `startPosition`, `endPosition`, `wallet`): `Promise`\<`Transaction`>
+:::
+
+Defined in: [**peek.ts:20**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/peek.ts#L20)
+
+Constructs a Solana transaction to perform a "peek" operation on a file within a file system.
+
+The peek operation reads data between two byte offsets within a specified file path.
+
+## Parameters
+
+### fsid
+
+`string`
+
+A stringified integer representing the file system ID in which the file resides.
+
+### path
+
+`string`
+
+The path to the file to be peeked.
+
+### startPosition
+
+`number`
+
+The starting byte offset (inclusive) to begin reading from.
+
+### endPosition
+
+`number`
+
+The ending byte offset (exclusive) to stop reading at.
+
+### wallet
+
+`PublicKey`
+
+The public key of the wallet that will sign and authorize the transaction.
+
+## Returns
+
+`Promise`\<`Transaction`>
+
+A Promise that resolves to a Solana `Transaction` object containing the peek instruction.
+
+## Throws
+
+Will throw an error if the `path` contains invalid characters.---
+title: Function: poke()
+slug: api/function-poke
+createdAt: 2025-11-21T10:56:35.130Z
+updatedAt: 2025-11-26T17:40:41.259Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / poke
+
+:::BlockQuote
+**poke**(`fsid`, `path`, `position`, `wallet`, `dataKey`): `Promise`\<`Transaction`>
+:::
+
+Defined in: [**poke.ts:19**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/poke.ts#L19)
+
+Constructs a Solana transaction to perform a poke\operation, which writes data
+to a file at the specified path and byte position.
+
+## Parameters
+
+### fsid
+
+`string`
+
+A stringified integer representing the file system ID where the file resides.
+
+### path
+
+`string`
+
+The path to the file to be written to.
+
+### position
+
+`number`
+
+The byte offset in the file where data should be written.
+
+### wallet
+
+`PublicKey`
+
+The public key of the wallet that signs and authorizes the transaction.
+
+### dataKey
+
+`PublicKey`
+
+A public key of a data account that holds the content to be written to the file.
+
+## Returns
+
+`Promise`\<`Transaction`>
+
+A Promise that resolves to a Solana `Transaction` object containing the poke instruction.
+
+## Throws
+
+Will throw an error if the `path` contains invalid characters.---
+title: Function: exists()
+slug: api/function-exists
+createdAt: 2025-11-21T10:56:35.130Z
+updatedAt: 2025-11-26T17:40:49.890Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / exists
+
+:::BlockQuote
+**exists**(`connection`, `path`): `Promise`\<`any`>
+:::
+
+Defined in: [**exists.ts:23**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/exists.ts#L23)
+
+Sends a JSON-RPC request to the Xandeum RPC endpoint to check if a file or directory exists.
+
+This function calls the custom RPC method `isExist`, which should be implemented
+by the backend to validate the existence of metadata (files/directories) at a given path.
+
+## Parameters
+
+### connection
+
+`Connection`
+
+The solana web3 connection with Xandeum-compatible JSON-RPC endpoint (e.g., `'https://api.devnet.solana.com'`).
+
+### path
+
+`string`
+
+The filesystem path to check (e.g., `/documents/myfile.txt`).
+
+## Returns
+
+`Promise`\<`any`>
+
+A `Promise<any>` resolving to the RPC response JSON, typically including a `result` field
+indicating existence (e.g., `true` or `false`), or `null` if not found.---
+title: Function: getMetadata()
+slug: api/function-getmetadata
+createdAt: 2025-11-21T10:56:35.130Z
+updatedAt: 2025-11-26T17:40:49.890Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / getMetadata
+
+:::BlockQuote
+**getMetadata**(`connection`, `path`): `Promise`\<`any`>
+:::
+
+Defined in: [**getMetadata.ts:26**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/getMetadata.ts#L26)
+
+Sends a JSON-RPC request to the Xandeum RPC endpoint to retrieve metadata
+about a file or directory at the given path.
+
+This function calls the custom RPC method `getMetadata`, which is implemented
+by the backend to return metadata such as type (file or directory), size,
+timestamps etc.
+
+## Parameters
+
+### connection
+
+`Connection`
+
+The solana web3 connection with Xandeum-compatible JSON-RPC endpoint (e.g., `'https://api.devnet.solana.com'`).
+
+### path
+
+`string`
+
+The filesystem path to query metadata for (e.g., `/documents/myfile.txt`).
+
+## Returns
+
+`Promise`\<`any`>
+
+A `Promise<any>` resolving to the parsed JSON response from the RPC server,
+typically containing a `result` object with metadata fields.---
+title: Function: getXandeumResult()
+slug: api/function-getxandeumresult
+createdAt: 2025-11-21T10:56:35.130Z
+updatedAt: 2025-11-26T17:40:49.890Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / getXandeumResult
+
+:::BlockQuote
+**getXandeumResult**(`connection`, `signature`): `Promise`\<`any`>
+:::
+
+Defined in: [**getXandeumResult.ts:21**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/getXandeumResult.ts#L21)
+
+Sends a JSON-RPC request to the Xandeum-compatible endpoint to retrieve
+the result of a transaction previously submitted with a specific signature.
+
+This function calls the custom RPC method `getXandeumResult`, which returns
+the result associated with the given transaction signature.
+
+## Parameters
+
+### connection
+
+`Connection`
+
+The Solana web3 connection object pointing to a Xandeum-compatible RPC endpoint.
+
+### signature
+
+`string`
+
+The transaction signature string whose result should be queried.
+
+## Returns
+
+`Promise`\<`any`>
+
+A `Promise<any>` resolving to the parsed JSON response from the RPC server,
+which includes the result of the transaction if available.---
+title: Function: subscribeResult()
+slug: api/function-subscriberesult
+createdAt: 2025-11-21T10:56:35.130Z
+updatedAt: 2025-11-26T17:40:55.941Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / subscribeResult
+
+:::BlockQuote
+**subscribeResult**(`connection`, `tx`, `onResult`, `onError?`, `onClose?`): `void`
+:::
+
+Defined in: [**webSocket.ts:40**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/webSocket.ts#L40)
+
+Opens a WebSocket connection and subscribes to the result of a transaction
+via the custom `xandeumResultSubscribe` method.
+
+This is useful for receiving asynchronous results tied to an on-chain operation,
+such as file creation, modification, or deletion.
+
+The subscription sends a JSON-RPC request with:
+
+- `method`: "xandeumResultSubscribe"
+- `params`: \[txId, \{ commitment: "finalized" }]
+
+The WebSocket listens for result messages and invokes the `onResult` callback
+if a valid result with `fsid`, `status`, or `data` is received.
+
+## Parameters
+
+### connection
+
+`Connection`
+
+The solana web3 connection with Xandeum-compatible JSON-RPC endpoint (e.g., `'https://api.devnet.solana.com'`).
+
+### tx
+
+`string`
+
+The transaction ID you want to listen for results from.
+
+### onResult
+
+(`value`) => `void`
+
+Callback to handle incoming result messages. Triggered when a valid response is received.
+
+### onError?
+
+(`err`) => `void`
+
+(Optional) Callback triggered if a WebSocket error occurs.
+
+### onClose?
+
+() => `void`
+
+(Optional) Callback triggered when the WebSocket connection closes.
+
+## Returns
+
+`void`---
+title: Function: unsubscribeResult()
+slug: api/function-unsubscriberesult
+createdAt: 2025-11-21T10:56:35.130Z
+updatedAt: 2025-11-26T17:40:55.941Z
+---
+
+[**@xandeum/web3.js**](docId\:WXgxPNPIdcz6-2b6gH786)
+
+***
+
+[**Xandeum Web3 Library v1.12.0**](docId\:l2rwyC57Gjg6S93MCecr9) / unsubscribeResult
+
+:::BlockQuote
+**unsubscribeResult**(`connection`, `subscriptionId`): `void`
+:::
+
+Defined in: [**webSocket.ts:103**](https://github.com/Xandeum/xandeum-web3.js/blob/master/src/webSocket.ts#L103)
+
+Sends a WebSocket JSON-RPC message to unsubscribe from a previously subscribed transaction result
+using the `xandeumResultUnsubscribed` method (note: custom method, ensure server-side implementation matches).
+
+This function automatically closes the WebSocket connection after sending the unsubscribe request.
+
+## Parameters
+
+### connection
+
+`Connection`
+
+The solana web3 connection with Xandeum-compatible JSON-RPC endpoint (e.g., `'https://api.devnet.solana.com'`).
+
+### subscriptionId
+
+`string`
+
+The ID of the active subscription you want to cancel.
+
+## Returns
+
+`void`---
+title: pNode CLI Usage
+slug: api/pnode-cli-usage
+createdAt: 2025-11-19T11:00:48.248Z
+updatedAt: 2025-11-26T17:45:35.078Z
+---
+
+Complete reference for all command-line arguments and configuration options.
+
+## Basic Usage
+
+### Start with Default Settings
+
+```bash
+pod
+```
+
+Starts the pnode with default configuration:
+
+- pRPC server on `127.0.0.1:6000` (private)
+- Stats server on `127.0.0.1:80` (private)
+- Uses default bootstrap node for peer discovery
+
+### Check Version
+
+```bash
+pod --version
+# Output: pod 1.0.0
+```
+
+### Get Help
+
+```bash
+pod --help
+# Shows complete usage information with all options and examples
+```
+
+**Output:**
+
+```text
+Xandeum pNode is a high-performance blockchain node that provides JSON-RPC API, 
+peer-to-peer communication via gossip protocol, and real-time statistics monitoring.
+
+PORTS:
+    6000    pRPC API (configurable IP binding)
+    80      Stats dashboard (localhost only)  
+    9001    Gossip protocol (peer communication)
+    5000    Atlas connection (outbound)
+
+DOCUMENTATION:
+    For complete documentation, visit /usr/share/doc/pod/ after installation
+
+Usage: pod [OPTIONS]
+
+Options:
+      --rpc-ip <IP_ADDRESS>
+          Set RPC server IP binding [default: 127.0.0.1 for private]
+          
+      --entrypoint <IP:PORT>
+          Bootstrap node for peer discovery [default: 173.212.207.32:9001]
+
+      --no-entrypoint
+          Disable peer discovery (run in isolation)
+
+      --atlas-ip <IP:PORT>
+          Atlas server address for data streaming [default: 95.217.229.171:5000]
+
+  -h, --help
+          Print help (see a summary with '-h')
+
+  -V, --version
+          Print version
+```
+
+## Command-Line Arguments
+
+### --rpc-ip `<IP_ADDRESS>`
+
+*Optional* - Specifies the IP address for the pRPC server to bind to.
+
+**Default**: `127.0.0.1` (private, localhost only)
+
+\=== "Examples"
+
+````text
+```bash
+# Private access (default)
+pod --rpc-ip 127.0.0.1
+
+# Public access from any interface
+pod --rpc-ip 0.0.0.0
+
+# Bind to specific network interface
+pod --rpc-ip 192.168.1.100
+
+# IPv6 localhost
+pod --rpc-ip ::1
+```
+````
+
+!!! warning "Security Note"
+Using `0.0.0.0` makes your pRPC API accessible from any network interface. Only use this if you understand the security implications.
+
+### --entrypoint `<IP:PORT>`
+
+*Optional* - Specifies a bootstrap node to connect to for initial peer discovery.
+
+**Default**: `173.212.207.32:9001` (default bootstrap node)
+
+\=== "Examples"
+
+````text
+```bash
+# Connect to specific bootstrap node
+pod --entrypoint 192.168.1.50:9001
+
+# Connect to custom port
+pod --entrypoint 10.0.0.5:9002
+```
+````
+
+### --no-entrypoint
+
+*Optional* - Disables bootstrap peer discovery. The pnode will start without attempting to connect to any initial peers.
+
+\=== "Example"
+
+````text
+```bash
+# Start without peer discovery
+pod --no-entrypoint
+```
+````
+
+!!! info "Isolated Mode"
+When using `--no-entrypoint`, your pnode will operate in isolation until other pnodes connect to it directly.
+
+### --atlas-ip `<IP:PORT>`
+
+*Optional* - Specifies the Atlas server address for data streaming and synchronization.
+
+**Default**: `95.217.229.171:5000` (Devnet)
+
+\=== "Examples"
+
+````text
+```bash
+# Connect to local Atlas server
+pod --atlas-ip 127.0.0.1:5000
+
+# Connect to custom Atlas server
+pod --atlas-ip 10.0.0.10:5000
+```
+````
+
+### --version
+
+*Standalone* - Displays the pnode software version and exits immediately.
+
+```bash
+pod --version
+# Output: pod 1.0.0
+```
+
+### --help
+
+*Standalone* - Displays complete usage information including all options, examples, and port information.
+
+```bash
+pod --help
+# Shows complete usage information with all options and examples
+```
+
+## Common Usage Patterns
+
+### 🔒 Private Development Setup
+
+```bash
+pod --no-entrypoint
+```
+
+Perfect for local development and testing. No external connections, pRPC only accessible locally.
+
+### 🌐 Public Node
+
+```bash
+pod --rpc-ip 0.0.0.0
+```
+
+Runs a public node with pRPC API accessible from any network interface. Uses default bootstrap for peer discovery.
+
+### 🏢 Enterprise/Private Network
+
+```bash
+pod --rpc-ip 192.168.1.100 --entrypoint 192.168.1.50:9001 --atlas-ip 192.168.1.10:5000
+```
+
+Configured for private corporate networks with custom Atlas server and internal bootstrap node.
+
+### 🧪 Local Testing with Custom Atlas
+
+```bash
+pod --atlas-ip 127.0.0.1:5000 --no-entrypoint
+```
+
+For testing with a local Atlas server without peer discovery.
+
+## Port Information
+
+| Service          | Default Port | Configurable | Description                                        |
+| ---------------- | ------------ | ------------ | -------------------------------------------------- |
+| pRPC API         | 6000         | IP Only      | JSON-RPC API endpoint                              |
+| Stats Dashboard  | 80           | ❌ Fixed      | Web-based statistics dashboard (localhost only)    |
+| Gossip Protocol  | 9001         | ❌ Fixed      | Peer-to-peer communication and bootstrap discovery |
+| Atlas Connection | 5000         | ❌ Fixed      | Connection to Atlas server for data streaming      |
+
+### Firewall Configuration
+
+For public nodes, ensure these ports are accessible:
+
+- **Port 6000**: pRPC API (if using `--rpc-ip 0.0.0.0`)
+- **Port 9001**: Gossip protocol (always required for peer communication and discovery)
+- **Port 5000**: Atlas connection (outbound to Atlas server)
+
+## Error Handling
+
+### Invalid IP Address
+
+```bash
+pod --rpc-ip invalid-ip
+# Error: Invalid IP address 'invalid-ip': invalid IP address syntax
+```
+
+### IP Address Not Available
+
+```bash
+pod --rpc-ip 192.168.1.200
+# Error: Cannot bind to IP address 192.168.1.200 on port 6000: Address not available.
+# Make sure the IP address is available on this system.
+```
+
+### Missing Argument Value
+
+```bash
+pod --rpc-ip
+# error: a value is required for '--rpc-ip <IP_ADDRESS>' but none was supplied
+# 
+# For more information, try '--help'.
+```
+
+### Unknown Argument
+
+```bash
+pod --invalid-option
+# error: unexpected argument '--invalid-option' found
+# 
+# Usage: pod [OPTIONS]
+# 
+# For more information, try '--help'.
+```
+
+## Configuration Examples
+
+### Development Environment
+
+```bash
+# Start isolated pnode for development
+pod --no-entrypoint
+
+# Test pRPC locally
+curl -X POST http://127.0.0.1:6000/rpc \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","method":"get-version","id":1}'
+```
+
+### Production Public Node
+
+```bash
+# Start public node with proper logging
+RUST_LOG=info pod --rpc-ip 0.0.0.0
+
+# Verify pRPC is accessible
+curl -X POST http://YOUR_PUBLIC_IP:6000/rpc \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","method":"get-version","id":1}'
+```
+
+### Private Network Setup
+
+```bash
+# Configure for private network
+pod \
+  --rpc-ip 10.0.1.100 \
+  --entrypoint 10.0.1.50:9001 \
+  --atlas-ip 10.0.1.10:5000
+```
+
+## Environment Variables
+
+You can also configure logging and other runtime behavior:
+
+```bash
+# Set log level
+export RUST_LOG=debug
+pod
+
+# Enable specific module logging
+export RUST_LOG=pod::rpc=debug,pod::gossip=info
+pod
+```
+
+## Systemd Service
+
+For production deployments, the pnode can be managed as a systemd service. When installed via apt, the service file is automatically configured.
+
+```ini
+[Unit]
+Description=Xandeum Pod System service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/pod --rpc-ip 0.0.0.0
+Restart=always
+User=pod
+Environment=NODE_ENV=production
+Environment=RUST_LOG=info
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=xandeum-pod
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+# Enable and start the service
+sudo systemctl enable pod
+sudo systemctl start pod
+
+# Check status
+sudo systemctl status pod
+
+# View logs
+sudo journalctl -u pod -f
+```
+
+## Troubleshooting
+
+### Port Already in Use
+
+```bash
+# Check what's using port 6000
+sudo lsof -i :6000
+
+# Kill process using the port
+sudo kill -9 <PID>
+```
+
+### Network Interface Issues
+
+```bash
+# List available network interfaces
+ip addr show
+
+# Test if IP is accessible
+ping <your-ip>
+```
+
+### Peer Discovery Problems
+
+```bash
+# Test connectivity to bootstrap node
+nc -u 173.212.207.32 9001
+
+# Check local gossip port
+sudo netstat -ulnp | grep 9001
+```
+
+!!! tip "Logging"
+Use `RUST_LOG=debug` to get detailed logs for troubleshooting network and configuration issues.---
+title: pNode pod Documentation
+slug: api/pnode-pod-documentation
+createdAt: 2025-11-19T11:00:48.248Z
+updatedAt: 2025-11-26T17:45:36.188Z
+---
+
+Welcome to the documentation for Xandeum pNode - a high-performance blockchain node implementation.
+
+## Quick Start
+
+### Installation
+
+!!! info "Prerequisites"
+\- A Linux server or VPS running Ubuntu/Debian
+\- SSH access to your server
+\- Basic command line knowledge
+
+**Step 1: Access Your Server**
+
+If you're using a VPS (Virtual Private Server), connect via SSH:
+
+```bash
+ssh username@your-server-ip
+```
+
+Once connected to your server, open a terminal window.
+
+**Step 2: Add the Xandeum Repository**
+
+First, install the required packages and add the Xandeum repository:
+
+```bash
+# Install repository prerequisites
+sudo apt-get install -y apt-transport-https ca-certificates
+
+# Add the Xandeum repository
+echo "deb [trusted=yes] https://xandeum.github.io/pod-apt-package/ stable main" | sudo tee /etc/apt/sources.list.d/xandeum-pod.list
+
+# Update package list
+sudo apt-get update
+```
+
+**Step 3: Install the pNode**
+
+```bash
+# Install the pod package
+sudo apt-get install pod
+```
+
+!!! tip "Verify Installation"
+After installation completes, you can verify it was successful by checking the version:
+`bash`
+`    pod --version`
+`    `
+
+### Basic Usage
+
+```bash
+# Start with default settings (private pRPC)
+pod
+
+# Start with public pRPC access
+pod --rpc-ip 0.0.0.0
+
+# Check version
+pod --version
+
+# Get help
+pod --help
+```
+
+### Test Your Setup
+
+Verify your pNode is running correctly:
+
+```bash
+curl -X POST http://127.0.0.1:6000/rpc \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "get-version",
+    "id": 1
+  }'
+```
+
+!!! success "Expected Response"
+If everything is working, you should see a JSON response with the version number:
+`json`
+`    {`
+`      "jsonrpc": "2.0",`
+`      "result": {`
+`        "version": "0.4.2"`
+`      },`
+`      "id": 1`
+`    }`
+`    `
+
+## What's Included
+
+### 🔌 pRPC API
+
+Complete JSON-RPC 2.0 API for interacting with your pnode:
+
+- **get-version**: Get pnode software version
+- **get-stats**: Retrieve comprehensive pnode statistics
+- **get-pods**: List known peer pnodes in the network
+
+[**pNode RPC (pRPC) Reference**](docId\:VMHRceGJBeAPYuRQsfJVV)\{ .md-button .md-button--primary }
+
+### ⚙️ pNode CLI Usage
+
+Comprehensive command-line reference:
+
+- **--rpc-ip**: Configure pRPC server IP binding
+- **--entrypoint**: Set bootstrap node for peer discovery
+- **--atlas-ip**: Configure Atlas server connection
+- And more...
+
+[**pNode CLI Usage**](docId\:W_tTYgywfDptdsCcykkl-)\{ .md-button .md-button--primary }
+
+## Architecture Overview
+
+The Xandeum pNode consists of several key components:
+
+- **pRPC Server**: JSON-RPC API on port 6000 (configurable IP)
+- **Stats Dashboard**: Web interface on port 80 (localhost only)
+- **Gossip Protocol**: Peer-to-peer communication on port 9001
+- **Atlas Client**: Data streaming connection on port 5000
+
+## Default Configuration
+
+| Service          | Port | Access              | Configurable |
+| ---------------- | ---- | ------------------- | ------------ |
+| pRPC API         | 6000 | Private (127.0.0.1) | IP only      |
+| Stats Dashboard  | 80   | Private (127.0.0.1) | No           |
+| Gossip Protocol  | 9001 | All interfaces      | No           |
+| Atlas Connection | 5000 | Fixed endpoint      | No           |
+
+!!! tip "Security by Default"
+The pnode is configured to be secure by default - pRPC API is private unless explicitly configured otherwise.---
+title: pNode RPC (pRPC) Reference
+slug: api/pnode-rpc-prpc-reference
+createdAt: 2025-11-19T11:00:48.248Z
+updatedAt: 2025-11-26T17:45:37.950Z
+---
+
+Complete reference for all JSON-RPC 2.0 methods available in Xandeum pNode.
+
+## Overview
+
+The Xandeum pNode pRPC API uses JSON-RPC 2.0 protocol over HTTP POST requests. All requests should be sent to the `/prpc` endpoint.
+
+!!! info "Base URL"
+`http://<pnode-ip>:6000/rpc`
+
+```text
+**Default**: `http://127.0.0.1:6000/rpc` (private)
+```
+
+## Network Architecture
+
+The pnode uses several network ports for different services:
+
+- **Port 6000**: pRPC API server (configurable IP binding)
+- **Port 80**: Statistics dashboard (localhost only)
+- **Port 9001**: Gossip protocol for peer discovery and communication
+- **Port 5000**: Atlas server connection for data streaming (fixed endpoint)
+
+## Available Methods
+
+\=== "get-version"
+
+````text
+Returns the current version of the pnode software.
+
+### Request
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "get-version",
+  "id": 1
+}
+```
+
+### Response
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "version": "1.0.0"
+  },
+  "id": 1
+}
+```
+
+### cURL Example
+```bash
+curl -X POST http://127.0.0.1:6000/rpc \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "get-version",
+    "id": 1
+  }'
+```
+````
+
+\=== "get-stats"
+
+````text
+Returns comprehensive statistics about the pnode including system metrics, storage info, and network activity.
+
+### Request
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "get-stats",
+  "id": 1
+}
+```
+
+### Response
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "metadata": {
+      "total_bytes": 1048576000,
+      "total_pages": 1000,
+      "last_updated": 1672531200
+    },
+    "stats": {
+      "cpu_percent": 15.5,
+      "ram_used": 536870912,
+      "ram_total": 8589934592,
+      "uptime": 86400,
+      "packets_received": 1250,
+      "packets_sent": 980,
+      "active_streams": 5
+    },
+    "file_size": 1048576000
+  },
+  "id": 1
+}
+```
+
+### Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `metadata.total_bytes` | number | Total bytes processed |
+| `metadata.total_pages` | number | Total pages in storage |
+| `metadata.last_updated` | number | Unix timestamp of last update |
+| `stats.cpu_percent` | number | Current CPU usage percentage |
+| `stats.ram_used` | number | RAM used in bytes |
+| `stats.ram_total` | number | Total RAM available in bytes |
+| `stats.uptime` | number | Uptime in seconds |
+| `stats.packets_received` | number | Packets received per second |
+| `stats.packets_sent` | number | Packets sent per second |
+| `stats.active_streams` | number | Number of active network streams |
+| `file_size` | number | Storage file size in bytes |
+````
+
+\=== "get-pods"
+
+````text
+Returns a list of all known peer pnodes in the network with their status information.
+
+### Request
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "get-pods",
+  "id": 1
+}
+```
+
+### Response
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "pods": [
+      {
+        "address": "192.168.1.100:9001",
+        "version": "1.0.0",
+        "last_seen": "2023-12-01 14:30:00 UTC",
+        "last_seen_timestamp": 1672574200
+      },
+      {
+        "address": "10.0.0.5:9001",
+        "version": "1.0.1",
+        "last_seen": "2023-12-01 14:25:00 UTC",
+        "last_seen_timestamp": 1672573900
+      }
+    ],
+    "total_count": 2
+  },
+  "id": 1
+}
+```
+
+### Pod Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `address` | string | IP address and port of the peer pnode |
+| `version` | string | Software version of the peer pnode |
+| `last_seen` | string | Human-readable timestamp of last contact |
+| `last_seen_timestamp` | number | Unix timestamp of last contact |
+| `total_count` | number | Total number of known pnodes |
+````
+
+## Error Handling
+
+All errors follow the JSON-RPC 2.0 specification and include standard error codes.
+
+### Method Not Found
+
+```json
+{
+  "jsonrpc": "2.0",
+  "error": {
+    "code": -32601,
+    "message": "Method not found"
+  },
+  "id": 1
+}
+```
+
+### Internal Error
+
+```json
+{
+  "jsonrpc": "2.0",
+  "error": {
+    "code": -32603,
+    "message": "Internal error"
+  },
+  "id": 1
+}
+```
+
+### Standard Error Codes
+
+| Code   | Message          | Description                          |
+| ------ | ---------------- | ------------------------------------ |
+| -32601 | Method not found | The requested method does not exist  |
+| -32603 | Internal error   | Server encountered an internal error |
+
+## Integration Examples
+
+### Python Example
+
+```python
+import requests
+import json
+
+def call_prpc(method, params=None):
+    payload = {
+        "jsonrpc": "2.0",
+        "method": method,
+        "id": 1
+    }
+    if params:
+        payload["params"] = params
+    
+    response = requests.post(
+        "http://127.0.0.1:6000/rpc",
+        json=payload,
+        headers={"Content-Type": "application/json"}
+    )
+    return response.json()
+
+# Get version
+version = call_prpc("get-version")
+print(f"pNode version: {version['result']['version']}")
+
+# Get stats
+stats = call_prpc("get-stats")
+print(f"CPU usage: {stats['result']['stats']['cpu_percent']}%")
+```
+
+### JavaScript/Node.js Example
+
+```javascript
+const fetch = require('node-fetch');
+
+async function callPRPC(method, params = null) {
+  const payload = {
+    jsonrpc: "2.0",
+    method: method,
+    id: 1
+  };
+  if (params) payload.params = params;
+
+  const response = await fetch('http://127.0.0.1:6000/rpc', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  
+  return await response.json();
+}
+
+// Usage
+(async () => {
+  const version = await callPRPC('get-version');
+  console.log(`pNode version: ${version.result.version}`);
+  
+  const stats = await callPRPC('get-stats');
+  console.log(`Uptime: ${stats.result.stats.uptime} seconds`);
+})();
+```
+
+### Bash/curl Example
+
+```bash
+#!/bin/bash
+
+PRPC_URL="http://127.0.0.1:6000/rpc"
+
+# Function to call pRPC
+call_prpc() {
+  local method=$1
+  curl -s -X POST "$PRPC_URL" \
+    -H "Content-Type: application/json" \
+    -d "{\"jsonrpc\":\"2.0\",\"method\":\"$method\",\"id\":1}"
+}
+
+# Get version
+echo "Getting version..."
+call_prpc "get-version" | jq '.result.version'
+
+# Get stats
+echo "Getting stats..."
+call_prpc "get-stats" | jq '.result.stats.cpu_percent'
+```
+
+!!! tip "Installation"
+Install the pod via apt: `sudo apt install pod`
+
+!!! tip "Rate Limiting"
+There are currently no rate limits on the pRPC API, but be mindful of resource usage when making frequent requests.
+
+!!! warning "Security"
+When using `--rpc-ip 0.0.0.0`, your pRPC API will be accessible from any network interface. Ensure proper firewall rules are in place.

@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode - Xandeum branded */
+    --background: 220 30% 98%;
+    --foreground: 220 50% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 50% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 50% 13%;
+    --primary: 24 90% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 30% 94%;
+    --secondary-foreground: 220 50% 13%;
+    --muted: 220 25% 92%;
+    --muted-foreground: 220 15% 45%;
+    --accent: 314 45% 25%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 20% 88%;
+    --input: 220 20% 88%;
+    --ring: 24 90% 54%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Dark mode - Xandeum branded with #0A1039 base */
+    --background: 232 70% 8%;
+    --foreground: 220 20% 95%;
+    --card: 232 60% 10%;
+    --card-foreground: 220 20% 95%;
+    --popover: 232 60% 10%;
+    --popover-foreground: 220 20% 95%;
+    --primary: 24 90% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 232 45% 16%;
+    --secondary-foreground: 220 20% 95%;
+    --muted: 232 40% 18%;
+    --muted-foreground: 220 15% 60%;
+    --accent: 314 45% 35%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62% 35%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 232 35% 20%;
+    --input: 232 35% 20%;
+    --ring: 24 90% 54%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .container {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-muted rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full hover:bg-muted-foreground/50;
+  }
+
+  /* Glass effect */
+  .glass {
+    @apply bg-background/80 backdrop-blur-lg border border-border/50;
+  }
+
+  /* Gradient text - Xandeum branded */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-xandeum-orange to-xandeum-purple;
+  }
+
+  /* Glow effect - Xandeum orange */
+  .glow {
+    box-shadow: 0 0 20px rgba(243, 119, 31, 0.3);
+  }
+
+  .glow-sm {
+    box-shadow: 0 0 10px rgba(243, 119, 31, 0.2);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(93, 37, 84, 0.3);
+  }
+
+  /* Grid background pattern */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Hero gradient - Xandeum branded */
+  .hero-gradient {
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(243, 119, 31, 0.12), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 10%, rgba(93, 37, 84, 0.08), transparent);
+  }
+
+  /* Card hover - Xandeum branded */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:shadow-xandeum-orange/10 hover:border-xandeum-orange/30;
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.5s ease-out;
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Focus ring - Xandeum branded */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-xandeum-orange focus:ring-offset-2 focus:ring-offset-background;
+  }
+}
