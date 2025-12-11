@@ -4,6 +4,7 @@ import { ThemeProvider } from 'next-themes';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { WatchlistProvider } from '@/contexts/WatchlistContext';
 import { APP_META } from '@/lib/constants';
 import './globals.css';
 
@@ -64,9 +65,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/logo.svg',
-    shortcut: '/logo.svg',
-    apple: '/logo.svg',
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
   },
 };
 
@@ -84,19 +85,21 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TooltipProvider>
-            <div className="relative flex min-h-screen flex-col">
+          <WatchlistProvider>
+            <TooltipProvider>
+              <div className="relative flex min-h-screen flex-col">
               {/* Background effects */}
               <div className="fixed inset-0 -z-10">
                 <div className="absolute inset-0 bg-grid dark:opacity-100 opacity-50" />
                 <div className="hero-gradient absolute inset-0" />
               </div>
 
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </div>
-          </TooltipProvider>
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </div>
+            </TooltipProvider>
+          </WatchlistProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -259,7 +259,7 @@ export function ParticleGalaxy3D({ nodes, isLoading }: ParticleGalaxy3DProps) {
             </div>
             <div>
               <CardTitle className="text-lg">Network Galaxy</CardTitle>
-              <p className="text-sm text-muted-foreground">Particle system visualization of pNodes</p>
+              <p className="text-sm text-muted-foreground">Artistic visualization • Real node stats below</p>
             </div>
           </div>
           <div className="flex items-center gap-2">

@@ -336,18 +336,13 @@ export function DataFlowVisualization({ nodes, isLoading }: DataFlowVisualizatio
               <Workflow className="h-5 w-5 text-white" />
             </div>
             <div>
-              <CardTitle className="text-lg">Real-time Data Flow</CardTitle>
-              <p className="text-sm text-muted-foreground">Network communication visualization</p>
+              <CardTitle className="text-lg">Node Topology View</CardTitle>
+              <p className="text-sm text-muted-foreground">Conceptual network structure • Real counts below</p>
             </div>
           </div>
-          <motion.div
-            className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20"
-            animate={{ opacity: [1, 0.5, 1] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-          >
-            <Zap className="h-3 w-3 text-green-400" />
-            <span className="text-xs text-green-400 font-medium">LIVE</span>
-          </motion.div>
+          <div className="text-xs text-muted-foreground">
+            {nodes.length} nodes
+          </div>
         </div>
       </CardHeader>
 

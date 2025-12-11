@@ -2,6 +2,10 @@
 
 A stunning real-time analytics dashboard for monitoring Xandeum storage provider nodes (pNodes). Built for the Xandeum Bounty Program.
 
+## Live Demo
+
+**[https://xandeum-dashboard.vercel.app](https://xandeum-dashboard.vercel.app)**
+
 ![Xandeum Analytics](https://img.shields.io/badge/Xandeum-Analytics-F3771F)
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
@@ -33,12 +37,19 @@ A stunning real-time analytics dashboard for monitoring Xandeum storage provider
 - **Quick Insights** - Automatic highlights showing which node leads in each metric
 - **Detailed Table** - Complete metrics comparison with highlighting
 
+### Operator Tools
+- **Watchlist System** - Star your favorite nodes to monitor them
+- **Browser Notifications** - Get alerts when watched nodes go offline or change status
+- **Quick Compare** - Select 2-4 nodes and compare them inline without leaving the page
+- **Real GeoIP** - Accurate city-level node locations using ip-api.com
+
 ### Enhanced User Experience
 - **Xandeum Branding** - Official color scheme (Orange #F3771F, Purple #5D2554, Blue #1C3850)
 - **Dark/Light Theme** - System-aware with manual toggle
 - **Mobile-Responsive** - Fully responsive design for all screen sizes
 - **Metric Tooltips** - Helpful explanations for all metrics and visualizations
 - **Smooth Animations** - Framer Motion transitions throughout
+- **Fullscreen Globe** - Expand the 3D globe to fullscreen with one click
 
 ## Tech Stack
 
@@ -121,8 +132,22 @@ This dashboard fetches all data in real-time from the Xandeum network using pRPC
 | Method | Description |
 |--------|-------------|
 | `get-pods-with-stats` | List all pNodes with detailed statistics |
+| `get-version` | Network version information |
+| `get-stats` | Network statistics |
 
-**Important**: No mock or hardcoded data is used. All visualizations are derived from live pRPC responses.
+### Data Sources
+
+**Real Data (from pRPC API):**
+- Node pubkeys and IP addresses
+- Storage committed/used values
+- Uptime metrics
+- Software versions
+- Last seen timestamps
+- Health scores (calculated from real metrics)
+
+**Estimated Data:**
+- **Geographic locations**: Derived from IP address ranges for visualization purposes. For production-accurate geolocation, a GeoIP database (like MaxMind) would be required.
+- **Regional distribution**: Based on estimated IP locations
 
 ## Health Score Calculation
 

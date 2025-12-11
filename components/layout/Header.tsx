@@ -31,22 +31,21 @@ export function Header() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-[#2a4a63] bg-[#1C3850]">
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-4 group">
           <div className="relative">
-            <div className="absolute inset-0 bg-xandeum-orange/20 rounded-xl blur-xl group-hover:bg-xandeum-orange/30 transition-all" />
             <Image
               src="/xandeum-logo.png"
               alt="Xandeum"
-              width={180}
-              height={50}
-              className="relative h-10 w-auto sm:h-12"
+              width={200}
+              height={44}
+              className="relative h-9 w-auto sm:h-11 md:h-12"
               priority
             />
             <motion.div
-              className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full bg-green-500 ring-2 ring-background"
+              className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-[#1C3850]"
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ repeat: Infinity, duration: 2 }}
             />
@@ -63,8 +62,8 @@ export function Header() {
                   className={cn(
                     'relative flex items-center space-x-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors',
                     isActive
-                      ? 'text-foreground'
-                      : 'text-muted-foreground hover:text-foreground'
+                      ? 'text-white'
+                      : 'text-white/70 hover:text-white'
                   )}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -92,7 +91,7 @@ export function Header() {
             variant="ghost"
             size="icon"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="hidden sm:flex"
+            className="hidden sm:flex text-white/70 hover:text-white hover:bg-white/10"
           >
             <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -100,7 +99,7 @@ export function Header() {
           </Button>
 
           {/* Docs Link */}
-          <Button variant="outline" size="sm" asChild className="hidden sm:flex">
+          <Button variant="outline" size="sm" asChild className="hidden sm:flex border-white/30 text-white hover:bg-white/10 hover:text-white">
             <a
               href="https://docs.xandeum.network"
               target="_blank"
@@ -116,7 +115,7 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="md:hidden text-white hover:bg-white/10"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
@@ -134,7 +133,7 @@ export function Header() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="border-t border-border md:hidden"
+          className="border-t border-[#2a4a63] md:hidden bg-[#1C3850]"
         >
           <nav className="container py-4 space-y-2">
             {navItems.map((item) => {
@@ -149,8 +148,8 @@ export function Header() {
                     className={cn(
                       'flex items-center space-x-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors',
                       isActive
-                        ? 'bg-xandeum-orange/10 text-foreground'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                        ? 'bg-white/10 text-white'
+                        : 'text-white/70 hover:text-white hover:bg-white/5'
                     )}
                   >
                     <item.icon className="h-5 w-5" />
@@ -159,12 +158,13 @@ export function Header() {
                 </Link>
               );
             })}
-            <div className="pt-4 border-t border-border flex items-center justify-between px-4">
-              <span className="text-sm text-muted-foreground">Theme</span>
+            <div className="pt-4 border-t border-[#2a4a63] flex items-center justify-between px-4">
+              <span className="text-sm text-white/70">Theme</span>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="text-white/70 hover:text-white hover:bg-white/10"
               >
                 {theme === 'dark' ? (
                   <Sun className="h-4 w-4 mr-2" />

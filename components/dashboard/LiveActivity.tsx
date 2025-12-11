@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Activity, Zap, Server, Clock } from 'lucide-react';
+import { Activity, Zap, Server, Clock, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PNode } from '@/types';
 import { truncateMiddle, formatRelativeTime } from '@/lib/utils';
@@ -14,48 +14,43 @@ interface LiveActivityProps {
 
 interface ActivityItem {
   id: string;
-  type: 'online' | 'heartbeat' | 'storage';
+  type: 'online' | 'degraded' | 'offline' | 'high_health' | 'low_health';
   node: PNode;
   timestamp: number;
 }
 
 export function LiveActivity({ nodes, isLoading }: LiveActivityProps) {
-  const [activities, setActivities] = useState<ActivityItem[]>([]);
+  // Generate activities from REAL node data - no simulation
+  const activities = useMemo(() => {
+    if (nodes.length === 0) return [];
 
-  useEffect(() => {
-    if (nodes.length === 0) return;
-
-    // Generate initial activities from recent nodes
-    const recentNodes = [...nodes]
+    // Sort by last_seen_timestamp to show most recent activity
+    const sortedNodes = [...nodes]
       .sort((a, b) => b.last_seen_timestamp - a.last_seen_timestamp)
-      .slice(0, 10);
+      .slice(0, 15);
 
-    const initialActivities: ActivityItem[] = recentNodes.map((node, i) => ({
-      id: `${node.pubkey}-${i}`,
-      type: node.status === 'online' ? 'heartbeat' : 'online',
-      node,
-      timestamp: node.last_seen_timestamp,
-    }));
-
-    setActivities(initialActivities);
-
-    // Simulate live activity updates
-    const interval = setInterval(() => {
-      const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
-      if (randomNode) {
-        const types: ActivityItem['type'][] = ['online', 'heartbeat', 'storage'];
-        const newActivity: ActivityItem = {
-          id: `${randomNode.pubkey}-${Date.now()}`,
-          type: types[Math.floor(Math.random() * types.length)],
-          node: randomNode,
-          timestamp: Math.floor(Date.now() / 1000),
-        };
-
-        setActivities((prev) => [newActivity, ...prev.slice(0, 9)]);
+    return sortedNodes.map((node): ActivityItem => {
+      // Determine activity type based on real node status and health
+      let type: ActivityItem['type'];
+      if (node.status === 'online' && node.healthScore >= 90) {
+        type = 'high_health';
+      } else if (node.status === 'online') {
+        type = 'online';
+      } else if (node.status === 'degraded') {
+        type = 'degraded';
+      } else if (node.healthScore < 50) {
+        type = 'low_health';
+      } else {
+        type = 'offline';
       }
-    }, 3000);
 
-    return () => clearInterval(interval);
+      return {
+        id: node.pubkey,
+        type,
+        node,
+        timestamp: node.last_seen_timestamp,
+      };
+    });
   }, [nodes]);
 
   if (isLoading) {
@@ -80,34 +75,46 @@ export function LiveActivity({ nodes, isLoading }: LiveActivityProps) {
 
   const getActivityIcon = (type: ActivityItem['type']) => {
     switch (type) {
+      case 'high_health':
+        return <Zap className="h-4 w-4 text-green-500" />;
       case 'online':
-        return <Server className="h-4 w-4 text-green-500" />;
-      case 'heartbeat':
-        return <Zap className="h-4 w-4 text-blue-500" />;
-      case 'storage':
-        return <Activity className="h-4 w-4 text-purple-500" />;
+        return <Server className="h-4 w-4 text-blue-500" />;
+      case 'degraded':
+        return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+      case 'low_health':
+        return <AlertTriangle className="h-4 w-4 text-red-500" />;
+      case 'offline':
+        return <Server className="h-4 w-4 text-gray-500" />;
     }
   };
 
-  const getActivityText = (type: ActivityItem['type']) => {
-    switch (type) {
+  const getActivityText = (activity: ActivityItem) => {
+    switch (activity.type) {
+      case 'high_health':
+        return `Excellent health (${activity.node.healthScore}%)`;
       case 'online':
-        return 'Node came online';
-      case 'heartbeat':
-        return 'Heartbeat received';
-      case 'storage':
-        return 'Storage updated';
+        return `Online (${activity.node.healthScore}% health)`;
+      case 'degraded':
+        return `Degraded performance`;
+      case 'low_health':
+        return `Low health (${activity.node.healthScore}%)`;
+      case 'offline':
+        return `Last seen`;
     }
   };
 
   const getActivityColor = (type: ActivityItem['type']) => {
     switch (type) {
-      case 'online':
+      case 'high_health':
         return 'border-l-green-500 bg-green-500/5';
-      case 'heartbeat':
+      case 'online':
         return 'border-l-blue-500 bg-blue-500/5';
-      case 'storage':
-        return 'border-l-purple-500 bg-purple-500/5';
+      case 'degraded':
+        return 'border-l-yellow-500 bg-yellow-500/5';
+      case 'low_health':
+        return 'border-l-red-500 bg-red-500/5';
+      case 'offline':
+        return 'border-l-gray-500 bg-gray-500/5';
     }
   };
 
@@ -115,16 +122,10 @@ export function LiveActivity({ nodes, isLoading }: LiveActivityProps) {
     <Card className="h-[400px] overflow-hidden">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg flex items-center gap-2">
-          <motion.div
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-          >
-            <Activity className="h-5 w-5 text-green-500" />
-          </motion.div>
-          Live Activity
-          <span className="ml-auto flex items-center gap-1 text-xs font-normal text-green-500">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            Live
+          <Activity className="h-5 w-5 text-xandeum-orange" />
+          Recent Node Activity
+          <span className="ml-auto text-xs font-normal text-muted-foreground">
+            Based on last_seen data
           </span>
         </CardTitle>
       </CardHeader>
@@ -134,9 +135,8 @@ export function LiveActivity({ nodes, isLoading }: LiveActivityProps) {
             {activities.map((activity) => (
               <motion.div
                 key={activity.id}
-                initial={{ opacity: 0, x: -20, height: 0 }}
-                animate={{ opacity: 1, x: 0, height: 'auto' }}
-                exit={{ opacity: 0, x: 20, height: 0 }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3 }}
                 className={`flex items-center gap-3 p-3 rounded-lg border-l-2 ${getActivityColor(activity.type)}`}
               >
@@ -145,10 +145,10 @@ export function LiveActivity({ nodes, isLoading }: LiveActivityProps) {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">
-                    {getActivityText(activity.type)}
+                    {getActivityText(activity)}
                   </p>
                   <p className="text-xs text-muted-foreground font-mono">
-                    {truncateMiddle(activity.node.pubkey, 8, 6)}
+                    {truncateMiddle(activity.node.pubkey, 8, 6)} • {activity.node.ip}
                   </p>
                 </div>
                 <div className="flex-shrink-0 flex items-center gap-1 text-xs text-muted-foreground">

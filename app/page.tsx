@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { ArrowRight, Server, Activity, Zap, RefreshCw, Globe2, ChevronDown, Search, Download, FileJson, FileSpreadsheet } from 'lucide-react';
+import { ArrowRight, Server, Activity, Zap, RefreshCw, Globe2, ChevronDown, FileJson, FileSpreadsheet, TableIcon, MapPin, Maximize2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { HeroStats } from '@/components/dashboard/HeroStats';
@@ -25,7 +25,12 @@ import { UptimeLeaderboard } from '@/components/dashboard/UptimeLeaderboard';
 import { NetworkPulse } from '@/components/dashboard/NetworkPulse';
 import { NodeTimeline } from '@/components/dashboard/NodeTimeline';
 import { VersionCompliance } from '@/components/dashboard/VersionCompliance';
+import { OperatorTools } from '@/components/dashboard/OperatorTools';
+import { CityMap } from '@/components/dashboard/CityMap';
 import { ErrorState } from '@/components/common/ErrorState';
+import { InfoTooltip } from '@/components/common/MetricTooltip';
+import { NodeTable } from '@/components/nodes/NodeTable';
+import { QuickCompare } from '@/components/dashboard/QuickCompare';
 import { useStats, useNodes } from '@/hooks/useNodes';
 
 // Dynamically import 3D components
@@ -74,7 +79,8 @@ const NetworkGlobe = dynamic(
 export default function DashboardPage() {
   const { data: statsData, error: statsError, isLoading: statsLoading, mutate: mutateStats } = useStats();
   const { data: nodesData, error: nodesError, isLoading: nodesLoading, mutate: mutateNodes } = useNodes();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [compareSelection, setCompareSelection] = useState<string[]>([]);
+  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
 
   const isLoading = statsLoading || nodesLoading;
   const error = statsError || nodesError;
@@ -129,138 +135,173 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen">
-      {/* HERO SECTION - GLOBE AS PROTAGONIST */}
-      <section className="relative min-h-[110vh] flex flex-col overflow-hidden py-8 lg:py-16">
+      {/* FULLSCREEN MAP MODAL */}
+      {isMapModalOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm"
+          onClick={() => setIsMapModalOpen(false)}
+        >
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-4 right-4 z-50 h-12 w-12 rounded-full bg-white/10 hover:bg-white/20 text-white"
+            onClick={() => setIsMapModalOpen(false)}
+          >
+            <X className="h-6 w-6" />
+          </Button>
+          <div className="w-full h-full" onClick={(e) => e.stopPropagation()}>
+            {nodesData?.nodes && nodesData.nodes.length > 0 && (
+              <NetworkGlobe
+                nodes={nodesData.nodes}
+                className="w-full h-full"
+                size="hero"
+                showLegend={true}
+                showStats={true}
+              />
+            )}
+          </div>
+        </motion.div>
+      )}
+
+      {/* HERO SECTION - Two columns layout */}
+      <section className="relative min-h-[80vh] lg:min-h-[90vh] overflow-hidden py-8 lg:py-12">
         {/* Background gradient */}
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-xandeum-dark via-[#050a1a] to-background" />
 
         {/* Animated orbs */}
         <motion.div
-          className="absolute top-20 left-10 w-[600px] h-[600px] bg-xandeum-orange/10 rounded-full blur-[150px]"
+          className="absolute top-20 left-10 w-[400px] h-[400px] bg-xandeum-orange/10 rounded-full blur-[120px]"
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 8, repeat: Infinity }}
         />
         <motion.div
-          className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-xandeum-purple/20 rounded-full blur-[120px]"
+          className="absolute bottom-20 right-10 w-[300px] h-[300px] bg-xandeum-purple/20 rounded-full blur-[100px]"
           animate={{ scale: [1.2, 1, 1.2], opacity: [0.4, 0.2, 0.4] }}
           transition={{ duration: 10, repeat: Infinity }}
         />
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-xandeum-blue/5 rounded-full blur-[200px]"
-          animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 12, repeat: Infinity }}
-        />
 
-        {/* Content overlay on globe */}
-        <div className="relative z-10 flex-1 flex flex-col">
-          {/* Top content */}
-          <div className="container pt-8 lg:pt-12">
-            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-              {/* Left - Branding & Title */}
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                className="max-w-xl"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <Image src="/logo.svg" alt="Xandeum" width={48} height={48} className="drop-shadow-lg" />
-                  <motion.div
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/20 border border-green-500/30"
-                    animate={{ scale: [1, 1.02, 1] }}
-                    transition={{ repeat: Infinity, duration: 2 }}
-                  >
-                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-xs font-medium text-green-400">LIVE</span>
-                  </motion.div>
-                </div>
+        <div className="container relative z-10 h-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[70vh] lg:min-h-[80vh]">
+            {/* LEFT COLUMN - Title, description, buttons, stats */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="flex flex-col justify-center"
+            >
+              {/* Branding */}
+              <div className="flex items-center gap-3 mb-6">
+                <Image src="/favicon.png" alt="Xandeum" width={48} height={48} className="drop-shadow-lg" />
+                <motion.div
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/20 border border-green-500/30"
+                  animate={{ scale: [1, 1.02, 1] }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                >
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  <span className="text-xs font-medium text-green-400">LIVE</span>
+                </motion.div>
+              </div>
 
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
-                  <span className="text-white">Xandeum</span>{' '}
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-xandeum-orange via-orange-400 to-yellow-500">
-                    pNodes
-                  </span>
-                </h1>
+              {/* Title */}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
+                <span className="text-white">Xandeum</span>{' '}
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-xandeum-orange via-orange-400 to-yellow-500">
+                  pNodes
+                </span>
+              </h1>
 
-                <p className="text-lg text-white/60 mb-6">
-                  Global decentralized storage network powering the future of Web3
-                </p>
+              <p className="text-lg text-white/60 mb-8 max-w-lg">
+                Global decentralized storage network powering the future of Web3
+              </p>
 
-                <div className="flex flex-wrap items-center gap-4 mb-8 lg:mb-12">
-                  <Link href="/nodes">
-                    <Button size="lg" className="bg-gradient-to-r from-xandeum-orange to-orange-500 hover:from-xandeum-orange/90 hover:to-orange-500/90 shadow-lg shadow-xandeum-orange/25 text-white font-semibold">
-                      <Server className="mr-2 h-5 w-5" />
-                      Explore All Nodes
-                    </Button>
-                  </Link>
-                  <Link href="/compare">
-                    <Button variant="outline" size="lg" className="border-white/20 hover:bg-white/10">
-                      Compare Nodes
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
-                </div>
-              </motion.div>
+              {/* Buttons */}
+              <div className="flex flex-wrap items-center gap-4 mb-10">
+                <Link href="/nodes">
+                  <Button size="lg" className="bg-gradient-to-r from-xandeum-orange to-orange-500 hover:from-xandeum-orange/90 hover:to-orange-500/90 shadow-lg shadow-xandeum-orange/25 text-white font-semibold">
+                    <Server className="mr-2 h-5 w-5" />
+                    Explore All Nodes
+                  </Button>
+                </Link>
+                <Link href="/compare">
+                  <Button variant="outline" size="lg" className="border-white/20 hover:bg-white/10 text-white">
+                    Compare Nodes
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
 
-              {/* Right - Live Stats */}
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex gap-6"
-              >
+              {/* Stats Row */}
+              <div className="flex items-center gap-6 lg:gap-8 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm w-fit">
                 <div className="text-center">
-                  <p className="text-4xl lg:text-5xl font-bold text-white">{totalNodes}</p>
-                  <p className="text-sm text-white/50">Total Nodes</p>
+                  <p className="text-3xl lg:text-4xl font-bold text-white">{totalNodes}</p>
+                  <p className="text-xs lg:text-sm text-white/50">Total Nodes</p>
                 </div>
-                <div className="w-px bg-white/10" />
+                <div className="w-px h-12 bg-white/10" />
                 <div className="text-center">
-                  <p className="text-4xl lg:text-5xl font-bold text-green-500">{onlineNodes}</p>
-                  <p className="text-sm text-white/50">Online</p>
+                  <p className="text-3xl lg:text-4xl font-bold text-green-500">{onlineNodes}</p>
+                  <p className="text-xs lg:text-sm text-white/50">Online</p>
                 </div>
-                <div className="w-px bg-white/10" />
+                <div className="w-px h-12 bg-white/10" />
                 <div className="text-center">
-                  <p className="text-4xl lg:text-5xl font-bold text-xandeum-orange">
+                  <p className="text-3xl lg:text-4xl font-bold text-xandeum-orange">
                     {totalNodes > 0 ? Math.round((onlineNodes / totalNodes) * 100) : 0}%
                   </p>
-                  <p className="text-sm text-white/50">Uptime</p>
+                  <p className="text-xs lg:text-sm text-white/50">Uptime</p>
                 </div>
-              </motion.div>
-            </div>
+              </div>
+            </motion.div>
+
+            {/* RIGHT COLUMN - Map */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex items-center justify-center"
+            >
+              <div className="relative w-full max-w-[500px] aspect-square rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-slate-900/80 to-slate-800/50 backdrop-blur-sm shadow-2xl shadow-black/50">
+                {/* Globe */}
+                <div className="absolute inset-0">
+                  {nodesData?.nodes && nodesData.nodes.length > 0 ? (
+                    <NetworkGlobe
+                      nodes={nodesData.nodes}
+                      className="w-full h-full"
+                      size="large"
+                      showLegend={false}
+                      showStats={false}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <Globe2 className="h-20 w-20 text-xandeum-orange/30 animate-pulse" />
+                    </div>
+                  )}
+                </div>
+
+                {/* Expand button */}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="absolute top-3 right-3 h-9 px-3 rounded-lg bg-black/50 hover:bg-black/70 text-white/70 hover:text-white backdrop-blur-sm border border-white/10"
+                  onClick={() => setIsMapModalOpen(true)}
+                >
+                  <Maximize2 className="h-4 w-4 mr-2" />
+                  Expand
+                </Button>
+
+                {/* Label */}
+                <div className="absolute bottom-3 left-3 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/10">
+                  <MapPin className="h-3.5 w-3.5 text-xandeum-orange" />
+                  <span className="text-sm text-white/80">Global Network</span>
+                </div>
+              </div>
+            </motion.div>
           </div>
 
-          {/* GLOBE SECTION - Full width edge to edge with generous spacing */}
+          {/* Scroll indicator - Mobile centered, Desktop bottom-center */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex-1 w-screen relative left-1/2 right-1/2 -mx-[50vw] my-8 lg:my-16"
-            style={{ minHeight: '80vh' }}
-          >
-            {/* Globe container - full viewport width */}
-            <div className="w-full h-full min-h-[80vh]">
-              {nodesData?.nodes && nodesData.nodes.length > 0 ? (
-                <NetworkGlobe
-                  nodes={nodesData.nodes}
-                  className="w-full h-full min-h-[80vh]"
-                  size="hero"
-                  showLegend={true}
-                  showStats={true}
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="text-center">
-                    <Globe2 className="h-16 w-16 text-xandeum-orange/50 mx-auto mb-4 animate-pulse" />
-                    <p className="text-white/50">Loading global network...</p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </motion.div>
-
-          {/* Scroll indicator */}
-          <motion.div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2"
+            className="absolute bottom-4 left-1/2 -translate-x-1/2 lg:bottom-8"
             animate={{ y: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
           >
@@ -269,78 +310,78 @@ export default function DashboardPage() {
         </div>
       </section>
 
+      {/* NODE TABLE - Primary Feature after Hero */}
+      <section className="container py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <Card className="overflow-hidden">
+            <CardHeader className="pb-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-gradient-to-br from-xandeum-orange to-orange-600 shadow-lg shadow-xandeum-orange/30">
+                    <TableIcon className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-xl flex items-center gap-2">
+                      All pNodes
+                      <InfoTooltip term="pnodes" />
+                    </CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Select nodes to compare performance metrics
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" size="sm" onClick={exportToJSON} disabled={!nodesData?.nodes}>
+                    <FileJson className="h-4 w-4 mr-1" />
+                    JSON
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={exportToCSV} disabled={!nodesData?.nodes}>
+                    <FileSpreadsheet className="h-4 w-4 mr-1" />
+                    CSV
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleRefresh}
+                    disabled={isLoading}
+                  >
+                    <RefreshCw className={`h-4 w-4 mr-1 ${isLoading ? 'animate-spin' : ''}`} />
+                    Refresh
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {/* Quick Compare - Shows when 2+ nodes selected */}
+              {compareSelection.length >= 2 && (
+                <QuickCompare
+                  selectedPubkeys={compareSelection}
+                  nodes={nodesData?.nodes || []}
+                  onClear={() => setCompareSelection([])}
+                  onRemove={(pubkey) => setCompareSelection(prev => prev.filter(p => p !== pubkey))}
+                />
+              )}
+
+              <NodeTable
+                nodes={nodesData?.nodes || []}
+                showSearch={true}
+                showPagination={true}
+                showCompare={true}
+                pageSize={15}
+                selectedForCompare={compareSelection}
+                onCompareSelectionChange={setCompareSelection}
+              />
+            </CardContent>
+          </Card>
+        </motion.div>
+      </section>
+
       {/* Main Content */}
       <div className="container py-12 space-y-8">
-        {/* Search & Actions Bar */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <h2 className="text-2xl font-bold flex items-center gap-3">
-            <Image src="/logo.svg" alt="Xandeum" width={32} height={32} />
-            Network Analytics
-          </h2>
-
-          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-            {/* Quick Search */}
-            <div className="relative flex-1 sm:flex-initial">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search by IP or pubkey..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full sm:w-64 pl-9 pr-4 py-2 text-sm bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-xandeum-orange/50"
-              />
-              {searchQuery && nodesData?.nodes && (
-                <div className="absolute top-full left-0 right-0 mt-1 bg-background border border-border rounded-lg shadow-xl z-50 max-h-60 overflow-auto">
-                  {nodesData.nodes
-                    .filter(n => n.ip.includes(searchQuery) || n.pubkey.toLowerCase().includes(searchQuery.toLowerCase()))
-                    .slice(0, 5)
-                    .map(node => (
-                      <Link
-                        key={node.pubkey}
-                        href={`/nodes/${node.pubkey}`}
-                        className="flex items-center gap-3 px-4 py-2 hover:bg-muted transition-colors"
-                        onClick={() => setSearchQuery('')}
-                      >
-                        <div className={`w-2 h-2 rounded-full ${node.status === 'online' ? 'bg-green-500' : node.status === 'degraded' ? 'bg-orange-500' : 'bg-red-500'}`} />
-                        <div>
-                          <p className="text-sm font-medium">{node.ip}</p>
-                          <p className="text-xs text-muted-foreground font-mono">{node.pubkey.slice(0, 16)}...</p>
-                        </div>
-                      </Link>
-                    ))
-                  }
-                  {nodesData.nodes.filter(n => n.ip.includes(searchQuery) || n.pubkey.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && (
-                    <p className="px-4 py-2 text-sm text-muted-foreground">No nodes found</p>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {/* Export Buttons */}
-            <div className="flex items-center gap-1">
-              <Button variant="outline" size="sm" onClick={exportToJSON} disabled={!nodesData?.nodes}>
-                <FileJson className="h-4 w-4 sm:mr-1" />
-                <span className="hidden sm:inline">JSON</span>
-              </Button>
-              <Button variant="outline" size="sm" onClick={exportToCSV} disabled={!nodesData?.nodes}>
-                <FileSpreadsheet className="h-4 w-4 sm:mr-1" />
-                <span className="hidden sm:inline">CSV</span>
-              </Button>
-            </div>
-
-            {/* Refresh */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleRefresh}
-              disabled={isLoading}
-            >
-              <RefreshCw className={`h-4 w-4 sm:mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-              <span className="hidden sm:inline">Refresh</span>
-            </Button>
-          </div>
-        </div>
-
         {/* Hero Stats */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -359,24 +400,39 @@ export default function DashboardPage() {
           <PerformanceGauge stats={statsData?.network || null} isLoading={isLoading} />
         </motion.section>
 
-        {/* Network Pulse & Live Activity */}
+        {/* Operator Tools & Network Pulse */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <NetworkPulse nodes={nodesData?.nodes || []} isLoading={isLoading} />
+            <OperatorTools nodes={nodesData?.nodes || []} isLoading={isLoading} />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-2"
+          >
+            <NetworkPulse nodes={nodesData?.nodes || []} isLoading={isLoading} />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
           >
             <LiveActivity nodes={nodesData?.nodes || []} isLoading={isLoading} />
           </motion.div>
         </div>
+
+        {/* City Map - Real GeoIP Locations */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <CityMap nodes={nodesData?.nodes || []} isLoading={isLoading} />
+        </motion.div>
 
         {/* Node Activity Timeline - Full Width */}
         <motion.div

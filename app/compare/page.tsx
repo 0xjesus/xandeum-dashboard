@@ -12,6 +12,8 @@ import {
   RefreshCw,
   TrendingUp,
   TrendingDown,
+  Scale,
+  Zap,
 } from 'lucide-react';
 import {
   RadarChart,
@@ -236,34 +238,72 @@ export default function ComparePage() {
   }
 
   return (
-    <div className="container py-8 space-y-6">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-      >
-        <div>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
-            <GitCompare className="h-8 w-8 text-xandeum-500" />
-            Compare Nodes
-          </h1>
-          <p className="text-muted-foreground mt-1">
-            Select up to {UI_CONFIG.maxCompareNodes} nodes to compare their metrics
-            side by side
-          </p>
-        </div>
+    <div className="min-h-screen">
+      {/* Hero Header with gradient */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-xandeum-dark via-[#0a1525] to-background border-b border-border/50">
+        <motion.div
+          className="absolute top-0 left-0 w-[500px] h-[500px] bg-xandeum-purple/15 rounded-full blur-[150px]"
+          animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
+          transition={{ duration: 8, repeat: Infinity }}
+        />
+        <motion.div
+          className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-xandeum-orange/10 rounded-full blur-[120px]"
+          animate={{ scale: [1.1, 1, 1.1], opacity: [0.2, 0.3, 0.2] }}
+          transition={{ duration: 10, repeat: Infinity }}
+        />
 
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => mutate()}
-          disabled={isLoading}
-        >
-          <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-          Refresh
-        </Button>
-      </motion.div>
+        <div className="container relative py-8 lg:py-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col lg:flex-row lg:items-center justify-between gap-6"
+          >
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <div className="p-3 rounded-xl bg-gradient-to-br from-xandeum-purple to-purple-700 shadow-lg shadow-xandeum-purple/30">
+                  <Scale className="h-8 w-8 text-white" />
+                </div>
+                <motion.div
+                  className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-xandeum-orange ring-2 ring-background flex items-center justify-center"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                >
+                  <Zap className="h-2.5 w-2.5 text-white" />
+                </motion.div>
+              </div>
+              <div>
+                <h1 className="text-3xl lg:text-4xl font-bold text-white">Node Comparison</h1>
+                <p className="text-white/60 mt-1">
+                  Select up to {UI_CONFIG.maxCompareNodes} nodes to compare performance
+                </p>
+              </div>
+            </div>
+
+            {/* Selection Counter */}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-white/5 border border-white/10">
+                <GitCompare className="h-5 w-5 text-xandeum-purple" />
+                <div>
+                  <p className="text-2xl font-bold text-white">{selectedNodes.length}/{UI_CONFIG.maxCompareNodes}</p>
+                  <p className="text-xs text-white/50">Selected</p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => mutate()}
+                disabled={isLoading}
+                className="border-white/20 hover:bg-white/10 text-white"
+              >
+                <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+                Refresh
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="container py-6 space-y-6">
 
       {/* Selected Nodes */}
       <motion.div
@@ -509,6 +549,7 @@ export default function ComparePage() {
           </CardContent>
         </Card>
       </motion.div>
+      </div>
     </div>
   );
 }

@@ -299,7 +299,7 @@ export function NetworkGlobe({ nodes, className, size = 'normal', showLegend = t
             <p class="font-mono text-white/90 text-sm mb-2">${d.node.pubkey.slice(0, 16)}...</p>
             <div class="space-y-1 text-white/70">
               <p>IP: <span class="text-white">${d.node.ip}</span></p>
-              <p>Region: <span class="text-orange-400">${d.country}</span></p>
+              <p>Est. Region: <span class="text-orange-400">${d.country}</span></p>
               <p>Storage: <span class="text-white">${d.node.storageCommittedFormatted}</span></p>
               <p>Version: <span class="text-green-400">v${d.node.version}</span></p>
             </div>
@@ -354,9 +354,10 @@ export function NetworkGlobe({ nodes, className, size = 'normal', showLegend = t
         </div>
       )}
 
-      {/* Instructions */}
-      <div className="absolute bottom-4 right-4 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/5">
+      {/* Instructions & Disclaimer */}
+      <div className="absolute bottom-4 right-4 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/5 max-w-[200px]">
         <p className="text-[10px] text-white/50">Drag to rotate • Hover for details</p>
+        <p className="text-[9px] text-white/30 mt-1">* Locations estimated from IP ranges. Real geolocation requires GeoIP database.</p>
       </div>
     </div>
   );
