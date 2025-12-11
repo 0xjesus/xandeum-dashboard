@@ -188,11 +188,12 @@ export function NetworkGlobe({ nodes, className, size = 'normal', showLegend = t
     if (globeRef.current && globeReady) {
       const globe = globeRef.current;
       globe.controls().autoRotate = true;
-      globe.controls().autoRotateSpeed = 0.5;
-      globe.controls().enableZoom = true;
-      // Closer view for hero size
-      const altitude = size === 'hero' ? 1.8 : 2.5;
-      globe.pointOfView({ lat: 20, lng: 0, altitude });
+      globe.controls().autoRotateSpeed = 0.3;
+      // Disable zoom to allow page scroll
+      globe.controls().enableZoom = false;
+      // Focus on USA where most nodes are located
+      const altitude = size === 'hero' ? 2.2 : 2.5;
+      globe.pointOfView({ lat: 35, lng: -100, altitude });
     }
   }, [globeReady, size]);
 
@@ -355,7 +356,7 @@ export function NetworkGlobe({ nodes, className, size = 'normal', showLegend = t
 
       {/* Instructions */}
       <div className="absolute bottom-4 right-4 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/5">
-        <p className="text-[10px] text-white/50">Drag to rotate • Scroll to zoom • Hover for details</p>
+        <p className="text-[10px] text-white/50">Drag to rotate • Hover for details</p>
       </div>
     </div>
   );

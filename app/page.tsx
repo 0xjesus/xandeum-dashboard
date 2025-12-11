@@ -18,6 +18,8 @@ import { PerformanceGauge } from '@/components/dashboard/PerformanceGauge';
 import { StorageChart } from '@/components/dashboard/StorageChart';
 import { RegionalDistribution } from '@/components/dashboard/RegionalDistribution';
 import { NetworkHealthChart } from '@/components/dashboard/NetworkHealthChart';
+import { StorageTreemap } from '@/components/dashboard/StorageTreemap';
+import { HealthDistribution } from '@/components/dashboard/HealthDistribution';
 import { ErrorState } from '@/components/common/ErrorState';
 import { useStats, useNodes } from '@/hooks/useNodes';
 
@@ -292,16 +294,31 @@ export default function DashboardPage() {
           <StorageChart nodes={nodesData?.nodes || []} isLoading={isLoading} />
         </motion.div>
 
-        {/* Storage Distribution - Full Section - Massive Interactive Chart */}
+        {/* New Charts Row - Treemap & Health Distribution */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <StorageTreemap nodes={nodesData?.nodes || []} isLoading={isLoading} />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <HealthDistribution nodes={nodesData?.nodes || []} isLoading={isLoading} />
+          </motion.div>
+        </div>
+
+        {/* Storage Distribution - Interactive Bubble Chart */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="w-screen relative left-1/2 right-1/2 -mx-[50vw] py-12 lg:py-20 bg-gradient-to-b from-transparent via-xandeum-dark/30 to-transparent"
         >
-          <div className="w-full px-4 lg:px-8">
-            <BubbleChart nodes={nodesData?.nodes || []} isLoading={isLoading} fullSection />
-          </div>
+          <BubbleChart nodes={nodesData?.nodes || []} isLoading={isLoading} fullSection />
         </motion.section>
 
         {/* Network Health Timeline & Regional Distribution */}
